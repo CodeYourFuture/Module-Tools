@@ -1,0 +1,9 @@
+Entry Sally
+Entry German
+Exit German
+Entry Mariana
+Exit Sally
+Entry Sally
+Entry German
+Exit Mariana
+Exit Sally
