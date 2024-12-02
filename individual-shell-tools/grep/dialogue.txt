@@ -1,0 +1,15 @@
+Doctor: Hello
+Patient: Hello Doctor
+Doctor: What's wrong today?
+Patient: Hello, I can't stop saying hello
+Doctor: That sounds frustrating. When did this start?
+Patient: Hello, about two days ago.
+Doctor: Say "Hi".
+Patient: Hi
+Doctor: You didn't say hello
+Patient: I seem to be cured!
+Doctor: You're welcome, goodbye
+
+Patient: I went to the doctor!
+Spouse: I'm glad you saw the Doctor: did they cure you?
+Patient: Yes!
