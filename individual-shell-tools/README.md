@@ -19,6 +19,6 @@ We recommend approaching the tools in this order:
 1. `ls`
 2. `cat`
 3. `wc`
-4. `sed`
-5. `grep`
+4. `grep`
+5. `sed`
 6. `awk`
