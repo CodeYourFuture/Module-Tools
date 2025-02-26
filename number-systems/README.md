@@ -64,7 +64,7 @@ If reading the byte 0x21 as a greyscale colour, as described in "Approaches for 
 Answer: A greyscale value of 0x21 corresponds to a dark grey colour.
 
 If reading the bytes 0xAA00FF as an RGB colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
-Answer:
+Answer: The RGB colour would be a shade of magenta, with red at 170 (0xAA), green at 0 (0x00), and blue at 255 (0xFF).
 
 If reading the bytes 0xAA00FF as a sequence of three one-byte decimal numbers, what decimal numbers would they be?
 Answer:
