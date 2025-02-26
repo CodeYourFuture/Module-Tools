@@ -13,7 +13,7 @@ Answer: 45
 ![alt text](101101-to-decimal.png)
 
 Which is larger: 1000 or 0111?
-Answer:
+Answer: 1000
 
 Which is larger: 00100 or 01011?
 Answer:
