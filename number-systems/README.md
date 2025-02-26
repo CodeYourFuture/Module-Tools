@@ -5,7 +5,7 @@ Do not convert any binary numbers to decimal when solving a question unless the 
 The goal of these exercises is for you to gain an intuition for binary numbers. Using tools to solve the problems defeats the point.
 
 Convert the decimal number 14 to binary.
-Answer:
+Answer: 1110
 
 Convert the binary number 101101 to decimal:
 Answer:
