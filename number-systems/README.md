@@ -34,7 +34,7 @@ How many bits would you need in order to store the numbers between 0 and 3 inclu
 Answer: 2
 
 How many bits would you need in order to store the numbers between 0 and 1000 inclusive?
-Answer:
+Answer: 10
 
 How can you test if a binary number is a power of two (e.g. 1, 2, 4, 8, 16, ...)?
 Answer:
