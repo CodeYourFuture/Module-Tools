@@ -6,6 +6,7 @@ The goal of these exercises is for you to gain an intuition for binary numbers. 
 
 Convert the decimal number 14 to binary.
 Answer: 1110
+![answer-1](14-decimal-binary.png)
 
 Convert the binary number 101101 to decimal:
 Answer:
