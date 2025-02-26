@@ -37,7 +37,7 @@ How many bits would you need in order to store the numbers between 0 and 1000 in
 Answer: 10
 
 How can you test if a binary number is a power of two (e.g. 1, 2, 4, 8, 16, ...)?
-Answer:
+Answer: A binary number is a power of two if it has exactly one '1' bit and all other bits are '0'. For example, 1 (0001), 2 (0010), 4 (0100), 8 (1000), etc.
 
 Convert the decimal number 14 to hex.
 Answer:
