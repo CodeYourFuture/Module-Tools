@@ -55,7 +55,7 @@ Convert the hex number B to decimal.
 Answer: 11
 
 If reading the byte 0x21 as a number, what decimal number would it mean?
-Answer:
+Answer: 33
 
 If reading the byte 0x21 as an ASCII character, what character would it mean?
 Answer:
