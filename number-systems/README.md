@@ -61,7 +61,7 @@ If reading the byte 0x21 as an ASCII character, what character would it mean?
 Answer: !
 
 If reading the byte 0x21 as a greyscale colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
-Answer:
+Answer: A greyscale value of 0x21 corresponds to a dark grey colour.
 
 If reading the bytes 0xAA00FF as an RGB colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
 Answer:
