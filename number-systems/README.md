@@ -44,7 +44,8 @@ Answer: E
 ![alt text](14-to-hex.png)
 
 Convert the decimal number 386 to hex.
-Answer:
+Answer: 182
+![alt text](386-to-hex.png)
 
 Convert the hex number 386 to decimal.
 Answer:
