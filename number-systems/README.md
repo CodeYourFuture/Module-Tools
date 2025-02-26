@@ -48,7 +48,8 @@ Answer: 182
 ![alt text](386-to-hex.png)
 
 Convert the hex number 386 to decimal.
-Answer:
+Answer: 902
+![alt text](386-hex-to-decimal.png)
 
 Convert the hex number B to decimal.
 Answer:
