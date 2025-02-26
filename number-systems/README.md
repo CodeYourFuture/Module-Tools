@@ -52,7 +52,7 @@ Answer: 902
 ![alt text](386-hex-to-decimal.png)
 
 Convert the hex number B to decimal.
-Answer:
+Answer: 11
 
 If reading the byte 0x21 as a number, what decimal number would it mean?
 Answer:
