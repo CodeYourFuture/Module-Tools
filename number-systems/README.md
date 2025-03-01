@@ -29,7 +29,7 @@ How many bits would you need in order to store the numbers between 0 and 255 inc
 Answer: 8
 
 How many bits would you need in order to store the numbers between 0 and 3 inclusive?
-Answer: 3
+Answer: 2
 
 How many bits would you need in order to store the numbers between 0 and 1000 inclusive?
 Answer: 10, but you'd have 23 spare values, so you can actually store between 0 and 1023 with 10 bits.
