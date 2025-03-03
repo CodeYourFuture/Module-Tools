@@ -29,7 +29,7 @@ async function readFiles(paths) {
 function extractLinesFromContent(content) {
   const lines = content.split("\n");
   if (lines[lines.length - 1] === "") {
-    lines.pop(); // excludes last line if it empty
+    lines.pop(); // excludes last line if empty
   }
   return lines;
 }
