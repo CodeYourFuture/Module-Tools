@@ -6,19 +6,25 @@ program
   .name("Implement ls")
   .description("Implements a version of the ls command")
   .option("-1, --one", "Output all files and directories each in a line")
-  .argument("[paths...]", "the paths")
+  .option("-a, --hidden", "Output hidden files/directories")
+  .argument("[paths...]", "the paths to be processed")
   .parse(process.argv);
 
 const filePaths = program.args.length ? program.args : ["."];
 const one = program.opts().one;
+const hidden = program.opts().hidden;
 
 filePaths.forEach(async (filePath) => {
   try {
-    const files = await fs.readdir(filePath);
+    const files = await fs.readdir(filePath, { withFileTypes: true });
+    const filteredFiles = files
+      .filter((file) => hidden || !file.name.startsWith("."))
+      .map((file) => file.name);
+
     if (one) {
-      files.forEach((file) => console.log(file));
+      filteredFiles.forEach((file) => console.log(file));
     } else {
-      console.log(files.join(" "));
+      console.log(filteredFiles.join(" "));
     }
   } catch (err) {
     console.error(`Error reading directory ${filePath}:`, err.message);
