@@ -1,7 +1,7 @@
 import { promises as fs, readFile } from "node:fs";
 import process from "node:process";
 
-const args = process.argv.slice(2);
+let filePaths = process.argv.slice(2);
 
 async function readFiles(paths) {
   try {
@@ -14,7 +14,7 @@ async function readFiles(paths) {
 }
 
 async function displayFileContents() {
-  const contents = await readFiles(args);
+  const contents = await readFiles(filePaths);
   contents.forEach((content) => console.log(content));
 }
 
