@@ -16,10 +16,14 @@ const hidden = program.opts().hidden;
 
 filePaths.forEach(async (filePath) => {
   try {
-    const files = await fs.readdir(filePath, { withFileTypes: true });
+    const files = await fs.readdir(filePath, { withFileTypes: true }); // is returned as a Dirent
     const filteredFiles = files
       .filter((file) => hidden || !file.name.startsWith("."))
       .map((file) => file.name);
+
+    if (hidden) {
+      filteredFiles.unshift(".", "..");
+    }
 
     if (one) {
       filteredFiles.forEach((file) => console.log(file));
