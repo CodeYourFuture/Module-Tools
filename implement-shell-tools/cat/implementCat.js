@@ -15,7 +15,13 @@ async function readFiles(paths) {
   try {
     const promises = paths.map((filePath) => fs.readFile(filePath, "utf-8"));
     const contents = await Promise.all(promises);
-    return contents.map((content) => content.split("\n"));
+    return contents.map((content) => {
+      const lines = content.split("\n");
+      if (lines[lines.length - 1] === "") {
+        lines.pop();
+      }
+      return lines;
+    });
   } catch (err) {
     console.error(err.message);
   }
