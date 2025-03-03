@@ -56,4 +56,4 @@ async function displayFileContents() {
   });
 }
 
-await displayFileContents();
+displayFileContents();
