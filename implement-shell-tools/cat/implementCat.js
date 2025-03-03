@@ -3,37 +3,36 @@ import process from "node:process";
 import { program } from "commander";
 
 program
-    .name("Implement cat")
-    .description("Implement a version of the cat program")
-    .option("-n, --number", "Number the output lines, starting at 1")
-    .argument("<paths...>", "The file paths to process")
-    .parse(process.argv);
+  .name("Implement cat")
+  .description("Implement a version of the cat program")
+  .option("-n, --number", "Number the output lines, starting at 1")
+  .argument("<paths...>", "The file paths to process")
+  .parse(process.argv);
 
 let filePaths = program.args;
 
 async function readFiles(paths) {
-    try {
-        const promises = paths.map((filePath) => fs.readFile(filePath, "utf-8"));
-        const contents = await Promise.all(promises);
-        return contents;
-    } catch (err) {
-        console.error(err.message);
-    }
+  try {
+    const promises = paths.map((filePath) => fs.readFile(filePath, "utf-8"));
+    const contents = await Promise.all(promises);
+    return contents.map((content) => content.split("\n"));
+  } catch (err) {
+    console.error(err.message);
+  }
 }
 
 async function displayFileContents() {
-    const contents = await readFiles(filePaths);
-    const numberLines = program.opts().number;
+  const contents = await readFiles(filePaths);
+  const flatternedContents = contents.flat();
+  const numberLines = program.opts().number;
 
-    contents.forEach((content) => {
-        if (numberLines) {
-            content.split('\n').forEach((line, lineNumber) => {
-                console.log(`${lineNumber + 1} ${line}`);
-            });
-        } else {
-            console.log(content);
-        }
-    });
+  flatternedContents.forEach((line, index) => {
+    if (numberLines) {
+      console.log(`${index + 1} ${line}`);
+    } else {
+      console.log(line);
+    }
+  });
 }
 
 await displayFileContents();
