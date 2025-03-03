@@ -5,10 +5,10 @@ Do not convert any binary numbers to decimal when solving a question unless the 
 The goal of these exercises is for you to gain an intuition for binary numbers. Using tools to solve the problems defeats the point.
 
 Convert the decimal number 14 to binary.
-Answer: 1110 (14 divide 2 and take remainder from end to start)
+Answer: 1110
 
 Convert the binary number 101101 to decimal:
-Answer: 25 (Each number multiply by index from 0 from right)
+Answer: 45
 
 Which is larger: 1000 or 0111?
 Answer: 1000 (We compare bit by bit from the left. First 1 > 0)
@@ -41,25 +41,25 @@ Convert the decimal number 14 to hex.
 Answer: E
 
 Convert the decimal number 386 to hex.
-Answer: 182 (Divide and write remainder from right to left)
+Answer: 182
 
 Convert the hex number 386 to decimal.
-Answer:
+Answer: 902
 
 Convert the hex number B to decimal.
-Answer:
+Answer: 11
 
 If reading the byte 0x21 as a number, what decimal number would it mean?
-Answer:
+Answer: 33
 
 If reading the byte 0x21 as an ASCII character, what character would it mean?
-Answer:
+Answer: !
 
 If reading the byte 0x21 as a greyscale colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
-Answer:
+Answer: dark gray
 
 If reading the bytes 0xAA00FF as an RGB colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
-Answer:
+Answer: purple
 
 If reading the bytes 0xAA00FF as a sequence of three one-byte decimal numbers, what decimal numbers would they be?
-Answer:
+Answer: 170, 0, 255
