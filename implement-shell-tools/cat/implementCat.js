@@ -3,11 +3,6 @@ import process from "node:process";
 
 const args = process.argv.slice(2);
 
-// if (args.length != 1) {
-//   console.error(`Expect one argument to be passed but got ${args.length} `);
-//   process.exit(1);
-// }
-
 async function readFiles(paths) {
   try {
     const promises = paths.map((filePath) => fs.readFile(filePath, "utf-8"));
@@ -18,3 +13,9 @@ async function readFiles(paths) {
   }
 }
 
+async function displayFileContents() {
+  const contents = await readFiles(args);
+  contents.forEach((content) => console.log(content));
+}
+
+await displayFileContents();
