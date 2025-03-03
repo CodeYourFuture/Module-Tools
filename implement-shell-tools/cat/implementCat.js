@@ -14,7 +14,9 @@ let filePaths = program.args;
 
 async function readFiles(paths) {
   try {
-    const promises = paths.map((filePath) => fs.readFile(filePath, "utf-8"));
+    const promises = paths.map((filePath) =>
+      fs.readFile(filePath, { encoding: "utf-8" })
+    );
     const contents = await Promise.all(promises);
     return contents.map((content) => {
       return extractLinesFromContent(content);
