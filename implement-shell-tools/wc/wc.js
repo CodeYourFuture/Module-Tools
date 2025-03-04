@@ -32,23 +32,23 @@ async function countLinesWordsCharsInFile(path) {
 
   const chars = content.split("");
 
-  const lineCount = lines.length;
-  const wordsCount = words.length;
-  const charCount = chars.length;
+  const numberOfLines = lines.length;
+  const numberOfWords = words.length;
+  const numberOFChars = chars.length;
 
   if (lineOption) {
-    return `${lineCount} ${path}`;
+    return `${numberOfLines} ${path}`;
   }
 
   if (charOption) {
-    return `${charCount} ${path}`;
+    return `${numberOFChars} ${path}`;
   }
 
   if (wordOption) {
-    return `${wordsCount} ${path}`;
+    return `${numberOfWords} ${path}`;
   }
 
-  return `${lineCount} ${wordsCount} ${charCount} ${path}`;
+  return `${numberOfLines} ${numberOfWords} ${numberOFChars} ${path}`;
 }
 
 async function createLineWordsCharCountForFiles() {
