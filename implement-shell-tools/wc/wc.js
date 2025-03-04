@@ -30,18 +30,23 @@ async function createLineWordsCharCountForFiles() {
   const files = await Promise.all(args.map(createLineWordsCharCountForFile));
   files.forEach((file) => console.log(file));
   const aggregatedFilesData = aggregateFileData(files);
-  console.log(
-    `${aggregatedFilesData[0]} ${aggregatedFilesData[1]} ${aggregatedFilesData[2]} total`
-  );
+  aggregatedFilesData !== 0
+    ? console.log(
+        `${aggregatedFilesData[0]} ${aggregatedFilesData[1]} ${aggregatedFilesData[2]} total`
+      )
+    : null;
 }
 
 function aggregateFileData(files) {
   const digits = files.map((element) =>
     element.split(" ").slice(0, -1).map(Number)
   );
-  const sums = digits[0].map((_, colIndex) =>
-    digits.reduce((sum, row) => sum + row[colIndex], 0)
-  );
+  const sums =
+    digits.length > 1
+      ? digits[0].map((_, colIndex) =>
+          digits.reduce((sum, row) => sum + row[colIndex], 0)
+        )
+      : 0;
   return sums;
 }
 
