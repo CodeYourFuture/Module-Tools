@@ -55,7 +55,13 @@ async function createLineWordsCharCountForFiles() {
   const files = await Promise.all(args.map(createLineWordsCharCountForFile));
   files.forEach((file) => console.log(file));
   const aggregatedFilesData = aggregateFileData(files);
-  aggregatedFilesData !== 0 && !lineOption && !charOption && !wordOption
+
+  if (aggregatedFilesData !== 0 && lineOption) {
+    console.log(`${aggregatedFilesData[0]} total`);
+    return;
+  }
+
+  aggregatedFilesData !== 0
     ? console.log(
         `${aggregatedFilesData[0]} ${aggregatedFilesData[1]} ${aggregatedFilesData[2]} total`
       )
