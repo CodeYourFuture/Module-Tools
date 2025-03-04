@@ -21,20 +21,20 @@ const lineOption = program.opts().line;
 const charOption = program.opts().char;
 const wordOption = program.opts().word;
 
-async function createLineWordsCharCountForFile(path) {
+async function countLinesWordsCharsInFile(path) {
   const content = await fs.readFile(path, { encoding: "utf-8" });
 
-  const arrForLineCount = removeEndEmptyLine(content.split("\n"));
+  const lines = removeEndEmptyLine(content.split("\n"));
 
-  const arrForWordsCount = arrForLineCount.flatMap((element) =>
+  const words = lines.flatMap((element) =>
     element.split(" ").filter((word) => word !== "")
   );
 
-  const charArray = content.split("");
+  const chars = content.split("");
 
-  const lineCount = arrForLineCount.length;
-  const wordsCount = arrForWordsCount.length;
-  const charCount = charArray.length;
+  const lineCount = lines.length;
+  const wordsCount = words.length;
+  const charCount = chars.length;
 
   if (lineOption) {
     return `${lineCount} ${path}`;
@@ -52,7 +52,7 @@ async function createLineWordsCharCountForFile(path) {
 }
 
 async function createLineWordsCharCountForFiles() {
-  const files = await Promise.all(args.map(createLineWordsCharCountForFile));
+  const files = await Promise.all(args.map(countLinesWordsCharsInFile));
   files.forEach((file) => console.log(file));
   const aggregatedFilesData = aggregateFileData(files);
 
