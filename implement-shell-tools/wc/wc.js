@@ -21,6 +21,11 @@ const lineOption = program.opts().line;
 const charOption = program.opts().char;
 const wordOption = program.opts().word;
 
+function formatOptionOutput(option, path, optionCount) {
+  if (option) {
+    return `${optionCount} ${path}`;
+  }
+}
 async function createLineWordsCharCountForFile(path) {
   const content = await fs.readFile(path, { encoding: "utf-8" });
 
@@ -36,17 +41,9 @@ async function createLineWordsCharCountForFile(path) {
   const wordsCount = arrForWordsCount.length;
   const charCount = charArray.length;
 
-  if (lineOption) {
-    return `${lineCount} ${path}`;
-  }
-
-  if (charOption) {
-    return `${charCount} ${path}`;
-  }
-
-  if (wordOption) {
-    return `${wordsCount} ${path}`;
-  }
+  formatOptionOutput(lineOption, path, lineCount);
+  formatOptionOutput(charOption, path, charCount);
+  formatOptionOutput(wordOption, path, wordsCount);
 
   return `${lineCount} ${wordsCount} ${charCount} ${path}`;
 }
