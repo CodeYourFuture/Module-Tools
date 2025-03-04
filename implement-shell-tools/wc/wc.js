@@ -51,7 +51,7 @@ async function countLinesWordsCharsInFile(path) {
   return `${numberOfLines} ${numberOfWords} ${numberOFChars} ${path}`;
 }
 
-async function createLineWordsCharCountForFiles() {
+async function processFilesAndDisplayCounts() {
   const files = await Promise.all(args.map(countLinesWordsCharsInFile));
   files.forEach((file) => console.log(file));
   const aggregatedFilesData = aggregateFileData(files);
@@ -91,4 +91,4 @@ function aggregateFileData(files) {
   return sums;
 }
 
-createLineWordsCharCountForFiles();
+processFilesAndDisplayCounts();
