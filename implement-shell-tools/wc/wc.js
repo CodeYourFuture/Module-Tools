@@ -6,6 +6,7 @@ program
   .name("Implement wc")
   .description("Implements a version of the wc command")
   .option("-l, --line", "Counts file lines")
+  .option("-c, --char", "Counts words in file")
   .argument("[paths...]", "The path/s to process")
   .parse(process.argv);
 
@@ -16,6 +17,7 @@ function removeEndEmptyLine(arr) {
 }
 
 const lineOption = program.opts().line;
+const charOption = program.opts().char;
 
 async function createLineWordsCharCountForFile(path) {
   const content = await fs.readFile(path, { encoding: "utf-8" });
@@ -34,16 +36,19 @@ async function createLineWordsCharCountForFile(path) {
 
   if (lineOption) {
     return `${lineCount} ${path}`;
-  } else {
-    return `${lineCount} ${wordsCount} ${charCount} ${path}`;
   }
+
+  if (charOption) {
+    return `${charCount} ${path}`;
+  }
+  return `${lineCount} ${wordsCount} ${charCount} ${path}`;
 }
 
 async function createLineWordsCharCountForFiles() {
   const files = await Promise.all(args.map(createLineWordsCharCountForFile));
   files.forEach((file) => console.log(file));
   const aggregatedFilesData = aggregateFileData(files);
-  aggregatedFilesData !== 0 && !lineOption
+  aggregatedFilesData !== 0 && !lineOption && !charOption
     ? console.log(
         `${aggregatedFilesData[0]} ${aggregatedFilesData[1]} ${aggregatedFilesData[2]} total`
       )
