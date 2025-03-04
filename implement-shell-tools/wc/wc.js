@@ -5,6 +5,7 @@ import { promises as fs } from "node:fs";
 program
   .name("Implement wc")
   .description("Implements a version of the wc command")
+  .option("-l, --line", "Counts file lines")
   .argument("[paths...]", "The path/s to process")
   .parse(process.argv);
 
@@ -13,6 +14,8 @@ const args = program.args;
 function removeEndEmptyLine(arr) {
   return arr[arr.length - 1] === "" ? arr.slice(0, -1) : arr;
 }
+
+const lineOption = program.opts().line;
 
 async function createLineWordsCharCountForFile(path) {
   const content = await fs.readFile(path, { encoding: "utf-8" });
@@ -29,14 +32,18 @@ async function createLineWordsCharCountForFile(path) {
   const wordsCount = arrForWordsCount.length;
   const charCount = charArray.length;
 
-  return `${lineCount} ${wordsCount} ${charCount} ${path}`;
+  if (lineOption) {
+    return `${lineCount} ${path}`;
+  } else {
+    return `${lineCount} ${wordsCount} ${charCount} ${path}`;
+  }
 }
 
 async function createLineWordsCharCountForFiles() {
   const files = await Promise.all(args.map(createLineWordsCharCountForFile));
   files.forEach((file) => console.log(file));
   const aggregatedFilesData = aggregateFileData(files);
-  aggregatedFilesData !== 0
+  aggregatedFilesData !== 0 && !lineOption
     ? console.log(
         `${aggregatedFilesData[0]} ${aggregatedFilesData[1]} ${aggregatedFilesData[2]} total`
       )
