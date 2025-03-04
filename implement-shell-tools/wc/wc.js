@@ -2,7 +2,13 @@ import { program } from "commander";
 import process from "node:process";
 import { promises as fs } from "node:fs";
 
-const args = process.argv.slice(2);
+program
+  .name("Implement wc")
+  .description("Implements a version of the wc command")
+  .argument("[paths...]", "The path/s to process")
+  .parse(process.argv);
+
+const args = program.args;
 
 function removeEndEmptyLine(arr) {
   return arr[arr.length - 1] === "" ? arr.slice(0, -1) : arr;
