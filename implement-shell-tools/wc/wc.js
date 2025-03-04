@@ -10,13 +10,16 @@ function removeEndEmptyLine(arr) {
 
 async function createLineWordsCharCountForFile(path) {
   const content = await fs.readFile(path, { encoding: "utf-8" });
+
   const arrForLineCount = removeEndEmptyLine(content.split("\n"));
-  const lineCount = arrForLineCount.length;
+
   const arrForWordsCount = arrForLineCount.flatMap((element) =>
     element.split(" ").filter((word) => word !== "")
   );
 
   const charArray = content.split("");
+
+  const lineCount = arrForLineCount.length;
   const wordsCount = arrForWordsCount.length;
   const charCount = charArray.length;
 
