@@ -52,9 +52,10 @@ async function countLinesWordsCharsInFile(path) {
 }
 
 async function processFilesAndDisplayCounts() {
-  const files = await Promise.all(args.map(countLinesWordsCharsInFile));
-  files.forEach((file) => console.log(file));
-  const aggregatedFilesData = aggregateFileData(files);
+  const fileCounts = await Promise.all(args.map(countLinesWordsCharsInFile));
+  fileCounts.forEach((fileCount) => console.log(fileCount));
+
+  const aggregatedFilesData = aggregateFileData(fileCounts);
 
   if (aggregatedFilesData !== 0 && lineOption) {
     console.log(`${aggregatedFilesData[0]} total`);
