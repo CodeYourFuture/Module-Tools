@@ -79,8 +79,16 @@ async function processFilesAndDisplayCounts() {
     : null;
 }
 
-function aggregateFileData(files) {
-  const digits = files.map((element) =>
+/**
+ * Aggregates numerical data from an array of file content strings.
+ *
+ * @param {string[]} files - An array of strings, each representing the content of a file.
+ * Each string should contain space-separated numbers.
+ * @returns {number[]|number} - An array of sums for each column of numbers if there are multiple files,
+ * or 0 if there is only one file.
+ */
+function aggregateFileData(fileCounts) {
+  const digits = fileCounts.map((element) =>
     element.split(" ").slice(0, -1).map(Number)
   );
   const sums =
