@@ -61,11 +61,16 @@ async function createLineWordsCharCountForFiles() {
     return;
   }
 
-  aggregatedFilesData !== 0
-    ? console.log(
-        `${aggregatedFilesData[0]} ${aggregatedFilesData[1]} ${aggregatedFilesData[2]} total`
-      )
-    : null;
+  if (aggregatedFilesData !== 0 && wordOption) {
+    console.log(`${aggregatedFilesData[0]} total`);
+    return;
+  }
+
+  //   aggregatedFilesData !== 0
+  //     ? console.log(
+  //         `${aggregatedFilesData[0]} ${aggregatedFilesData[1]} ${aggregatedFilesData[2]} total`
+  //       )
+  //     : null;
 }
 
 function aggregateFileData(files) {
