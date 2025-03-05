@@ -10,13 +10,13 @@ program
   .argument("<paths...>", "The file paths to process")
   .parse(process.argv);
 
-let filePaths = program.args;
+let args = program.args;
 
 const numberLines = program.opts().number;
 const numberLines2 = program.opts().number2;
 let lineNumber = 1;
 
-async function readFile(path) {
+async function printFileWithLineNumbers(path) {
   try {
     const content = await fs.readFile(path, { encoding: "utf-8" });
     const lines = extractLinesFromContent(content);
@@ -46,8 +46,5 @@ function extractLinesFromContent(content) {
   return lines;
 }
 
-async function displayFileContents() {
-  await Promise.all(filePaths.map(readFile));
-}
-
-displayFileContents();
+// display file/s contents with line numbers.
+await Promise.all(args.map(printFileWithLineNumbers));
