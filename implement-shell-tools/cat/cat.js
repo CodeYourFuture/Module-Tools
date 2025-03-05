@@ -12,8 +12,8 @@ program
 
 let args = program.args;
 
-const numberLines = program.opts().number;
-const numberLines2 = program.opts().number2;
+const nOption = program.opts().number;
+const bOption = program.opts().number2;
 let lineNumber = 1;
 
 async function printFileWithLineNumbers(path) {
@@ -21,12 +21,12 @@ async function printFileWithLineNumbers(path) {
     const content = await fs.readFile(path, { encoding: "utf-8" });
     const lines = extractLinesFromContent(content);
     lines.forEach((line) => {
-      if (numberLines) {
+      if (nOption) {
         console.log(`${lineNumber++} ${line}`);
         return;
       }
 
-      if (numberLines2) {
+      if (bOption) {
         if (line !== "") {
           console.log(`${lineNumber++} ${line}`);
           return;
