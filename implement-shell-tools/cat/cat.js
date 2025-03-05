@@ -1,4 +1,4 @@
-import { promises as fs } from "node:fs";
+import { promises as fs, read } from "node:fs";
 import process from "node:process";
 import { program } from "commander";
 
@@ -12,14 +12,26 @@ program
 
 let filePaths = program.args;
 
-async function readFiles(paths) {
+const numberLines = program.opts().number;
+const numberLines2 = program.opts().number2;
+let lineNumber = 1;
+
+async function readFile(path) {
   try {
-    const promises = paths.map((filePath) =>
-      fs.readFile(filePath, { encoding: "utf-8" })
-    );
-    const contents = await Promise.all(promises);
-    return contents.map((content) => {
-      return extractLinesFromContent(content);
+    const content = await fs.readFile(path, { encoding: "utf-8" });
+    const lines = extractLinesFromContent(content);
+    lines.forEach((line) => {
+      if (numberLines) {
+        console.log(`${lineNumber++} ${line}`);
+      } else if (numberLines2) {
+        if (line !== "") {
+          console.log(`${lineNumber++} ${line}`);
+        } else {
+          console.log(line);
+        }
+      } else {
+        console.log(line);
+      }
     });
   } catch (err) {
     console.error(err.message);
@@ -35,25 +47,7 @@ function extractLinesFromContent(content) {
 }
 
 async function displayFileContents() {
-  const contents = await readFiles(filePaths);
-  const flatternedContents = contents.flat();
-  const numberLines = program.opts().number;
-  const numberLines2 = program.opts().number2;
-  let lineNumber = 1;
-
-  flatternedContents.forEach((line) => {
-    if (numberLines) {
-      console.log(`${lineNumber++} ${line}`);
-    } else if (numberLines2) {
-      if (line !== "") {
-        console.log(`${lineNumber++} ${line}`);
-      } else {
-        console.log(line);
-      }
-    } else {
-      console.log(line);
-    }
-  });
+  await Promise.all(filePaths.map(readFile));
 }
 
 displayFileContents();
