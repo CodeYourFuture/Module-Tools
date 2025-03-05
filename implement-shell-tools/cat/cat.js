@@ -23,15 +23,17 @@ async function printFileWithLineNumbers(path) {
     lines.forEach((line) => {
       if (numberLines) {
         console.log(`${lineNumber++} ${line}`);
-      } else if (numberLines2) {
+        return;
+      }
+
+      if (numberLines2) {
         if (line !== "") {
           console.log(`${lineNumber++} ${line}`);
-        } else {
-          console.log(line);
+          return;
         }
-      } else {
-        console.log(line);
       }
+
+      console.log(line);
     });
   } catch (err) {
     console.error(err.message);
