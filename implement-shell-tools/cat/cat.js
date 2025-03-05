@@ -16,25 +16,11 @@ const nOption = program.opts().number;
 const bOption = program.opts().number2;
 let lineNumber = 1;
 
-async function printFileWithLineNumbers(path) {
+async function readAndPrintFileContent(path) {
   try {
     const content = await fs.readFile(path, { encoding: "utf-8" });
     const lines = extractLinesFromContent(content);
-    lines.forEach((line) => {
-      if (nOption) {
-        console.log(`${lineNumber++} ${line}`);
-        return;
-      }
-
-      if (bOption) {
-        if (line !== "") {
-          console.log(`${lineNumber++} ${line}`);
-          return;
-        }
-      }
-
-      console.log(line);
-    });
+    printLinesWithOptions(lines);
   } catch (err) {
     console.error(err.message);
   }
@@ -48,5 +34,22 @@ function extractLinesFromContent(content) {
   return lines;
 }
 
+function printLinesWithOptions(lines) {
+  lines.forEach((line) => {
+    if (nOption) {
+      console.log(`${lineNumber++} ${line}`);
+      return;
+    }
+
+    if (bOption) {
+      if (line !== "") {
+        console.log(`${lineNumber++} ${line}`);
+        return;
+      }
+    }
+
+    console.log(line);
+  });
+}
 // display file/s contents with line numbers.
-await Promise.all(args.map(printFileWithLineNumbers));
+await Promise.all(args.map(readAndPrintFileContent));
