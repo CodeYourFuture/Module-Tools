@@ -7,3 +7,5 @@ set -euo pipefail
 # The formatting of the output doesn't matter.
 
 ls -R
+
+# ls -R - lists all files, directory, and all files inside the subdirectory as well.

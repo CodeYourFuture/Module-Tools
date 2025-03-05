@@ -6,3 +6,5 @@ set -euo pipefail
 # The output should be a list of names: helper-1.txt, helper-2.txt, helper-3.txt.
 
 ls child-directory
+
+# ls child-directory - lists files in the child-directory directory.
