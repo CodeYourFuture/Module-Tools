@@ -11,15 +11,16 @@ parser.add_argument("path", help="The files to search")
 
 args = parser.parse_args()
 number_lines = args.number
-# print(args)
-# print(number_lines)
-
 
 def read_and_print_file_content(file_path, number_lines):
     count = 0
     with open(file_path, 'r') as f:
         content = f.read()
     lines = extractContentLines(content)
+    output_lines_with_numbers(number_lines, count, lines)
+
+
+def output_lines_with_numbers(number_lines, count, lines):
     for line in lines:
         if number_lines:
             count+=1
