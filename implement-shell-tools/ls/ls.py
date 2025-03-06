@@ -11,15 +11,20 @@ parser.add_argument("-1", "--one", action="store_true", help="list the directory
 
 args = parser.parse_args()
 
+def does_not_start_with_do(filename):
+    return not filename.startswith('.')
+
 def read_dir():
     one = args.one
     dir = args.dir
-    contents = os.listdir(dir)
-    for content in contents:
+    files = os.listdir(dir)
+    non_hidden_files_or_dirs = list(filter(does_not_start_with_do,files ))
+    print(non_hidden_files_or_dirs, 'filtered elements')
+    for content in files:
         if one:
             print(content)
     if not one:
-        print(' '.join(contents))
+        print(' '.join(files))
     
 
 read_dir()
