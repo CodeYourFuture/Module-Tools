@@ -13,7 +13,10 @@ args = parser.parse_args()
 
 
 def extract_lines(content):
-    return content.split('\n')
+    lines = content.split('\n')
+    if lines and lines[-1] == '':
+        lines = lines[:-1]
+    return lines
 
 
 def read_file_content(file_path):
@@ -23,5 +26,7 @@ def read_file_content(file_path):
         lines = extract_lines(content)
     return lines
 
+def number_of_lines(lines):
+    return len(lines)
+
 lines = read_file_content(args.path)
-print(lines)
