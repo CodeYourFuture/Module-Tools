@@ -29,4 +29,9 @@ def read_file_content(file_path):
 def number_of_lines(lines):
     return len(lines)
 
-lines = read_file_content(args.path)
+
+def output_lines_words_chars_number():
+    lines = read_file_content(args.path)
+    print(len(lines), args.path)
+
+output_lines_words_chars_number()
