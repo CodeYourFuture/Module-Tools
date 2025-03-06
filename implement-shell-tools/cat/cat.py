@@ -6,42 +6,36 @@ parser = argparse.ArgumentParser(
 )
 
 parser.add_argument("-n", "--number", action="store_true", help="Number the output lines, starting at 1.")
-parser.add_argument("path", help="The files to search")
-
+parser.add_argument("paths", nargs='+', help="The files to search")
 
 args = parser.parse_args()
 number_lines = args.number
 
-def read_and_print_file_content(file_path, number_lines):
-    count = 0
+def read_file_content(file_path):
     with open(file_path, 'r') as f:
-        content = f.read()
-    lines = extractContentLines(content)
-    output_lines_with_numbers(number_lines, count, lines)
+        return f.read()
 
-
-def output_lines_with_numbers(number_lines, count, lines):
-    for line in lines:
-        if number_lines:
-            count+=1
-            print(count, line)
-        else:
-            print(line)
-        
-        
-
-
-
-def extractContentLines(content):
+def extract_content_lines(content):
     lines = content.split('\n')
     if lines and lines[-1] == '':
         lines = lines[:-1]
     return lines
 
-read_and_print_file_content(args.path, number_lines)
+def output_lines_with_numbers(number_lines, lines):
+    count = 0
+    for line in lines:
+        if number_lines:
+            count += 1
+            print(count, line)
+        else:
+            print(line)
 
-# contents = map(read_and_print_file_content, args.paths)
+# Read contents of all files into a list
+all_lines = []
+for path in args.paths:
+    content = read_file_content(path)
+    lines = extract_content_lines(content)
+    all_lines.extend(lines)
 
-# for content in contents:
-#     if content is not None:
-#         print(content)
+# Output lines with or without numbering
+output_lines_with_numbers(number_lines, all_lines)
