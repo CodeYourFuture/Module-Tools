@@ -42,7 +42,13 @@ def output_lines_words_chars_count(file_path):
     lines_count = lines_words_chars_count[0]
     words_count = lines_words_chars_count[1]
     chars_count = lines_words_chars_count[2]
-    print(lines_count, words_count, chars_count, args.paths[0])
+    print(lines_count, words_count, chars_count, file_path)
+
+def output_total_lines(lines_words_chars_count, total):
+     total_lines = sum(count[0] for count in lines_words_chars_count)
+     total_words = sum(count[1] for count in lines_words_chars_count)
+     total_chars = sum(count[2] for count in lines_words_chars_count)
+     print(total_lines, total_words, total_chars, total)
 
 lines_words_chars_count = []
 if len(args.paths) == 1:
@@ -51,5 +57,5 @@ else:
     for file_path in args.paths:
         result = get_lines_words_chars_count(file_path)
         lines_words_chars_count.append(result)
-
-#print(lines_words_chars_count)
+        output_lines_words_chars_count(file_path)
+    output_total_lines(lines_words_chars_count, 'total')
