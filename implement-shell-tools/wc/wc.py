@@ -50,28 +50,20 @@ def print_selected_counts(file_path):
     words_count = lines_words_chars_count[1]
     chars_count = lines_words_chars_count[2]
 
-    if is_lines_option:
-        print(lines_count, file_path)
-    elif is_words_option:
-        print(words_count, file_path)
-    elif is_chars_option:
-        print(chars_count, file_path)
-    else:
-        print(lines_count, words_count, chars_count, file_path)
+    if is_lines_option: print(lines_count, file_path)
+    elif is_words_option: print(words_count, file_path)
+    elif is_chars_option: print(chars_count, file_path)
+    else: print(lines_count, words_count, chars_count, file_path)
 
 def print_total_lines(lines_words_chars_count, total):
      total_lines = sum(count[0] for count in lines_words_chars_count)
      total_words = sum(count[1] for count in lines_words_chars_count)
      total_chars = sum(count[2] for count in lines_words_chars_count)
      
-     if is_lines_option:
-         print(total_lines, total)
-     elif is_words_option:
-         print(total_words, total)
-     elif is_chars_option:
-         print(total_chars, total)
-     else:
-         print(total_lines, total_words, total_chars, total)
+     if is_lines_option: print(total_lines, total)
+     elif is_words_option: print(total_words, total)
+     elif is_chars_option: print(total_chars, total)
+     else: print(total_lines, total_words, total_chars, total)
 
 def print_file_statistics():
     lines_words_chars_count = []
