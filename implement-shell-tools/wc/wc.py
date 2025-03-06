@@ -36,13 +36,20 @@ def get_lines_words_chars_count(file_path):
     chars = extract_chars(content)
     return  [len(lines), len(words), len(chars)]
 
+
+def output_lines_words_chars_count(file_path):
+    lines_words_chars_count = get_lines_words_chars_count(file_path)
+    lines_count = lines_words_chars_count[0]
+    words_count = lines_words_chars_count[1]
+    chars_count = lines_words_chars_count[2]
+    print(lines_count, words_count, chars_count, args.paths[0])
+
 lines_words_chars_count = []
 if len(args.paths) == 1:
-    result = get_lines_words_chars_count(args.paths[0])
-    print(result[0], result[1], result[2], args.paths[0])
+    output_lines_words_chars_count(args.paths[0])
 else:
     for file_path in args.paths:
         result = get_lines_words_chars_count(file_path)
         lines_words_chars_count.append(result)
 
-print(lines_words_chars_count)
+#print(lines_words_chars_count)
