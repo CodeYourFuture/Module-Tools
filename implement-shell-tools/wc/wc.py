@@ -18,6 +18,8 @@ def extract_lines(content):
         lines = lines[:-1]
     return lines
 
+def extract_words(content):
+    return content.split(' ')
 
 def read_file_content(file_path):
     with open(file_path, 'r') as file:
@@ -30,6 +32,7 @@ def number_of_lines(lines):
 def output_lines_words_chars_number():
     content = read_file_content(args.path)
     lines = extract_lines(content)
-    print(len(lines), args.path)
+    words = extract_words(content)
+    print(len(lines), len(words), args.path)
 
 output_lines_words_chars_number()
