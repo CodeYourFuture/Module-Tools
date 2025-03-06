@@ -21,6 +21,9 @@ def extract_lines(content):
 def extract_words(content):
     return content.split(' ')
 
+def extract_chars(content):
+    return list(content)
+
 def read_file_content(file_path):
     with open(file_path, 'r') as file:
         return file.read()
@@ -33,6 +36,7 @@ def output_lines_words_chars_number():
     content = read_file_content(args.path)
     lines = extract_lines(content)
     words = extract_words(content)
-    print(len(lines), len(words), args.path)
+    chars = extract_chars(content)
+    print(len(lines), len(words), len(chars), args.path)
 
 output_lines_words_chars_number()
