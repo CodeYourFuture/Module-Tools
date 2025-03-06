@@ -73,12 +73,15 @@ def print_total_lines(lines_words_chars_count, total):
      else:
          print(total_lines, total_words, total_chars, total)
 
-lines_words_chars_count = []
-if len(args.paths) == 1:
-    print_selected_counts(args.paths[0])
-else:
-    for file_path in args.paths:
-        result = get_lines_words_chars_count(file_path)
-        lines_words_chars_count.append(result)
-        print_selected_counts(file_path)
-    print_total_lines(lines_words_chars_count, 'total')
+def print_file_statistics():
+    lines_words_chars_count = []
+    if len(args.paths) == 1:
+        print_selected_counts(args.paths[0])
+    else:
+        for file_path in args.paths:
+            result = get_lines_words_chars_count(file_path)
+            lines_words_chars_count.append(result)
+            print_selected_counts(file_path)
+        print_total_lines(lines_words_chars_count, 'total')
+
+print_file_statistics()
