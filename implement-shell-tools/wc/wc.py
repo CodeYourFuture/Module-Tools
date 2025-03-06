@@ -28,9 +28,6 @@ def read_file_content(file_path):
     with open(file_path, 'r') as file:
         return file.read()
 
-def number_of_lines(lines):
-    return len(lines)
-
 
 def output_lines_words_chars_number():
     content = read_file_content(args.path)
