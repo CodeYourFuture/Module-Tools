@@ -13,10 +13,8 @@ parser.add_argument("-a", "--hidden_files", action="store_true", help="list the 
 
 args = parser.parse_args()
 
-def does_not_start_with_do(filename):
-    return not filename.startswith('.')
 
-def read_dir():
+def list_directory_contents():
     is_file_per_line_option = args.one
     is_hidden_option = args.hidden_files
     dir = args.dir
@@ -27,11 +25,11 @@ def read_dir():
 
     for file in files:
         if is_hidden_option or not file.startswith('.'):
-            if is_file_per_line_option :
+            if is_file_per_line_option:
                 print(file)
             else:
                 print(file, end=' ')
-    if not is_file_per_line_option :
+    if not is_file_per_line_option:
         print()
 
-read_dir()
+list_directory_contents()
