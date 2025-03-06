@@ -14,8 +14,8 @@ print(args)
 
 def read_dir():
     dir = args.dir
-    contents = os.listdir(dir)
-    for content in contents:
-        print(content)
+    contents = ' '.join(os.listdir(dir))
+    print(contents)
+    
 
 read_dir()
