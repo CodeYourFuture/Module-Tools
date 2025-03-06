@@ -21,7 +21,7 @@ def list_directory_contents():
     files = os.listdir(dir)
 
     if is_hidden_option:
-        files.extend(['.', '..'])
+        files = ['.', '..'] + files
 
     for file in files:
         if is_hidden_option or not file.startswith('.'):
