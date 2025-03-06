@@ -6,10 +6,10 @@ parser = argparse.ArgumentParser(
 )
 
 parser.add_argument("-n", "--number", action="store_true", help="Number the output lines, starting at 1.")
+parser.add_argument("-b", "--number2", action="store_true", help="Number the output of non-empty lines, starting at 1.")
 parser.add_argument("paths", nargs='+', help="The files to search")
 
 args = parser.parse_args()
-number_lines = args.number
 
 def read_file_content(file_path):
     with open(file_path, 'r') as f:
@@ -21,10 +21,15 @@ def extract_content_lines(content):
         lines = lines[:-1]
     return lines
 
-def output_lines_with_numbers(number_lines, lines):
+def output_lines_with_numbers(lines):
     count = 0
+    number_lines = args.number
+    number_non_empty_lines = args.number2
     for line in lines:
         if number_lines:
+            count += 1
+            print(count, line)
+        elif(number_non_empty_lines) and line != '':
             count += 1
             print(count, line)
         else:
@@ -38,4 +43,4 @@ for path in args.paths:
     all_lines.extend(lines)
 
 # Output lines with or without numbering
-output_lines_with_numbers(number_lines, all_lines)
+output_lines_with_numbers(all_lines)
