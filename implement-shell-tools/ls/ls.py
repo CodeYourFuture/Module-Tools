@@ -10,12 +10,16 @@ parser.add_argument('dir', nargs='?', type=str, help="Path to the directory to l
 parser.add_argument("-1", "--one", action="store_true", help="list the directory files one per line")
 
 args = parser.parse_args()
-print(args)
 
 def read_dir():
+    one = args.one
     dir = args.dir
-    contents = ' '.join(os.listdir(dir))
-    print(contents)
+    contents = os.listdir(dir)
+    for content in contents:
+        if one:
+            print(content)
+    if not one:
+        print(' '.join(contents))
     
 
 read_dir()
