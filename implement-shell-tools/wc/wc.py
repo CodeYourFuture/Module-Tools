@@ -10,6 +10,7 @@ parser = argparse.ArgumentParser(
 parser.add_argument("paths", nargs='+', type=str, help="The path to process")
 parser.add_argument('-l', '--lines', action="store_true", help='Ouput number of lines')
 parser.add_argument('-w', '--words', action="store_true", help='Ouput number of words')
+parser.add_argument('-c', '--chars', action="store_true", help='Ouput number of characters')
 
 args = parser.parse_args()
 
@@ -43,6 +44,7 @@ def output_lines_words_chars_count(file_path):
     lines_words_chars_count = get_lines_words_chars_count(file_path)
     is_lines_option = args.lines
     is_words_option = args.words
+    is_chars_option = args.chars
 
     lines_count = lines_words_chars_count[0]
     words_count = lines_words_chars_count[1]
@@ -52,6 +54,8 @@ def output_lines_words_chars_count(file_path):
         print(lines_count, file_path)
     elif is_words_option:
         print(words_count, file_path)
+    elif is_chars_option:
+        print(chars_count, file_path)
     else:
         print(lines_count, words_count, chars_count, file_path)
 
