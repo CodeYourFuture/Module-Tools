@@ -11,15 +11,15 @@ parser.add_argument("path", help="The files to search")
 
 args = parser.parse_args()
 number_lines = args.number
-print(args)
-print(number_lines)
+# print(args)
+# print(number_lines)
 
 
 def read_and_print_file_content(file_path, number_lines):
     count = 0
     with open(file_path, 'r') as f:
         content = f.read()
-    lines = content.split('\n')
+    lines = extractContentLines(content)
     for line in lines:
         if number_lines:
             count+=1
@@ -30,7 +30,15 @@ def read_and_print_file_content(file_path, number_lines):
         
 
 
+
+def extractContentLines(content):
+    lines = content.split('\n')
+    if lines and lines[-1] == '':
+        lines = lines[:-1]
+    return lines
+
 read_and_print_file_content(args.path, number_lines)
+
 # contents = map(read_and_print_file_content, args.paths)
 
 # for content in contents:
