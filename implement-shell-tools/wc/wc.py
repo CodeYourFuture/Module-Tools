@@ -29,12 +29,20 @@ def read_file_content(file_path):
         return file.read()
 
 
-def output_lines_words_chars_number(file_path):
+def get_lines_words_chars_count(file_path):
     content = read_file_content(file_path)
     lines = extract_lines(content)
     words = extract_words(content)
     chars = extract_chars(content)
-    print(len(lines), len(words), len(chars), file_path)
+    return  [len(lines), len(words), len(chars)]
 
-for file_path in args.paths:
-    output_lines_words_chars_number(file_path)
+lines_words_chars_count = []
+if len(args.paths) == 1:
+    result = get_lines_words_chars_count(args.paths[0])
+    print(result[0], result[1], result[2], args.paths[0])
+else:
+    for file_path in args.paths:
+        result = get_lines_words_chars_count(file_path)
+        lines_words_chars_count.append(result)
+
+print(lines_words_chars_count)
