@@ -9,6 +9,8 @@ parser = argparse.ArgumentParser(
 parser.add_argument('dir', nargs='?', type=str, help="Path to the directory to list", default='.')
 parser.add_argument("-1", "--one", action="store_true", help="list the directory files one per line")
 
+parser.add_argument("-a", "--hidden_files", action="store_true", help="list the directory files one per line")
+
 args = parser.parse_args()
 
 def does_not_start_with_do(filename):
@@ -16,15 +18,20 @@ def does_not_start_with_do(filename):
 
 def read_dir():
     one = args.one
+    hidden_files = args.hidden_files
     dir = args.dir
     files = os.listdir(dir)
-    non_hidden_files_or_dirs = list(filter(does_not_start_with_do,files ))
-    print(non_hidden_files_or_dirs, 'filtered elements')
-    for content in files:
-        if one:
-            print(content)
+
+    if hidden_files:
+        files.extend(['.', '..'])
+
+    for file in files:
+        if hidden_files or not file.startswith('.'):
+            if one:
+                print(file)
+            else:
+                print(file, end=' ')
     if not one:
-        print(' '.join(files))
-    
+        print()
 
 read_dir()
