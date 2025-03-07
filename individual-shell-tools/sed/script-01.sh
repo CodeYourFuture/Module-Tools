@@ -7,7 +7,7 @@ set -euo pipefail
 # The first line of the output should be: "ThIs Is a sample fIle for experImentIng with sed.".
 
 
-sed "s/i/I/g" input.txt
+sed 's/i/I/g' input.txt
 
 # s - substiturion.
 # i - the letter to replace.
