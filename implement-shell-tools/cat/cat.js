@@ -11,8 +11,9 @@ program
   .parse(process.argv);
 
 let args = program.args;
-const nOption = program.opts().number;
-const bOption = program.opts().number2;
+//const nOption = program.opts().number;
+//const bOption = program.opts().number2;
+const { number: nOption, number2: bOption } = program.opts();
 let lineNumber = 1;
 let nonEmptyLineNumber = 1;
 
@@ -28,10 +29,13 @@ function printLinesWithOptions(lines) {
   });
 }
 
-async function readAndPrintFileContent(path) {
+async function readFileContent(path) {
   try {
     const content = await fs.readFile(path, { encoding: "utf-8" });
     const lines = content.split("\n");
+    if(lines[lines.length - 1] === "") {
+      lines.pop();
+    }
     printLinesWithOptions(lines);
   } catch (err) {
     console.error(`Error reading file ${path}: ${err.message}`);
@@ -39,5 +43,5 @@ async function readAndPrintFileContent(path) {
 }
 
 args.forEach((arg) => {
-  readAndPrintFileContent(arg);
+  readFileContent(arg);
 });
