@@ -7,6 +7,17 @@ import { program } from "commander";
 // Importing the 'chalk' module to add colors and styles to text in the console
 import chalk from "chalk";
 
+// Configure the CLI tool with name, description, arguments, and options
+// 'program' is from the Commander package and handles command-line arguments
+program
+    .name("ls command")
+    .description("Implementing ls command (-1, -a flags) functionality")
+    .argument("[path]", "Path to list", ".")
+    .option("-a", "List hidden files, directories")
+    .option("-1", "List one file, directory per line")
+    // Read and process command-line arguments, process.argv - an array containing the command-line arguments
+    .parse(process.argv);
+
 // Function to list contents of a directory. 
 async function listDirectoryFiles(directoryPath, showHiddenFiles = false, oneFilePerLine = false) {
     try {
@@ -53,16 +64,6 @@ async function listDirectoryFiles(directoryPath, showHiddenFiles = false, oneFil
         console.error(`Error reading directory: ${error.message}`);
     }
 }
-// Configure the CLI tool with name, description, arguments, and options
-// 'program' is from the Commander package and handles command-line arguments
-program
-    .name("ls command")
-    .description("Implementing ls command (-1, -a flags) functionality")
-    .argument("[path]", "Path to list", ".")
-    .option("-a", "List hidden files, directories")
-    .option("-1", "List one file, directory per line")
-    // Read and process command-line arguments, process.argv - an array containing the command-line arguments
-    .parse(process.argv);
 
 // Get user inputs from command-line options and arguments
 const directory = program.args[0] || ".";

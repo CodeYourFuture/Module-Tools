@@ -5,7 +5,7 @@ import * as glob from "glob";
 
 // Set up program
 program
-    .name("Cat command")
+    .name("cat command")
     .description("Implementing 'cat' command (-n, -b flags) functionality")
     .argument("<path...>", "Path")
     .option("-n", "Display line numbers")
