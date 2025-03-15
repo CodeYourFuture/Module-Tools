@@ -11,6 +11,7 @@ program
   .parse(process.argv);
 
 let args = program.args;
+//console.log(args)
 
 const nOption = program.opts().number;
 const bOption = program.opts().number2;
