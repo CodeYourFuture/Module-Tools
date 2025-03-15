@@ -10,7 +10,7 @@ parser.add_argument("-b", "--number2", action="store_true", help="Number the out
 parser.add_argument("paths", nargs='+', help="The files to search")
 
 args = parser.parse_args()
-
+#print(args.paths, '<====paths list')
 def read_file_content(file_path):
     with open(file_path, 'r') as f:
         return f.read()
