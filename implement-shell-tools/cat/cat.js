@@ -36,19 +36,11 @@ function extractLinesFromContent(content) {
 
 function printLinesWithOptions(lines) {
   lines.forEach((line) => {
-    if (displayLineNumber) {
-      console.log(`${lineNumber++} ${line}`);
-      return;
-    }
-
-    if (displayNonEmptyLineNumber) {
-      if (line !== "") {
-        console.log(`${lineNumber++} ${line}`);
-        return;
-      }
-    }
-
-    console.log(line);
+    displayLineNumber
+      ? console.log(`${lineNumber++} ${line}`)
+      : displayNonEmptyLineNumber && line !== ""
+      ? console.log(`${lineNumber++} ${line}`)
+      : console.log(line);
   });
 }
 // display file/s contents with line numbers.
