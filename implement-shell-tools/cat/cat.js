@@ -13,7 +13,7 @@ program
 const args = program.args;
 
 const displayLineNumber = program.opts().number;
-const bOption = program.opts().number2;
+const displayNonEmptyLineNumber = program.opts().number2;
 let lineNumber = 1;
 
 async function readAndPrintFileContent(path) {
@@ -41,7 +41,7 @@ function printLinesWithOptions(lines) {
       return;
     }
 
-    if (bOption) {
+    if (displayNonEmptyLineNumber) {
       if (line !== "") {
         console.log(`${lineNumber++} ${line}`);
         return;
