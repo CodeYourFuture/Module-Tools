@@ -34,21 +34,33 @@ async function countLinesWordsCharsInFile(path) {
 
   const numberOfLines = lines.length;
   const numberOfWords = words.length;
-  const numberOFChars = chars.length;
+  const numberOfChars = chars.length;
+
+  if (lineOption && charOption) {
+    return `${numberOfLines} ${numberOfChars} ${path}`;
+  }
+
+  if (lineOption && wordOption) {
+    return `${numberOfLines} ${numberOfWords} ${path}`;
+  }
+
+  if (wordOption && charOption) {
+    return `${numberOfWords} ${numberOfChars} ${path}`;
+  }
 
   if (lineOption) {
     return `${numberOfLines} ${path}`;
   }
 
   if (charOption) {
-    return `${numberOFChars} ${path}`;
+    return `${numberOfChars} ${path}`;
   }
 
   if (wordOption) {
     return `${numberOfWords} ${path}`;
   }
 
-  return `${numberOfLines} ${numberOfWords} ${numberOFChars} ${path}`;
+  return `${numberOfLines} ${numberOfWords} ${numberOfChars} ${path}`;
 }
 
 async function processFilesAndDisplayCounts() {
@@ -57,18 +69,21 @@ async function processFilesAndDisplayCounts() {
 
   const aggregatedFilesData = aggregateFileData(fileCounts);
 
-  if (aggregatedFilesData !== 0 && lineOption) {
+  if (aggregatedFilesData !== 0 && lineOption && !(wordOption || charOption)) {
     console.log(`${aggregatedFilesData[0]} total`);
     return;
   }
 
-  if (aggregatedFilesData !== 0 && wordOption) {
+  if (aggregatedFilesData !== 0 && charOption && !(wordOption || lineOption)) {
     console.log(`${aggregatedFilesData[0]} total`);
     return;
   }
 
-  if (aggregatedFilesData !== 0 && charOption) {
-    console.log(`${aggregatedFilesData[0]} total`);
+  if (
+    aggregatedFilesData !== 0 &&
+    ((lineOption && charOption) || (lineOption && wordOption))
+  ) {
+    console.log(`${aggregatedFilesData[0]} ${aggregatedFilesData[1]} total`);
     return;
   }
 
@@ -96,7 +111,7 @@ function aggregateFileData(fileCounts) {
       ? digits[0].map((_, colIndex) =>
           digits.reduce((sum, row) => sum + row[colIndex], 0)
         )
-      : 0;
+      : digits[0];
   return sums;
 }
 
