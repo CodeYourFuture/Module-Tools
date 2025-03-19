@@ -21,19 +21,16 @@ let currentDirName = process.cwd()
 async function listDirectory(currentDirName) {
     try {
         const files = await fs.readdir(currentDirName)
-        let output = ''
+        let output = []
         files.forEach(file => {
             if (!options["all"] && file[0] === '.') {
                 return;
             } else {
-                if (options.onePerLine) {
-                    output += file + '\n';
-                } else {
-                    output += file.padEnd(20, ' ');
-                }
+                output.push(file);
             }
         })
-        console.log(options.onePerLine ? output.slice(0, -1) : output);
+        output.sort()
+        options.onePerLine ? output.forEach(file => {console.log(file)}) : console.log(output.join('  '))   
     } catch (err) {
         if (err.code === 'ENOENT') {
             console.error(`Error: The directory "${currentDirName}" does not exist.`);
@@ -49,10 +46,17 @@ if (arg[0]) {
     for (const dirName of arg) {
         try {
             const dirPath = path.join(currentDirName, dirName)
+            console.log(dirName + ':')
             await listDirectory(dirPath)
         } catch (err) {
             console.log('Path should be a string.')
         }
+    }
+}else{
+    try {
+        await listDirectory(currentDirName)
+    } catch (err) {
+        console.log('Path should be a string.')
     }
 }
 
