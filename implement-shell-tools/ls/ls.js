@@ -27,19 +27,21 @@ const includeHiddenFiles = program.opts().hidden;
 async function listDirectoryContents(filePath) {
   try {
     const files = await fs.readdir(filePath, { withFileTypes: true }); // is returned as a Dirent
-    const filteredFiles = files
-      .filter((file) => includeHiddenFiles || !file.name.startsWith("."))
-      .map((file) => file.name);
+    const output = [];
+
+    files.forEach((file) => {
+      if (includeHiddenFiles || !file.name.startsWith(".")) {
+        output.push(file.name);
+      }
+    });
 
     if (includeHiddenFiles) {
-      filteredFiles.unshift(".", "..");
+      output.unshift(".", "..");
     }
-
-    if (outputOnePerLine) {
-      filteredFiles.forEach((file) => console.log(file));
-    } else {
-      console.log(filteredFiles.join(" "));
-    }
+    
+    outputOnePerLine === true
+      ? output.forEach((file) => console.log(file))
+      : console.log(output.join(" "));
   } catch (err) {
     console.error(`Error reading directory ${filePath}:`, err.message);
   }
