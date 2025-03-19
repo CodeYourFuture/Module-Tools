@@ -12,7 +12,7 @@ program
 
 const args = program.args;
 
-const nOption = program.opts().number;
+const displayLineNumber = program.opts().number;
 const bOption = program.opts().number2;
 let lineNumber = 1;
 
@@ -36,7 +36,7 @@ function extractLinesFromContent(content) {
 
 function printLinesWithOptions(lines) {
   lines.forEach((line) => {
-    if (nOption) {
+    if (displayLineNumber) {
       console.log(`${lineNumber++} ${line}`);
       return;
     }
