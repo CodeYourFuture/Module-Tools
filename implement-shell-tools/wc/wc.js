@@ -13,10 +13,6 @@ program
 
 const args = program.args;
 
-function removeEndEmptyLine(arr) {
-  return arr[arr.length - 1] === "" ? arr.slice(0, -1) : arr;
-}
-
 const lineOption = program.opts().line;
 const charOption = program.opts().char;
 const wordOption = program.opts().word;
@@ -24,7 +20,8 @@ const wordOption = program.opts().word;
 async function countLinesWordsCharsInFile(path) {
   const content = await fs.readFile(path, { encoding: "utf-8" });
 
-  const lines = removeEndEmptyLine(content.split("\n"));
+  const lines = content.split("\n")
+  lines[lines.length - 1] === "" ? lines.pop() : lines;
 
   const words = lines.flatMap((element) =>
     element.split(" ").filter((word) => word !== "")
