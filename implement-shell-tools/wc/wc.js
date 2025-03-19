@@ -76,9 +76,15 @@ async function processFilesAndDisplayCounts() {
     return;
   }
 
+  if (aggregatedFilesData !== 0 && wordOption && !(lineOption || charOption)) {
+    console.log(`${aggregatedFilesData[0]} total`);
+    return;
+  }
+
+
   if (
     aggregatedFilesData !== 0 &&
-    ((lineOption && charOption) || (lineOption && wordOption))
+    ((lineOption && charOption) || (lineOption && wordOption) || (wordOption && charOption))
   ) {
     console.log(`${aggregatedFilesData[0]} ${aggregatedFilesData[1]} total`);
     return;
