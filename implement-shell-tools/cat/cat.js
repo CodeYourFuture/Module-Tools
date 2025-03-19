@@ -44,4 +44,4 @@ function printLinesWithOptions(lines) {
   });
 }
 // display file/s contents with line numbers.
-await Promise.all(args.map(readAndPrintFileContent));
+args.map(readAndPrintFileContent)
