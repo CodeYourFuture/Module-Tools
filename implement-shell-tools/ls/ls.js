@@ -21,21 +21,21 @@ program
 
 const filePaths = program.args.length ? program.args : ["."];
 
-const one = program.opts().one;
-const hidden = program.opts().hidden;
+const outputOnePerLine = program.opts().one;
+const includeHiddenFiles = program.opts().hidden;
 
 async function listDirectoryContents(filePath) {
   try {
     const files = await fs.readdir(filePath, { withFileTypes: true }); // is returned as a Dirent
     const filteredFiles = files
-      .filter((file) => hidden || !file.name.startsWith("."))
+      .filter((file) => includeHiddenFiles || !file.name.startsWith("."))
       .map((file) => file.name);
 
-    if (hidden) {
+    if (includeHiddenFiles) {
       filteredFiles.unshift(".", "..");
     }
 
-    if (one) {
+    if (outputOnePerLine) {
       filteredFiles.forEach((file) => console.log(file));
     } else {
       console.log(filteredFiles.join(" "));
