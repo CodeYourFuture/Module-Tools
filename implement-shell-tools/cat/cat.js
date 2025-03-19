@@ -19,19 +19,12 @@ let lineNumber = 1;
 async function readAndPrintFileContent(path) {
   try {
     const content = await fs.readFile(path, { encoding: "utf-8" });
-    const lines = extractLinesFromContent(content);
+    const lines = content.split("\n");
+    lines[lines.length - 1] === "" ? lines.pop() : lines;
     printLinesWithOptions(lines);
   } catch (err) {
     console.error(err.message);
   }
-}
-
-function extractLinesFromContent(content) {
-  const lines = content.split("\n");
-  if (lines[lines.length - 1] === "") {
-    lines.pop(); // excludes last line if empty
-  }
-  return lines;
 }
 
 function printLinesWithOptions(lines) {
@@ -44,4 +37,4 @@ function printLinesWithOptions(lines) {
   });
 }
 // display file/s contents with line numbers.
-args.map(readAndPrintFileContent)
+args.map(readAndPrintFileContent);
