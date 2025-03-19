@@ -1,11 +1,3 @@
-/**
- * Reads the contents of the specified directories and outputs the file names.
- * Supports options for displaying hidden files and listing each file on a new line.
- *
- * @param {string[]} filePaths - The paths to be processed. Defaults to the current directory if no argument is provided.
- * @param {boolean} one - If true, outputs each file and directory on a new line.
- * @param {boolean} hidden - If true, includes hidden files and directories in the output.
- */
 import process from "node:process";
 import { promises as fs } from "node:fs";
 import { program } from "commander";
@@ -17,6 +9,15 @@ program
   .option("-a, --hidden", "Output hidden files/directories")
   .argument("[paths...]", "the paths to be processed")
   .parse(process.argv);
+
+/**
+ * Reads the contents of the specified directories and outputs the file names.
+ * Supports options for displaying hidden files and listing each file on a new line.
+ *
+ * @param {string[]} filePaths - The paths to be processed. Defaults to the current directory if no argument is provided.
+ * @param {boolean} one - If true, outputs each file and directory on a new line.
+ * @param {boolean} hidden - If true, includes hidden files and directories in the output.
+ */
 
 const filePaths = program.args.length ? program.args : ["."];
 
