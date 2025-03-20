@@ -13,7 +13,6 @@ program
 program.parse();
 const options = program.opts()
 const argvs = program.args;
-let number = 1
 
 if (options.n && options.b ){
     console.error(`Expected -n or -b option to be passed but got both.`);
@@ -23,11 +22,14 @@ if (options.n && options.b ){
 for (const path of argvs) {
     try {
         let content = await fs.readFile(path, "utf-8");
+        const lines = content.split('\n')
+        lines.pop()
+        let number = 1
         if(content && content.trim()){
             if (options.s){
                 content = content.replace(/\n{2,}/g, '\n');
             }
-            for (const line of content.split('\n')){
+            for (const line of lines){
                 if (options.n) {
                     console.log(number + ' ' + line)
                     number += 1
