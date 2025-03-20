@@ -83,34 +83,40 @@ async function fileContentInfo(filePath, file){
     }
 }
 
-async function handleArgs(){
-    for (const argument of arg ){
-        try{
-            const filePath = path.join(currentDirName, argument);
-            fs.stat(filePath, (err, stats) => { 
-                if (err) {if (err.code === 'ENOENT') {
-                    console.error(`wc: ${argument}: read: No such file or directory`);
+async function main() {
+    const promises = arg.map(argument => {
+        const filePath = path.join(currentDirName, argument);
+        return new Promise((resolve, reject) => {
+            fs.stat(filePath, (err, stats) => {
+                if (err) {
+                    if (err.code === 'ENOENT') {
+                        console.error(`wc: ${argument}: read: No such file or directory`);
+                    } else {
+                        console.error(`wc: ${argument}: read: Error: ${err.message}`);
+                    }
+                    resolve(); 
+                } else if (stats.isFile()) {
+                    fileContentInfo(filePath, argument).then(resolve);
+                } else if (stats.isDirectory()) {
+                    console.log(`wc: ${argument}: read: Is a directory`);
+                    resolve();
                 } else {
-                    console.error(`wc: ${argument}: read: Error: ${err.message}`);
+                    console.error(`wc: ${argument}: read: Unknown file type`);
+                    resolve();
                 }
-                return;}; 
-                if (stats.isFile()){
-                    fileContentInfo(filePath, argument);
-                }else if (stats.isDirectory()){
-                    console.log('wc: ', argument, ': ', 'read: ', 'Is a directory')
-                }
-            }); 
-        }catch(err){
-            console.log(err);
-        }
-    }
-}
-
-async function main(){
-    await handleArgs();
-    setTimeout( ()=>{if (Object.keys(options).length == 0){
+            });
+        });
+    });
+    await Promise.all(promises);
+    if (Object.keys(options).length == 0){
         console.log(totalLines, totalWords, totalBytes, 'total')
-    }}, 1500)
+    }else{
+        let totalOutput = ''
+        options.lines ? totalOutput += totalLines + ' ' : null;
+        options.words ? totalOutput += totalWords  + ' ': null;
+        options.bytes ? totalOutput += totalBytes  + ' ' : null;
+        console.log(totalOutput + 'total')
+    }
 }
 
 main();
