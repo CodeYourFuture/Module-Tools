@@ -38,7 +38,7 @@ async function listDirectoryContents(filePath) {
     if (includeHiddenFiles) {
       output.unshift(".", "..");
     }
-    
+
     outputOnePerLine === true
       ? output.forEach((file) => console.log(file))
       : console.log(output.join(" "));
@@ -47,4 +47,5 @@ async function listDirectoryContents(filePath) {
   }
 }
 
-filePaths.map(listDirectoryContents);
+//filePaths.map(listDirectoryContents);fi
+filePaths.forEach(listDirectoryContents);
