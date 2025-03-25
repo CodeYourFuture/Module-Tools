@@ -1,19 +1,35 @@
-//A simple script that reads a file and prints its content.(no flags yet)
-const fs = require("fs");
+import fs from "fs/promises"; // Import fs.promises for async file reading
+import { Command } from "commander";
 
-const args = process.argv;
-const files = args.slice(2); // No flags yet, just file names
+const program = new Command();
 
-console.log("args",args);
-console.log("files",files);
+program
+  .command("readfiles <files...>") // Accepts multiple file arguments
+  .description("read text files")
+  .option("-n, --number", "show line number")
+  .option("-b, --non-blank", "number 'only' the non-blank lines")
+  .action(async (files, options) => {
+    let lineCounter = 1; // Continuous line number for `-n`
+    let nonBlankCounter = 1; // Non-blank line number for `-b`
 
-function readCatFile(filePath) {
-    try {
-        const content = fs.readFileSync(filePath, "utf8");
-        console.log(content);
-    } catch (err){
-        console.error(`error reading ${filePath}: ${err.message}`)
+    for (const file of files) {
+      try {
+        // Read file content using promises (async/await)
+        const data = await fs.readFile(file, "utf8");
+        let lines = data.split("\n");
+
+        if (options.number) {
+          lines = lines.map((line) => `${lineCounter++} ${line}`);
+        } else if (options.nonBlank) {
+          lines = lines.map((line) =>
+            line.trim() === "" ? line : `${nonBlankCounter++} ${line}`
+          );
+        }
+        console.log(lines.join("\n"));
+      } catch (err) {
+        console.error(err);
+      }
     }
-}
+  });
 
-files.forEach(file => readCatFile(file))
+program.parse();
