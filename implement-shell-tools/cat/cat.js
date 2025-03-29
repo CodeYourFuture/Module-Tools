@@ -24,18 +24,18 @@ for (const path of argvs) {
     let content = await fs.readFile(path, "utf-8");
     const lines = content.split("\n");
     lines.pop();
-    let number = 1;
+    let lineNumber = 1;
     if (content && content.trim()) {
       if (options.s) {
         content = content.replace(/\n{2,}/g, "\n");
       }
       for (const line of lines) {
         if (options.n) {
-          console.log(number + " " + line);
-          number += 1;
+          console.log(lineNumber + " " + line);
+          lineNumber += 1;
         } else if (line.trim() && options.b) {
-          console.log(number + " " + line);
-          number += 1;
+          console.log(lineNumber + " " + line);
+          lineNumber += 1;
         } else {
           console.log(line);
         }
