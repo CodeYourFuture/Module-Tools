@@ -1,7 +1,7 @@
 
-const { promises: fs } = require("fs");
-const process = require("process");
-const { program } = require("commander");
+const { promises: fs } = require("fs");// it reads the files 
+const process = require("process");// gets large files information 
+const { program } = require("commander");// it puts out in chunks or parses information 
 
 program
   .name("cat")
