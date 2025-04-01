@@ -7,4 +7,4 @@ set -euo pipefail
 #
 # TODO: Write a command to output the contents of text.txt with every exclamation mark (!) replaced with a full-stop (.).
 
-cat text.txt | tr '!' '.'
+tr '!' '.' < text.txt
