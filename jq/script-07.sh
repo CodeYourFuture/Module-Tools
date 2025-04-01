@@ -7,4 +7,4 @@ set -euo pipefail
 # Your output should contain 6 lines, each with one word and one number on it.
 # The first line should be "Ahmed 4" with no quotes.
 
-jq -r '.[] | .scores[-1] as $scores | "\(.name) \($scores)" ' scores.json
+jq -r '.[] | .scores[-1] as $lastScore | "\(.name) \($lastScore)" ' scores.json
