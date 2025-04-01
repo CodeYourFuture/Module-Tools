@@ -7,3 +7,9 @@ set -euo pipefail
 # so every Y should be a Z, and every Z should be a Y!
 #
 # TODO: Write a command to output the contents of text.txt with every Y and Z swapped (both upper and lower case).
+
+echo "first solution with shell pipline:"
+cat text.txt | tr 'YyZz' 'ZzYy' 
+
+echo "second solution using input redirection with tr"
+tr 'yYzZ' 'zZyY' < text.txt
