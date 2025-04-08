@@ -20,13 +20,9 @@ async function countDisplayNumBytesWordsLines(filePath, numLines = false, numWor
         let content = await fs.readFile(filePath, "utf-8");
         // Split content into array by lines
         let arrayLines = content.split("\n");
-        // If the last line is empty - remove it
-        while (arrayLines.length > 0 && arrayLines[arrayLines.length - 1].trim() === "") {
-            arrayLines.pop();
-        }
-
+        
         // Get the number of lines 
-        const countNumLines = arrayLines.length;
+        const countNumLines = arrayLines.filter(line => line.trim() !== "").length;
         // Get the number of words using split by any whitespace (spaces, newlines, tabs), filter to remove empty strings
         const countNumWords = content.split(/\s+/).filter(word => word !== "").length;
         // Get the number of bytes (file size in bytes)
