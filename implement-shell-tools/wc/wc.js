@@ -8,9 +8,6 @@ program
     .name("wc command")
     .description("Implementing 'wc' command (-c, -w, -l flags) functionality")
     .argument("<path...>", "Path")
-    .option("-c", "Display the number of bytes (characters)")
-    .option("-w", "Display the number of words")
-    .option("-l", "Display the number of lines")
     .parse(process.argv);
 
 // Function to count bytes, words and lines in a file
