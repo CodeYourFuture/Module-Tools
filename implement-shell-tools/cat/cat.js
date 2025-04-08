@@ -1,5 +1,7 @@
-import { promises as fs } from "fs";
+import * as fs from "fs";
 import { program } from "commander";
+// For reading file line by line
+import * as readline from "readline";
 // For handling "*.txt"
 import * as glob from "glob";
 
@@ -15,29 +17,29 @@ program
 // Function to print file contents with the flags
 async function displayFileContents(filePath, displayLineNumbers = false, displayNonEmptyLineNumbers = false) {
     try {
-        // Read the file content
-        let content = await fs.readFile(filePath, "utf-8");
-        // Split content into array based on new lines
-        let arrayContentLines = content.split("\n");
-        // If last line is emty, remove it
-        while (arrayContentLines.length > 0 && arrayContentLines[arrayContentLines.length - 1].trim() === "") {
-            arrayContentLines.pop();
-        }       
+        // Create a readline interface to read file line by line
+        const fileStream = fs.createReadStream(filePath, { encoding: 'utf-8' });
+        const rl = readline.createInterface({
+            input: fileStream,
+            crlfDelay: Infinity
+        });    
+        
+        // Initialise the line number
+        let lineNumber = 1;
 
-        // Map through all lines and apply different conditions depend on chosen flag.
-        arrayContentLines = arrayContentLines.map(line => {
+        // Process each line
+        for await (const line of rl) {
             if (displayNonEmptyLineNumbers) {
                 if (line.trim()) {
                     console.log(`     ${lineNumber++}  ${line}`);
-                } return "";
+                }
             } else if (displayLineNumbers) {
                 console.log(`     ${lineNumber++}  ${line}`);
-            } else{
+            } else {
                 console.log(line);
-            }            
-        });        
-    }
-    catch (error) {
+            }
+        }       
+    } catch (error) {
         console.error(`Error reading directory: ${error.message}`);
     }
 }
@@ -46,9 +48,6 @@ async function displayFileContents(filePath, displayLineNumbers = false, display
 const filePaths = program.args;
 const displayLineNumbers = program.opts().n;
 const displayNonEmptyLineNumbers = program.opts().b;
-
-// Declare and assign line number for printing line with numbers
-let lineNumber = 1;
 
 const arrayFilePaths = [];
 
