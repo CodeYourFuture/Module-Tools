@@ -28,16 +28,14 @@ async function displayFileContents(filePath, displayLineNumbers = false, display
         arrayContentLines = arrayContentLines.map(line => {
             if (displayNonEmptyLineNumbers) {
                 if (line.trim()) {
-                    return `     ${lineNumber++}  ${line}`
+                    console.log(`     ${lineNumber++}  ${line}`);
                 } return "";
-            }
-            if (displayLineNumbers) {
-                return `     ${lineNumber++}  ${line}`;
-            }
-            return line;
-        });
-        // join lines back to the string and print them
-        console.log(arrayContentLines.join("\n"));
+            } else if (displayLineNumbers) {
+                console.log(`     ${lineNumber++}  ${line}`);
+            } else{
+                console.log(line);
+            }            
+        });        
     }
     catch (error) {
         console.error(`Error reading directory: ${error.message}`);
