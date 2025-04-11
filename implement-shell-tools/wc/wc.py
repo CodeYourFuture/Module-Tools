@@ -67,7 +67,7 @@ if not matched_files:
     # exit(1) - stop the program with 1 code that indicates the error. exit(0) - indicates the program ran successfully
     exit(1)
 
-# For in loop to process each file using 
+# For in loop to process each file using for in loop
 for filepath in matched_files:
     # Get counts for the current file
     lines, words, byte_size = wc_counts(filepath)
