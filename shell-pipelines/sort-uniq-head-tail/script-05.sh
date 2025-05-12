@@ -7,4 +7,4 @@ set -euo pipefail
 # The order they're displayed doesn't matter, but we never want to see the same event listed twice.
 # Your output should contain 6 lines.
 sort -u ./events.txt   #with -u option
-sort ./events.txt | uniq  #with pipe output of sort to the input of uniq
+#sort ./events.txt | uniq  #with pipe output of sort to the input of uniq
