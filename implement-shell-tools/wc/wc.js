@@ -21,7 +21,7 @@ async function countFileStats(filePath, options) {
   try {
     const data = await fs.readFile(filePath, 'utf8');
     
-    const lines = data.split('\n').length;
+    const lines = (data.match(/\n/g) || []).length;
     const words = data.split(/\s+/).filter(Boolean).length;
     const characters = data.length;
     
@@ -58,8 +58,8 @@ async function processFiles() {
 
   if (files.length > 1) {
     const totals = [];
-    if (options.lines !== false) totals.push(totalLines);
-    if (options.words !== false) totals.push(totalWords);
+    if (options.lines) totals.push(totalLines);
+    if (options.words) totals.push(totalWords);
     if (options.characters !== false) totals.push(totalCharacters);
 
     if (totals.length > 0) {
