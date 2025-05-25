@@ -11,8 +11,7 @@ program
   .parse(process.argv);
 
 let args = program.args;
-//const nOption = program.opts().number;
-//const bOption = program.opts().number2;
+
 const { number: nOption, number2: bOption } = program.opts();
 let lineNumber = 1;
 let nonEmptyLineNumber = 1;
