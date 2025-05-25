@@ -49,7 +49,7 @@ async function processFiles() {
     const result = await countFileStats(filePath, options);
 
     if (result) {
-      console.log(result.output, result.file);
+      console.log(result.output, file);
       totalLines += result.lines;
       totalWords += result.words;
       totalCharacters += result.characters;
