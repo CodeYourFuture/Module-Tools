@@ -18,9 +18,9 @@ let nonEmptyLineNumber = 1;
 function printLinesWithOptions(lines) {
   lines.forEach(line => {
     if (nOption) {
-      console.log(`${lineNumber++} ${line}`);
+      console.log(`${String(lineNumber++).padStart(6)}  ${line}`);
     } else if (bOption && line.trim()) {
-      console.log(`${nonEmptyLineNumber++} ${line}`);
+      console.log(`${String(nonEmptyLineNumber++).padStart(6)}  ${line}`);
     } else {
       console.log(line);
     }
