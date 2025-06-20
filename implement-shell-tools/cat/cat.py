@@ -31,23 +31,23 @@ def display_file_contents(file_path, display_line_numbers = False, display_not_e
            # loopp through each line
             for line in file_object:               
                 # rstrip("\n") - removes any trailing newline character (\n) from the end of each line
-                line_to_print = line.rstrip("\n")
+                line_to_print = line
                 # if a user set "-b" flag
                 if display_not_empty_line_numbers:
                     # Print if there is not empty line after removing any whitespace from the start and end of the line
                     if line.strip():
                         # {line_number:6} - string formatting
-                        print(f"{line_number:6}  {line_to_print}")
+                        print(f"{line_number:6}  {line_to_print}", end="")
                         # Increments the line number after printing the line.
                         line_number += 1
                     else:
                         print(line_to_print)
                 elif display_line_numbers:
                     # f - f-string, formatted string literal
-                    print(f"{line_number:6}  {line_to_print}")
+                    print(f"{line_number:6}  {line_to_print}", end="")
                     line_number += 1
                 else:
-                    print(line_to_print)
+                    print(line_to_print, end="")
      # Handle errors   
     
     # Exception - is the base class for all built-in exceptions
