@@ -13,7 +13,7 @@ init()
 # Setup argument parser. Creates an instance(object) from built-in ArgumentParser class
 parser = argparse.ArgumentParser(prog="ls command",
     description="Implement 'ls' command with -1 and -a flags",
-    epilog="Now you can see the files in chossen path"
+    epilog="Now you can see the files in the chosen path"
 )
 # Define flags and arguments
 # Define dest="one_per_line" for "-1", because -1 is not valid Python variable
