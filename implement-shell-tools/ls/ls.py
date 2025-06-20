@@ -10,21 +10,6 @@ from colorama import Fore, Style, init
 # Sets up colorama for blue colour for directories
 init()
 
-# Setup argument parser. Creates an instance(object) from built-in ArgumentParser class
-parser = argparse.ArgumentParser(prog="ls command",
-    description="Implement 'ls' command with -1 and -a flags",
-    epilog="Now you can see the files in the chosen path"
-)
-# Define flags and arguments
-# Define dest="one_per_line" for "-1", because -1 is not valid Python variable
-parser.add_argument("-1", dest="one_per_line", action="store_true", help = "Display each file on a new line")
-parser.add_argument("-a", action="store_true", help = "Display all filles included hidden files")
-# Positional argument. Defaults to . (current directory) if not provided. nargs="?" - optional, takes 0 or 1 value
-parser.add_argument("path", nargs="?", default = ".", help = "Specify file path to the list")
-
-# Parse the command-line arguments. args - an instance of the class argparse.Namespace
-args = parser.parse_args()
-
 # Function to list directories, files
 def list_directory_files(file_path, display_hidden_files = False, display_one_per_line = False):
     try:
@@ -77,6 +62,21 @@ def list_directory_files(file_path, display_hidden_files = False, display_one_pe
     # error - an exception object
     except Exception as error:
         print(f"Error reading directory: {error}")
+
+# Setup argument parser. Creates an instance(object) from built-in ArgumentParser class
+parser = argparse.ArgumentParser(prog="ls command",
+    description="Implement 'ls' command with -1 and -a flags",
+    epilog="Now you can see the files in the chosen path"
+)
+# Define flags and arguments
+# Define dest="one_per_line" for "-1", because -1 is not valid Python variable
+parser.add_argument("-1", dest="one_per_line", action="store_true", help = "Display each file on a new line")
+parser.add_argument("-a", action="store_true", help = "Display all filles including hidden files")
+# Positional argument. Defaults to . (current directory) if not provided. nargs="?" - optional, takes 0 or 1 value
+parser.add_argument("path", nargs="?", default = ".", help = "Specify file path to the list")
+
+# Parse the command-line arguments. args - an instance of the class argparse.Namespace
+args = parser.parse_args()
 
 # Get absolute path
 absolute_path = Path(args.path).resolve()
