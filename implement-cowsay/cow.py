@@ -1,3 +1,7 @@
+# This program lets you choose an animal (like a cow, dragon, etc.) to "say" a message using ASCII art.
+# It uses command-line arguments to get the animal type and the message.
+# The message is combined into a single string, and the correct cowsay function is called to display it.
+
 import argparse
 import cowsay
 
