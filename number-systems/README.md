@@ -8,7 +8,7 @@ Convert the decimal number 14 to binary.
 Answer: 1110
 
 Convert the binary number 101101 to decimal:
-Answer: 101101
+Answer: 45
 
 Which is larger: 1000 or 0111?
 Answer: 1000(8 in decimal) > 0111(7 in decimal)
@@ -26,7 +26,9 @@ What's the largest number you can store with 4 bits, if you want to be able to r
 Answer: 15
 
 How many bits would you need in order to store the numbers between 0 and 255 inclusive?
-Answer: 8 bits
+Answer: 8 bits 
+        with n bits, 2^n different values can be represented.
+        To store numbers from 0 to 255 inclusive, you need to represent 256 different values. Since 2^8 = 256, 8 bits are required to represent all numbers in that range.
 
 How many bits would you need in order to store the numbers between 0 and 3 inclusive?
 Answer: 2 bits
@@ -36,6 +38,7 @@ Answer:10 bits
 
 How can you test if a binary number is a power of two (e.g. 1, 2, 4, 8, 16, ...)?
 Answer: if n & (n - 1) == 0 and n > 0
+        A power of two in binary has only one '1' in it (like 1 = 0001, 2 = 0010, 4 = 0100). If we subtract 1 from it, all the bits after that '1' change. So when we do n & (n - 1), it becomes 0 only if there was just one '1' to begin with.
 
 Convert the decimal number 14 to hex.
 Answer: E
@@ -59,7 +62,7 @@ If reading the byte 0x21 as a greyscale colour, as described in "Approaches for 
 Answer: Dark shade of gray
 
 If reading the bytes 0xAA00FF as an RGB colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
-Answer: RGB(177, 0, 255) - Bright purple
+Answer: RGB(170, 0, 255) - Bright purple
 
 If reading the bytes 0xAA00FF as a sequence of three one-byte decimal numbers, what decimal numbers would they be?
-Answer:177, 0, 255
+Answer:170, 0, 255
