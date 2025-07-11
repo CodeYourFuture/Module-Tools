@@ -10,4 +10,5 @@ set -euo pipefail
 #   count=$(grep -c "Doctor" "$f" || true)
 #   echo "$f contains $count lines"
 # done
+# grep -c "Doctor" *.txt | sed 's/:/ contains /; s/$/ lines/'
 
