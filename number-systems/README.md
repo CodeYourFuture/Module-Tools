@@ -59,7 +59,7 @@ If reading the byte 0x21 as a greyscale colour, as described in "Approaches for 
 Answer:Dark shade of gray
 
 If reading the bytes 0xAA00FF as an RGB colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
-Answer:(RGB 170, 0, 255) high red, no green, maximum blue.
+Answer:(RGB 170, 0, 255) high red, no green, maximum blue
 
 If reading the bytes 0xAA00FF as a sequence of three one-byte decimal numbers, what decimal numbers would they be?
 Answer:170, 0, 255
