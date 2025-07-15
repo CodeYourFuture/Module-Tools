@@ -4,3 +4,5 @@ set -euo pipefail
 
 # TODO: Write a command to output every line in dialogue.txt said by the Doctor.
 # The output should contain 6 lines.
+path="/Users/cyf/Documents/SDC/Module-Tools/individual-shell-tools/grep/dialogue.txt"
+grep '^Doctor:' "$path"
