@@ -13,3 +13,4 @@ set -euo pipefail
 # 3 It looked delicious.
 # 4 I was tempted to take a bite of it.
 # 5 But this seemed like a bad idea...
+cat -n ../helper-files/helper-1.txt ../helper-files/helper-2.txt ../helper-files/helper-3.txt
