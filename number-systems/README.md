@@ -80,25 +80,51 @@ Convert the decimal number 14 to hex.
 Answer: E
 
 Convert the decimal number 386 to hex.
-Answer:
+Answer: 386 / 16 = 24 R 2
+        24 / 16 = 1 R 8
+        1 / 16 = 0 R 1
+        = 0x182
 
 Convert the hex number 386 to decimal.
 Answer:
+Going from right to left
+16^0 x 6 = 1 x 6 = 6
+16^1 x 8 = 16 x 8 = 128
+16^2 x 3 = 256 x 3 = 768
+  768 + 128 + 6 = 902
 
 Convert the hex number B to decimal.
-Answer:
+Answer: 11
 
 If reading the byte 0x21 as a number, what decimal number would it mean?
-Answer:
+Answer: 
+16^0 x 1 = 1 x 1 = 1
+16^1 x 2 = 16 x 2 = 32
+   32 + 1 = 33
 
 If reading the byte 0x21 as an ASCII character, what character would it mean?
-Answer:
+Answer: !
 
 If reading the byte 0x21 as a greyscale colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
-Answer:
+Answer: 0x21 = 33
+        The value of 33 out of 255 will be dark grey
 
 If reading the bytes 0xAA00FF as an RGB colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
-Answer:
+Answer: There's more blue, less red and no green = Bluish-purple
 
 If reading the bytes 0xAA00FF as a sequence of three one-byte decimal numbers, what decimal numbers would they be?
-Answer:
+Answer: 170, 0, 255
+0xAA
+A = 10
+16^0 x 10 = 1 x 10 = 10
+16^1 x 10 = 16 x 10 = 160
+  160 + 10 = 170
+
+0x00
+= 0
+
+0xFF
+F = 15
+16^0 x 15 = 1 x 15 = 15
+16^1 x 15 = 16 x 15 = 240
+   240 + 15 = 255
