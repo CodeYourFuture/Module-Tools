@@ -7,3 +7,4 @@ set -euo pipefail
 # The order they're displayed doesn't matter, but we never want to see the same event listed twice.
 # Your output should contain 6 lines.
 sort -u events.txt
+.
