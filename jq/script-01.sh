@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -euo pipefail
+jq -r '.name' person.json
 
 # The input for this script is the person.json file.
 # TODO: Write a command to output the name of the person.
