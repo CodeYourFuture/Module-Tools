@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -euo pipefail
+awk '{print $3}' events-with-timestamps.txt | sort | grep -E 'Entry|Exit' | uniq -c
 
 # The input for this script is the events-with-timestamps.txt file.
 # TODO: Write a command to show how many times anyone has entered and exited.

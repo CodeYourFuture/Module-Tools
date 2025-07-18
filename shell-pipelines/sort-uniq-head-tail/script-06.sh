@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -euo pipefail
+awk '{print $1}' events.txt | sort | uniq -c |  awk '{print "There have been", $1 , $2, "events."}'
 
 # The input for this script is the events.txt file.
 # TODO: Write a command to show how many times anyone has entered and exited.

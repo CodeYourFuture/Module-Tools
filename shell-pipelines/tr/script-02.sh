@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -euo pipefail
-
+cat text.txt | tr 'zy' 'yz'
 # The input for this script is the text.txt file, which contains an email.
 # Unfortunately, the author wrote it using a German keyboard which has the Y and Z keys swapped,
 # so every Y should be a Z, and every Z should be a Y!
