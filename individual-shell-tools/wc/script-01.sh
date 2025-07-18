@@ -4,3 +4,5 @@ set -euo pipefail
 
 # TODO: Write a command to output the number of words in the file helper-files/helper-3.txt.
 # The output should include the number 19. The output should not include the number 92.
+path="/Users/cyf/Documents/SDC/Module-Tools/individual-shell-tools/helper-files/helper-3.txt"
+wc -w "$path"
