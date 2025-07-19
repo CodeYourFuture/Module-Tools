@@ -7,3 +7,7 @@ set -euo pipefail
 # so every Y should be a Z, and every Z should be a Y!
 #
 # TODO: Write a command to output the contents of text.txt with every Y and Z swapped (both upper and lower case).
+
+#ANSWER
+tr 'yYzZ' 'zZyY' < text.txt
+#eg replace y by z , Y by Z ... and do this char by char basis. then put down the updated version on the file.
