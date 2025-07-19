@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -euo pipefail
+sed -E 's/^([0-9]+) (.*)$/\2 \1/' input.txt
 
 # TODO: Write a command to output input.txt with one change:
 # If a line starts with a number and a space, make the line instead end with a space and the number.

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -euo pipefail
-
+awk '{sum = $3+$4+$5; print $1, sum}' scores-table.txt
 # NOTE: This is a stretch exercise - it is optional.
 
 # TODO: Write a command to output just the names of each player along with the total of adding all of that player's scores.

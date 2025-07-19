@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -euo pipefail
-
+cat helper-files/*.txt
 # TODO: Write a command to output the contents of all of the files inside the helper-files directory to the terminal.
 # Make sure you are only calling `cat` once.
 #

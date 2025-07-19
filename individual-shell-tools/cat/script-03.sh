@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -euo pipefail
-
+cat -n helper-files/helper-3.txt
 # TODO: Write a command to output the contents of the file `helper-3.txt` inside the helper-files directory to the terminal.
 # This time, we also want to see the line numbers in the output.
 #
