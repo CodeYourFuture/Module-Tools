@@ -8,3 +8,7 @@ set -euo pipefail
 # Basia London 22 9 6
 # Piotr Glasgow 15 2 25 11 8
 # Chandra Birmingham 12 6
+#ANSWER
+sort -rnk3 scores-table.txt | head -n 3
+
+#head -n 3 tells it to take the top 3 values by numerically
