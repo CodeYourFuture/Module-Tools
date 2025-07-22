@@ -32,19 +32,19 @@ What's the largest number you can store with 4 bits, if you want to be able to r
 Answer: 15
 
 How many bits would you need in order to store the numbers between 0 and 255 inclusive?
-Answer: 7 
+Answer: 8 
 
 How many bits would you need in order to store the numbers between 0 and 3 inclusive?
 Answer: 2
 
 How many bits would you need in order to store the numbers between 0 and 1000 inclusive?
-Answer: 9
+Answer: 10
 
 How can you test if a binary number is a power of two (e.g. 1, 2, 4, 8, 16, ...)?
 Answer: If the number have only one '1' digit at the start and other digits are 0 - the number is a power of two
 
 Convert the decimal number 14 to hex.
-Answer: F
+Answer: E
 
 Convert the decimal number 386 to hex.
 ```
