@@ -15,4 +15,4 @@ set -euo pipefail
 
 helper_dir="../helper-files"
 
-cat "$helper_dir/helper-1.txt" "$helper_dir/helper-2.txt" "$helper_dir/helper-3.txt"
+cat "$helper_dir"/*
