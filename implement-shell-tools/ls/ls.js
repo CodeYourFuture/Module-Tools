@@ -1,34 +1,61 @@
 import { promises as fs } from "node:fs";
 import process from "node:process";
-// const path = require("node:path");
 import path from "node:path";
+import { program } from "commander";
+
+program
+  .name("ls")
+  .description("Shows files in directory")
+  .option("-1", "list one file per line")
+  .option(
+    "-a",
+    "Used to list all files, including hidden files, in the current directory"
+  )
+  .argument("[path]", "The file path to process");
+
+program.parse();
+
+const programArgv = program.args;
+
+if (programArgv.length > 0) {
+  console.log(programArgv);
+  console.log("k");
+}
+
+// i'm not using any arguments for now
+// const argv = program.args;
+
+const char = program.opts();
+
 const pathToFile = process.argv[1];
+
 // console.log(pathToFile);
 const formattedPath = path.dirname(pathToFile);
 // console.log(formattedPath);
 
-// ------ sync version (not working with promises) -------
-
-// const files = fs.readdir(formattedPath, (files) => console.log(files));
-
-// fs.readdir(formattedPath, (err, files) => {
-//   if (err) {
-//     console.error("Error reading directory:", err);
-//     return;
-//   }
-//   files.forEach(function (file) {
-//     // Do whatever you want to do with the file
-//     console.log(file);
-//   });
-// });
-
 async function listFiles() {
-  try {
-    const files = await fs.readdir(formattedPath);
-    console.log(files.sort((a, b) => a.localeCompare(b)).join("         "));
-  } catch (err) {
-    //is it goes to sterror
-    console.error("Error reading directory:", err);
+  if (char["1"]) {
+    try {
+      const files = await fs.readdir(formattedPath);
+      const sortedOutput = files.sort((a, b) => a.localeCompare(b));
+      files.forEach(function (file) {
+        console.log(file);
+      });
+    } catch (err) {
+      //is it goes to stderror
+      console.error("Error reading directory:", err);
+    }
+  } else if (char["a"]) {
+    try {
+      const files = await fs.readdir(formattedPath);
+      const formattedOutput = files.sort((a, b) => a.localeCompare(b));
+      formattedOutput.unshift("..");
+      formattedOutput.unshift(".");
+      console.log(formattedOutput.join("             "));
+    } catch (err) {
+      //is it goes to stderror
+      console.error("Error reading directory:", err);
+    }
   }
 }
 
