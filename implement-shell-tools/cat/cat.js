@@ -1,7 +1,14 @@
+import { program } from "commander";
 import process from "node:process";
 import { promises as fs } from "node:fs";
 
-const argv = process.argv.slice(2);
+program
+    .name("cat")
+    .description("print the content of file")
+    .argument("<path>", "The file path to process");
+program.parse();
+
+const argv = program.args;
 if (argv.length != 1) {
     console.error(`Expected exactly 1 argument (a path) to be passed but got ${argv.length}.`);
     process.exit(1);
