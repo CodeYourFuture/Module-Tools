@@ -11,29 +11,30 @@ program
     "-a",
     "Used to list all files, including hidden files, in the current directory"
   )
-  .argument("[path]", "The file path to process");
+  .argument("[sample-files]", "The file path to process");
 
 program.parse();
 
+/* probably can be assigned by ternary operator */
+let pathToFile = "";
+
 const programArgv = program.args;
-
-if (programArgv.length > 0) {
-  console.log(programArgv);
-  console.log("k");
+if (programArgv.length == 1) {
+  pathToFile = programArgv[0];
+} else if (programArgv.length == 0) {
+  pathToFile = process.argv[1];
+} else {
+  console.error(
+    `Expected no more than 1 argument (sample-files) to be passed but got ${argv.length}.`
+  );
 }
-
-// i'm not using any arguments for now
-// const argv = program.args;
 
 const char = program.opts();
 
-const pathToFile = process.argv[1];
-
-// console.log(pathToFile);
 const formattedPath = path.dirname(pathToFile);
-// console.log(formattedPath);
 
 async function listFiles() {
+  /* can be rewritten using switch */
   if (char["1"]) {
     try {
       const files = await fs.readdir(formattedPath);
