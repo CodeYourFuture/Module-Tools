@@ -1,6 +1,5 @@
 import { program } from "commander";
 import { promises as fs } from "node:fs";
-import process from "node:process";
 
 program
   .name("count-containing-words")
@@ -26,7 +25,7 @@ console.log(argv);
 const opts = program.opts();
 console.log("OPTS", opts);
 
-const total = [0, 0, 0];
+const total = [];
 const output = [];
 
 const flag_c = (content) => {
@@ -43,6 +42,7 @@ const flag_l = (content) => {
 
 const countAndDisplay = async (path) => {
   const content = await fs.readFile(path, "utf-8");
+  output.splice(0);
   if (opts["l"]) {
     flag_l(content);
   }
@@ -52,10 +52,24 @@ const countAndDisplay = async (path) => {
   if (opts["c"]) {
     flag_c(content);
   }
+  if (argv.length > 1) {
+    if (total.length == 0) {
+      total.push(...output);
+    } else {
+      for (let index = 0; index < output.length; index++) {
+        total[index] += output[index];
+      }
+    }
+  }
   console.log([...output, path].join("     "));
 };
 
 const handleInput = async () => {
+  console.log("opts.length", opts.length);
+  if (Object.keys(opts).length == 0) {
+    ["l", "w", "c"].forEach((key) => (opts[key] = true));
+    console.log(opts);
+  }
   for (const path of argv) {
     await countAndDisplay(path);
   }
