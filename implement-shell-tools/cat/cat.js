@@ -5,7 +5,7 @@ import { promises as fs } from "node:fs";
 program
     .name("cat")
     .description("print the content of file")
-    .option("-n , --line-numbers","Number the output lines, starting at 1")
+    .option("-n, --line-numbers","Number the output lines, starting at 1")
     .argument("<paths...>", "The file path(s) to process"); // to support multiple file
 program.parse();
 
@@ -22,10 +22,13 @@ for (const path of argv) {
     try {
 const content = await fs.readFile(path, "utf-8");
 const lines= content.split(/\r?\n/);
+if (lines.length && lines[lines.length - 1] === '') {//// Remove trailing empty line if it's just from the final newline
+    lines.pop();
+}
 if (options.lineNumbers) {
     lines.forEach((line) => {
         const lineNumber = String(lineCounter++).padStart(6, ' ');
-        console.log(index+1, line)
+        console.log(`${lineNumber}\t${line}`)
     });
    
 } else {
