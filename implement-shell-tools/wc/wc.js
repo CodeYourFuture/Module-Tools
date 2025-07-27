@@ -27,31 +27,32 @@ const opts = program.opts();
 console.log("OPTS", opts);
 
 const total = [0, 0, 0];
+const output = [];
 
-const flag_l = (content) => {
-  return Buffer.byteLength(content, "utf8");
+const flag_c = (content) => {
+  output.push(Buffer.byteLength(content, "utf8"));
 };
 
 const flag_w = (content) => {
-  return content.match(/\b[\w']+\b/g).length;
+  output.push(content.match(/\b[\w']+\b/g).length);
 };
 
-const flag_c = (content) => {
-  return content.split("\n").length - 1;
+const flag_l = (content) => {
+  output.push(content.split("\n").length - 1);
 };
 
 const countAndDisplay = async (path) => {
   const content = await fs.readFile(path, "utf-8");
   if (opts["l"]) {
-    const countOfLines = flag_c(content);
-    total[0] += countOfLines;
-    return countOfLines;
+    flag_l(content);
   }
-  const countOfWords = flag_w(content);
-  total[1] += countOfWords;
-  const countOfBytes = flag_l(content);
-  total[2] += countOfBytes;
-  console.log([countOfLines, countOfWords, countOfBytes, path].join("     "));
+  if (opts["w"]) {
+    flag_w(content);
+  }
+  if (opts["c"]) {
+    flag_c(content);
+  }
+  console.log([...output, path].join("     "));
 };
 
 const handleInput = async () => {
