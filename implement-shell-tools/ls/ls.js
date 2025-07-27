@@ -1,4 +1,4 @@
-import { Dirent, promises as fs } from "node:fs";
+import { promises as fs } from "node:fs";
 import process from "node:process";
 import path from "node:path";
 import { program } from "commander";
@@ -18,30 +18,6 @@ program.parse();
 let pathToFile = "";
 
 const programArgv = program.args;
-// if (programArgv.length == 1) {
-//   console.log(programArgv[0]);
-//   fs.stat(programArgv[0], (err, stats) => {
-//     console.log(stats);
-//     if (!err) {
-//       if (stats.isFile()) {
-//         console.log("is file ? " + stats.isFile());
-//         await listFiles();
-//       } else if (stats.isDirectory()) {
-//         console.log("is directory? " + stats.isDirectory());
-//         listFiles();
-//       }
-//     } else throw err;
-//   });
-
-//   pathToFile = programArgv[0];
-// } else if (programArgv.length == 0) {
-//   pathToFile = process.argv[1];
-//   listFiles();
-// } else {
-//   console.error(
-//     `Expected no more than 1 argument (sample-files) to be passed but got ${argv.length}.`
-//   );
-// }
 
 (async () => {
   if (programArgv.length === 1) {
