@@ -20,10 +20,8 @@ program
   .parse();
 
 const argv = program.args;
-console.log(argv);
 
 const opts = program.opts();
-console.log("OPTS", opts);
 
 const total = [];
 const output = [];
@@ -65,10 +63,8 @@ const countAndDisplay = async (path) => {
 };
 
 const handleInput = async () => {
-  console.log("opts.length", opts.length);
   if (Object.keys(opts).length == 0) {
     ["l", "w", "c"].forEach((key) => (opts[key] = true));
-    console.log(opts);
   }
   for (const path of argv) {
     await countAndDisplay(path);
