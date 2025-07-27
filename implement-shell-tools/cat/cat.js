@@ -6,25 +6,33 @@ program
     .name("cat")
     .description("print the content of file")
     .option("-n , --line-numbers","Number the output lines, starting at 1")
-    .argument("<path>", "The file path to process");
+    .argument("<paths...>", "The file path(s) to process"); // to support multiple file
 program.parse();
 
 const argv = program.args;
-if (argv.length != 1) {
-    console.error(`Expected exactly 1 argument (a path) to be passed but got ${argv.length}.`);
+const options = program.opts();
+if (argv.length === 0) {
+    console.error(`No file paths provided`);// to support more files 
     process.exit(1);
 }
 
-const options = program.opts();
-const path = argv[0];
+let lineCounter = 1;
+
+for (const path of argv) {
+    try {
 const content = await fs.readFile(path, "utf-8");
+const lines= content.split(/\r?\n/);
 if (options.lineNumbers) {
-    const lines= content.split(/\r?\n/);
-    lines.forEach((line, index) => {
+    lines.forEach((line) => {
+        const lineNumber = String(lineCounter++).padStart(6, ' ');
         console.log(index+1, line)
     });
    
 } else {
-    
     process.stdout.write(content);
+    if (!content.endsWith('\n')) process.stdout.write('\n');
+        }
+    } catch (err) {
+        console.error(`cat: ${path}: ${err.message}`);
+    }
 }
