@@ -13,36 +13,35 @@ program
 program.parse();
 
 const files = program.args;
-const opts = program.opts();
+const options = program.opts();
 
 if (files.length === 0) {
   console.error(`Expected at least 1 argument (a path) to be passed but got ${files.length}.`);
   process.exit(1);
 }
 
-const path = files[0];
 let lineNum = 1;
 
-for (let file of files) {
+for (const file of files) {
   const content = await fs.readFile(file, "utf-8");
   const lines = content.split("\n");
 
-  for (let i = 0; i < lines.length; i++) {
-    if (opts.b) {
-      if (lines[i].trim() !== "") {
-        console.log(`${(lineNum).toString().padStart(6)}  ${lines[i]}`);
+  for (const line of lines) {
+    if (options.b) {
+      if (line.trim() !== "") {
+        console.log(`${(lineNum).toString().padStart(6)}  ${line}`);
         lineNum++;
       }
       else {
-        console.log(lines[i]);
+        console.log(line);
       }
     }
-    else if (opts.n) {
-      console.log(`${(lineNum).toString().padStart(6)}  ${lines[i]}`);
+    else if (options.n) {
+      console.log(`${(lineNum).toString().padStart(6)}  ${line}`);
       lineNum++;
     }
     else {
-      console.log(lines[i]);
+      console.log(line);
     }
   }
 
