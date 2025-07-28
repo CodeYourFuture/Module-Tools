@@ -1,7 +1,5 @@
 import { promises as fs } from "node:fs";
-// import path from "node:path";
 import { program } from "commander";
-import { clearLine } from "node:readline";
 
 program
   .name("cat")
@@ -15,26 +13,36 @@ const argv = program.args;
 
 const opts = program.opts();
 
-const flag_n = (data) => {
-  const numberOfLines = data.split("\n").length - 1;
-  return numberOfLines;
+const countLines = (data) => {
+  const lines = data.split("\n");
+  if (lines[lines.length - 1] === "") {
+    lines.pop();
+  }
+
+  let lineNum = 1;
+
+  for (const line of lines) {
+    if (opts.b) {
+      if (line.trim() === "") {
+        console.log();
+      } else {
+        console.log(`${lineNum} ${line}`);
+        lineNum++;
+      }
+    } else if (opts.n) {
+      console.log(`${lineNum} ${line}`);
+      lineNum++;
+    }
+  }
 };
-let number = 0;
+
 async function example(path) {
   try {
     const data = await fs.readFile(path, { encoding: "utf8" });
-    if (opts["n"]) {
-      const lines = data.split("\n");
-      if (lines[lines.length - 1] === "") {
-        lines.pop();
-      }
-
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        const output = `${number + 1} ${line}`;
-        number += 1;
-        console.log(output.trimEnd());
-      }
+    if (opts["b"]) {
+      countLines(data);
+    } else if (opts["n"]) {
+      countLines(data);
     } else {
       console.log(data.trimEnd());
     }
@@ -50,6 +58,3 @@ const handleInput = async () => {
 };
 
 handleInput();
-// for (const path of argv) {
-//   example(path);
-// }
