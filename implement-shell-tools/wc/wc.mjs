@@ -20,19 +20,19 @@ if(args.length === 0){
 }
 
 const path = args[0];
-const content = await fs.readFile(path, "utf-8")
+const content = await fs.readFile(path, "utf-8");
 
 
 // function to count the number of lines in a files
 function countLines(content){
-const lines = content.split(/\r?\n/)
-return lines.length
+const lines = content.split(/\r?\n/);
+return lines.length;
 }
 
 //function to count the words
 function countWords(content){
   const words = content.trim().split(/\s+/);
-  return words.length
+  return words.length;
 }
 
 //function to count the bytes
@@ -40,12 +40,16 @@ function countBytes(content){
   return Buffer.byteLength(content, "utf-8");
 }
 
-if (opts.line){
-  console.log(countLines(content))
-}else if(opts.words){console.log(countWords(content), path)}
-else if(opts.bytes){console.log(countBytes(content), path)}
-else{
-  console.log(countLines(content), countWords(content), countBytes(content), path)
+const lines = countLines(content);
+const words = countWords(content);
+const bytes = countBytes(content);
+
+if (opts.line) {
+  console.log(lines);
+} else if (opts.words) {
+  console.log(words, path);
+} else if (opts.bytes) {
+  console.log(bytes, path);
+} else {
+  console.log(lines, words, bytes, path);
 }
-
-

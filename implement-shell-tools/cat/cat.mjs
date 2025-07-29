@@ -1,12 +1,12 @@
 import { program } from "commander";
 import{promises as fs} from "node:fs";
-import process from "node:process";
+
 
 program
 .name("cat")
 .description("displays the contents of a file")
-.option('-n, --number', 'Number all output lines')
-.option("-b, --number-nonblank", 'Number non-blank output lines only')
+.option("-n, --number", "Number all output lines")
+.option("-b, --number-nonblank", "Number non-blank output lines only")
 .argument("<filepath>");
 
 program.parse();

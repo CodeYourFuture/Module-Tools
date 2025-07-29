@@ -1,6 +1,5 @@
 import {program} from "commander";
 import {promises as fs} from "node:fs";
-import { readdir } from "node:fs";
 
 program
 .name("ls")
@@ -20,15 +19,15 @@ if (args.length === 0) {
 }
 
 const path = args[0];
-const files = await fs.readdir(path, "utf-8");
+const files = await fs.readdir(path);
 
 let visibleFiles = files;
 if (!opts.all) {
-  visibleFiles = files.filter(file => !file.startsWith('.'));
+  visibleFiles = files.filter(file => !file.startsWith("."));
 }
 
 if (opts.one) {
   visibleFiles.forEach(file => console.log(file));
 } else {
-  console.log(visibleFiles.join(' '));
+  console.log(visibleFiles.join(" "));
 }
