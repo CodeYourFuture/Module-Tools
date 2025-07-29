@@ -5,6 +5,7 @@ program
   .name("wc")
   .description("Count lines, words, and bytes in files")
   .option("-l, --lines", "Only print line counts")
+  .option("-w, --words", "Only print word counts")
   .argument("<files...>", "One or more files to process");
 await program.parseAsync();
 
@@ -29,7 +30,9 @@ for(const file of files){
         
         if (options.lines) {
             console.log(`${lines} ${file}`);
-        } else {
+        } else if (options.words) {
+            console.log(`${words} ${file}`);
+        }else {
             console.log(`${lines} ${words} ${bytes} ${file}`);
         }
 
@@ -43,5 +46,11 @@ for(const file of files){
 }
 
 if (files.length > 1) {
-    console.log(`${totalLines} total`);
+    if (options.lines) {
+        console.log(`${totalLines} total`)//if more then 1 file is
+    }else if (options.words) {
+    console.log(`${totalWords} total`);
+    } else {
+    console.log(`${totalLines} ${totalWords} ${totalBytes} total`);
+    }
 }
