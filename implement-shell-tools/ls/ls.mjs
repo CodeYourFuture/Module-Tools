@@ -1,6 +1,5 @@
 import { program } from "commander";
 import { promises as fs } from "node:fs";
-import { connect } from "node:http2";
 import process from "node:process";
 
 program
