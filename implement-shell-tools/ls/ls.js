@@ -1,5 +1,6 @@
-import { Command } from "commander";
+import { program } from "commander";
 import process from "node:process";
+import { promises as fs } from "node:fs";
 
 program
     .name("ls")
@@ -12,12 +13,22 @@ program.parse();
 
 
 const argv = program.args;
-const dir = argv[0] || "."; // default to current directory
+const dir = argv[0] || "."; 
 
-// Arg validation: No more than 1 argument
+
 if (argv.length > 1) {
     console.error(`Expected at most 1 argument (directory) but got ${argv.length}.`);
     process.exit(1);
 }
 
-
+try {
+    const files = await fs.readdir(dir);
+    const showHidden = program.opts().a;
+    const filtered = showHidden ? files : files.filter(f => !f.startsWith("."));
+    for (const f of filtered) {
+        console.log(f);
+    }
+} catch {
+    console.error(`Could not read directory: ${dir}`);
+    process.exit(1);
+}
