@@ -5,6 +5,7 @@ import { promises as fs } from "node:fs";
 program
   .name("cat")
   .description("Prints file contents to the terminal")
+  .option("-n", "number all output lines")
   .argument("<files...>", "Files to print");
 
 program.parse();
