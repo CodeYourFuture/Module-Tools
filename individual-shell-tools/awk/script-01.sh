@@ -4,5 +4,3 @@ set -euo pipefail
 
 # TODO: Write a command to output just the names of each player in `scores-table.txt`.
 # Your output should contain 6 lines, each with just one word on it.
-path="/Users/cyf/Documents/SDC/Module-Tools/individual-shell-tools/awk/scores-table.txt"
-awk '{print $1}' $path
