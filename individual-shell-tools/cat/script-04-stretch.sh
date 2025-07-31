@@ -14,4 +14,5 @@ set -euo pipefail
 # 4 I was tempted to take a bite of it.
 # 5 But this seemed like a bad idea...
 path="/Users/cyf/Documents/SDC/Module-Tools/individual-shell-tools/helper-files"
-cat "$path"/*.txt | cat -n
+# cat "$path"/*.txt | cat -n
+awk '{ printf("%6d\t%s\n", ++n, $0) }' "$path"/*.txt
