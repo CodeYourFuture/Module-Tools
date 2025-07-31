@@ -10,6 +10,7 @@ program
 
 program.parse();
 
+const opts = program.opts();
 const files = program.args;
 
 if (files.length < 1) {
@@ -20,7 +21,14 @@ if (files.length < 1) {
 async function printFileContent(filename) {
   try {
     const content = await fs.readFile(filename, "utf-8");
-    process.stdout.write(content);
+    if (opts.n) {
+      const lines = content.split("\n");
+      for (let i = 0; i < lines.length; i++) {
+        console.log(`${(i + 1).toString().padStart(6, " ")}\t${lines[i]}`);
+      }
+    } else {
+      process.stdout.write(content);
+    }
   } catch {
     console.error(`Could not read file: ${filename}`);
   }
