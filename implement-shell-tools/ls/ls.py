@@ -17,12 +17,12 @@ def ls(path='.', one_column=False, show_hidden=False):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-1', action='store_true', help='list one file per line')
+    parser.add_argument('-1', dest='one_column', action='store_true', help='list one file per line')
     parser.add_argument('-a', action='store_true', help='show hidden files')
     parser.add_argument('path', nargs='?', default='.', help='directory to list')
     args = parser.parse_args()
     
-    ls(args.path, args.__dict__['1'], args.a)
+    ls(args.path, args.one_column, args.a)
 
 if __name__ == "__main__":
     main()
