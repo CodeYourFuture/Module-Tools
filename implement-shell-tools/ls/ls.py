@@ -1,6 +1,5 @@
 import os
 import argparse
-import sys
 
 parser = argparse.ArgumentParser(
     prog="ls",
@@ -14,14 +13,78 @@ parser.add_argument("path", nargs="?", default=".", help="The path to search")
 args = parser.parse_args()
 
 def arguments_proceeding(files):
+    data_to_proceed = files
+
+    if args.a:
+        data_to_proceed = [f for f in files]
+        data_to_proceed.sort()
+        data_to_proceed.insert(0, "..")
+        data_to_proceed.insert(0, ".")
+    else:
+        data_to_proceed = [f for f in files if not f.startswith('.')]
+    data_to_proceed.sort(key=str.lower)
     if args.one:
-        files.sort()
-        for f in files:
+        output = [f for f in data_to_proceed]
+        for f in output:
             print(f)
+    else: 
+        print("         ".join(data_to_proceed))
+        
 
-    if not args.a:
-        files = [f for f in files if not f.startswith(".")]
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#     output = files 
+
+#     # if args.one:
+#     #     files.sort()
+#     #     for f in files:
+#     #         print(f)
+
+#     if args.a:
+#         output = [f for f in files]
+#         output.sort()
+#         output.insert(0, "..")
+#         output.insert(0, ".")
+
+#     if args.one:
+#         output = [f for f in files]
+#         output.sort()
+#         for f in output:
+#             print(f)
+
+
+# -------
+
+#     if args.a:
+#         output = files  # include hidden files
+#         output.insert(0, "..")
+#         output.insert(0, ".")
+#     else:
+#         # exclude hidden files
+#         output = [f for f in files if not f.startswith('.')]
+
+#     output.sort()  # always sort after filtering
+
+#     if args.one:
+#         for f in output:
+#             print(f)
+#     else:
+#         print("  ".join(output))
 
 def path_proceeding(path_argument):
     if os.path.isfile(path_argument):
@@ -29,11 +92,9 @@ def path_proceeding(path_argument):
     elif os.path.isdir(path_argument):
         files = os.listdir(path_argument)
         arguments_proceeding(files)
-#     elif not path_argument:
-#         print("no")
+    
 
-# if not args.path:
-#     print("no")
+
 path_proceeding(args.path)
 
 
