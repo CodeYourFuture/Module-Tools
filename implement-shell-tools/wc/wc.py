@@ -1,6 +1,5 @@
 import os
 import argparse
-import sys
 
 parser = argparse.ArgumentParser(
     prog="wc",
