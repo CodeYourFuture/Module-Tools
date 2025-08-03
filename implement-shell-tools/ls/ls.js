@@ -25,10 +25,8 @@ const programArgv = program.args;
     try {
       const stats = await fs.stat(pathToFile);
       if (stats.isFile()) {
-        console.log("is file ? " + stats.isFile());
         await listFiles("file");
       } else if (stats.isDirectory()) {
-        console.log("is directory? " + stats.isDirectory());
 
         listFiles("directory");
       } else {
@@ -50,10 +48,10 @@ const programArgv = program.args;
 const flag_1 = (files) => {
   try {
     files.forEach(function (file) {
-      console.log(file);
+        console.log(file);
+        
     });
   } catch (err) {
-    //is it goes to stderror
     console.error("Error reading directory:", err);
   }
 };
@@ -64,12 +62,12 @@ const flag_a = (files) => {
     files.unshift(".");
     return files;
   } catch (err) {
-    //is it goes to stderror
     console.error("Error reading directory:", err);
   }
 };
 
 async function listFiles(type) {
+  let output = []
   try {
     let formattedPath = "";
     if (type == "directory") {
@@ -81,12 +79,31 @@ async function listFiles(type) {
     const files = await fs.readdir(formattedPath);
     const sortedOutput = files.sort((a, b) => a.localeCompare(b));
 
-    if (char["1"] && char["a"]) {
-      flag_1(flag_a(sortedOutput));
-    } else if (char["a"]) {
-      console.log(flag_a(sortedOutput).join("     "));
-    } else if (char["1"]) {
-      flag_1(sortedOutput);
+    // if (char["1"] && char["a"]) {
+    //   flag_1(flag_a(sortedOutput));
+    // } else if (char["a"]) {
+    //   console.log(flag_a(sortedOutput).join("     "));
+    // } else if (char["1"]) {
+    //   flag_1(sortedOutput);
+    // }
+
+    if (char["a"]){
+      output = flag_a(sortedOutput)
+    } else {
+      sortedOutput.forEach(function (file) {
+
+        if (file[0] != "."){
+          output.push(file)
+        }
+      })
+
+      // output = sortedOutput
+    }
+
+    if (char["1"]){
+      flag_1(output)
+    } else {
+      console.log(output.join("   "));
     }
   } catch (err) {
     console.error("Error reading directory:", err);
