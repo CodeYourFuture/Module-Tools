@@ -31,61 +31,6 @@ def arguments_proceeding(files):
         print("         ".join(data_to_proceed))
         
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#     output = files 
-
-#     # if args.one:
-#     #     files.sort()
-#     #     for f in files:
-#     #         print(f)
-
-#     if args.a:
-#         output = [f for f in files]
-#         output.sort()
-#         output.insert(0, "..")
-#         output.insert(0, ".")
-
-#     if args.one:
-#         output = [f for f in files]
-#         output.sort()
-#         for f in output:
-#             print(f)
-
-
-# -------
-
-#     if args.a:
-#         output = files  # include hidden files
-#         output.insert(0, "..")
-#         output.insert(0, ".")
-#     else:
-#         # exclude hidden files
-#         output = [f for f in files if not f.startswith('.')]
-
-#     output.sort()  # always sort after filtering
-
-#     if args.one:
-#         for f in output:
-#             print(f)
-#     else:
-#         print("  ".join(output))
-
 def path_proceeding(path_argument):
     if os.path.isfile(path_argument):
         print(path_argument)
