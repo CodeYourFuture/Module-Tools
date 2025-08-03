@@ -79,14 +79,6 @@ async function listFiles(type) {
     const files = await fs.readdir(formattedPath);
     const sortedOutput = files.sort((a, b) => a.localeCompare(b));
 
-    // if (char["1"] && char["a"]) {
-    //   flag_1(flag_a(sortedOutput));
-    // } else if (char["a"]) {
-    //   console.log(flag_a(sortedOutput).join("     "));
-    // } else if (char["1"]) {
-    //   flag_1(sortedOutput);
-    // }
-
     if (char["a"]){
       output = flag_a(sortedOutput)
     } else {
@@ -96,8 +88,6 @@ async function listFiles(type) {
           output.push(file)
         }
       })
-
-      // output = sortedOutput
     }
 
     if (char["1"]){
