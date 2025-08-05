@@ -1,5 +1,23 @@
 import argparse
 
+def cat_file(file_path, number_all_lines, number_non_blank):
+  with open(file_path, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+
+        for line_num, line in enumerate(lines, start=1):
+            prefix = ""
+
+            # -n: number all lines
+            if number_all_lines:
+                prefix = f"{line_num:6}\t" # 'line_num:6' means align right
+
+            # -b: number only non-blank lines
+            elif number_non_blank and line.strip() != "":
+                    prefix = f"{line_num:6}\t"
+
+            print(f"{prefix}{line}", end="")
+            
+
 parser = argparse.ArgumentParser(
     prog="cat.py",
     description="Display contents of files with optional line numbering."
@@ -19,18 +37,4 @@ number_non_blank = args.b
 
 # Loop through all file paths
 for file_path in args.files:
-    with open(file_path, "r", encoding="utf-8") as file:
-        lines = file.readlines()
-
-        for line_num, line in enumerate(lines, start=1):
-            prefix = ""
-
-            # -n: number all lines
-            if number_all_lines:
-                prefix = f"{line_num:6}\t" # 'line_num:6' means align right
-
-            # -b: number only non-blank lines
-            elif number_non_blank and line.strip() != "":
-                    prefix = f"{line_num:6}\t"
-                    
-            print(f"{prefix}{line}", end="")
+    cat_file(file_path, number_all_lines, number_non_blank)
