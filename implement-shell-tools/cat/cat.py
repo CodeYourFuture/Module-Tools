@@ -23,17 +23,14 @@ for file_path in args.files:
         lines = file.readlines()
 
         for line_num, line in enumerate(lines, start=1):
+            prefix = ""
+
             # -n: number all lines
             if number_all_lines:
-                print(f"{line_num:6}\t{line}", end="") # 'line_num:6' means align right
+                prefix = f"{line_num:6}\t" # 'line_num:6' means align right
 
             # -b: number only non-blank lines
-            elif number_non_blank:
-                if line.strip() != "":
-                    print(f"{line_num:6}\t{line}", end="")
-                else:
-                    print(line, end="")
-
-            # No flags: just print the line
-            else:
-                print(line, end="")
+            elif number_non_blank and line.strip() != "":
+                    prefix = f"{line_num:6}\t"
+                    
+            print(f"{prefix}{line}", end="")
