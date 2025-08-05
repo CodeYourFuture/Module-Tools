@@ -21,19 +21,16 @@ number_non_blank = args.b
 for file_path in args.files:
     with open(file_path, "r", encoding="utf-8") as file:
         lines = file.readlines()
-        line_num = 1  # Start from 1
 
-        for line in lines:
+        for line_num, line in enumerate(lines, start=1):
             # -n: number all lines
             if number_all_lines:
                 print(f"{line_num:6}\t{line}", end="") # 'line_num:6' means align right
-                line_num += 1
 
             # -b: number only non-blank lines
             elif number_non_blank:
                 if line.strip() != "":
                     print(f"{line_num:6}\t{line}", end="")
-                    line_num += 1
                 else:
                     print(line, end="")
 
