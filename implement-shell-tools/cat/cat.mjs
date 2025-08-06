@@ -13,18 +13,19 @@ program.parse();
 const options = program.opts();
 const paths = program.args;
 
+let hadError = false;
 for(const path of paths){
     let content;
     try {
         content = await fs.readFile(path, "utf-8")
     } catch(err) {
         console.error(`Error reading file "${path}": ${err.message} `);
+        hadError = true;
         continue;
     }
 
     // split file into lines
     let lines = content.replace(/\n$/, "").split("\n");
-    
     let lineNum = 1;
 
     for (const line of lines){
@@ -43,3 +44,5 @@ for(const path of paths){
         }
 }
 }
+
+if (hadError) process.exit(1);
