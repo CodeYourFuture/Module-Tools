@@ -64,5 +64,8 @@ Answer: it is 33 from 0(black)-255(white) 0x21 is almost dark gray (close to dar
 If reading the bytes 0xAA00FF as an RGB colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
 Answer: AA =170,  00 = 0,  FF = 255  It is RGB(170,000,255)
 
+Clarification As Requested by Volunteer:
+this create a magenta-purple color which is a mix of red = 170 and full blue
+
 If reading the bytes 0xAA00FF as a sequence of three one-byte decimal numbers, what decimal numbers would they be?
 Answer: 170,0 and 255
