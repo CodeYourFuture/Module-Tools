@@ -5,15 +5,21 @@ program
   .name("ls")
   .description("List all the files in a directory")
   .option("-a, --all", "Include hidden files")
-  .option("-1", "One entry per line")
-  .argument("[dir]", "directory to list", ".");
+  .option("-1, --one", "One entry per line")
+  .argument("[dir]", "directory to list");
 
 program.parse();
 
 const options = program.opts();
 const dir = program.args[0] || ".";
 
-const entries = await fs.readdir(dir, { withFileTypes: true });
+let entries;
+try {
+    entries = await fs.readdir(dir, { withFileTypes: true });
+} catch (err) {
+    console.error(`Error accessing ${dir}: ${err.message}`);
+    process.exit(1);
+}
 
 const visibleNames = [];
 
@@ -22,7 +28,10 @@ for(const entry of entries){
     visibleNames.push(entry.name);
 }
 
-if(options["1"]){
+if (options.all) {
+  visibleNames.unshift(".", "..");
+}
+if(options.one){
     console.log(visibleNames.join("\n"));
 } else{
     console.log(visibleNames.join("       "));
