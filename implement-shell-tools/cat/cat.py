@@ -1,8 +1,12 @@
 import argparse
 import os
 
+# set argument parser
 parser = argparse.ArgumentParser(description="Python implementation of cat command")
 
+# to number all lines
+parser.add_argument("-n", action="store_true", help="Number all lines")
+# To raed files
 parser.add_argument("files", nargs="+", help="Files to read")
 
 args = parser.parse_args()
@@ -17,4 +21,8 @@ for file in args.files:
 
     with open(file, "r") as f:
         for line in f:
-            print(line, end ="")
+            if args.n:
+                print(f"{line_number:6}\t{line}", end="")  # to print number all lines
+                line_number += 1
+            else:    
+                print(line, end ="")  # to print content of files
