@@ -37,6 +37,9 @@ Answer: 10 bits 1024 numbers
 How can you test if a binary number is a power of two (e.g. 1, 2, 4, 8, 16, ...)?
 Answer: if the digit at the last index is 1 and all others are 0 it is power of two (except 1 which is 01)
 
+Clarification As Requested by Volunteer:
+when i say last index i was meant the bit at the nth index (eg 8 = 2**3 so the index = 3) must be one and other digits must be 0 
+i.e a binary number is a power of two if it contains exactly one 1 bit and all other bits are 0. 
 Convert the decimal number 14 to hex.
 Answer: E
 
