@@ -6,4 +6,4 @@ set -euo pipefail
 # The output should contain 6 lines.
 
 # ANSWER
-grep -v '[0-9]' sed/input.txt  #invert the match
+sed '/[0-9]/d' input.txt
