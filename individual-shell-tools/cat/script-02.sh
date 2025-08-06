@@ -13,4 +13,4 @@ set -euo pipefail
 # But this seemed like a bad idea...
 
 # ANSWER
-cat cat/*
+cat ../helper-files/*

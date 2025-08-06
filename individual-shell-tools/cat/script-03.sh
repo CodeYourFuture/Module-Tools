@@ -11,4 +11,4 @@ set -euo pipefail
 # 3 But this seemed like a bad idea...
 
 #ANSWER
-cat -n helper-files/helper-3.txt
+cat -n ../helper-files/helper-3.txt

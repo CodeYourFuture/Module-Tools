@@ -15,4 +15,4 @@ set -euo pipefail
 # 5 But this seemed like a bad idea...
 
 #ANSWER
-cat -n helper-files/*
+cat ../helper-files/* | awk '{$1=""; sub(/^ /,""); print NR ". " $0}'
