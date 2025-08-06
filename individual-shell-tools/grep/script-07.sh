@@ -6,9 +6,4 @@ set -euo pipefail
 # The output should show that dialogue.txt contains 6 lines, dialogue-2.txt contains 2, and dialogue-3.txt contains 0.
 
 # ANSWER
-# for f in *.txt; do       
-#   count=$(grep -c "Doctor" "$f" || true)
-#   echo "$f contains $count lines"
-# done
-# grep -c "Doctor" *.txt | sed 's/:/ contains /; s/$/ lines/'
-
+grep -c "^Doctor" dialogue.txt dialogue-2.txt dialogue-3.txt
