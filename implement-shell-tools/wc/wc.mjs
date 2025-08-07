@@ -1,6 +1,7 @@
 import { program } from "commander";
 import { promises as fs } from "node:fs";
 import process from "node:process";
+import path from "node:path";
 
 program
   .option("-l", "count lines")
@@ -28,16 +29,18 @@ program.action(async (files) => {
       totalWords += words;
       totalBytes += bytes;
 
+      const filename = path.basename(file);
+
       // prepare line to show
       let output = "";
       if (!options.l && !options.w && !options.c) {
         //if no flag is used, show all
-        output += `${lines.toString().padStart(8)} ${words.toString().padStart(8)} ${bytes.toString().padStart(8)} ${file}`;
+        output += `${lines.toString().padStart(8)} ${words.toString().padStart(8)} ${bytes.toString().padStart(8)} ${filename}`;
       } else {
         if (options.l) output += lines.toString().padStart(8);
         if (options.w) output += words.toString().padStart(8);
         if (options.c) output += bytes.toString().padStart(8);
-        output += ` ${file}`;
+        output += ` ${filename}`;
       }
 
       console.log(output);
