@@ -5,6 +5,8 @@ parser = argparse.ArgumentParser(description="Python implementation of wc comman
 
 parser.add_argument("-l", action="store_true", help="Print line count")
 
+parser.add_argument("-w", action="store_true", help="Print word count")
+
 parser.add_argument("files", nargs="+", help="Files to process")
 
 args = parser.parse_args()
@@ -34,6 +36,9 @@ for file in args.files:
         if args.l:
             print(f"{lines:} {file}")
 
+        elif args.w:
+            print(f"{words:} {file}")    
+
         else:
             print(f"{lines:>3} {words:>3} {tbytes:>3} {file}") # to print data from per life
 
@@ -41,6 +46,10 @@ for file in args.files:
 if multiple_files:
     if args.l:
         print(f"{total_lines:} total")
+
+    elif args.w:
+        print(f"{total_words:} total")
+
     else:
         print(f"{total_lines:>3} {total_words:>3} {total_bytes:>3} total")    
                 
