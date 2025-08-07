@@ -7,6 +7,8 @@ parser.add_argument("-l", action="store_true", help="Print line count")
 
 parser.add_argument("-w", action="store_true", help="Print word count")
 
+parser.add_argument("-c", action="store_true", help="Print byte count")
+
 parser.add_argument("files", nargs="+", help="Files to process")
 
 args = parser.parse_args()
@@ -26,8 +28,9 @@ for file in args.files:
         content = f.read()
         lines = content.count("\n")
         words = len(content.split())
-        tbytes = len(content.encode("utf-8"))
+        tbytes = os.path.getsize(file)
 
+    
         
         total_lines += lines
         total_words += words
@@ -37,10 +40,13 @@ for file in args.files:
             print(f"{lines:} {file}")
 
         elif args.w:
-            print(f"{words:} {file}")    
+            print(f"{words:} {file}")
+
+        elif args.c:
+            print(f"{tbytes:} {file}")        
 
         else:
-            print(f"{lines:>3} {words:>3} {tbytes:>3} {file}") # to print data from per life
+            print(f"{lines:>3} {words:>3} {tbytes:>3} {file}") # to print data from per file
 
 #to print total output
 if multiple_files:
