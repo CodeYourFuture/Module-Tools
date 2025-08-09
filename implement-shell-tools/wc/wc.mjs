@@ -10,17 +10,28 @@ program
   .argument("<files...>", "files to read");
 
 program.action(async (files) => {
-  const options = program.opts(); // get the options the user used
+  const options = program.opts();
 
   let totalLines = 0;
   let totalWords = 0;
   let totalBytes = 0;
+//helper function
+  function formatOutput(lines, words, bytes, label) {
+    let output = "";
+    if (!options.l && !options.w && !options.c) {
+      output += `${lines.toString().padStart(8)} ${words.toString().padStart(8)} ${bytes.toString().padStart(8)}`;
+    } else {
+      if (options.l) output += lines.toString().padStart(8);
+      if (options.w) output += words.toString().padStart(8);
+      if (options.c) output += bytes.toString().padStart(8);
+    }
+    return `${output} ${label}`;
+  }
 
   for (const file of files) {
     try {
-      const data = await fs.readFile(file, "utf-8"); // read file content
+      const data = await fs.readFile(file, "utf-8");
 
-      //count lines,words and bytes
       const lines = data.split("\n").length - 1;
       const words = data.trim().split(/\s+/).filter(Boolean).length;
       const bytes = Buffer.byteLength(data, "utf-8");
@@ -29,40 +40,15 @@ program.action(async (files) => {
       totalWords += words;
       totalBytes += bytes;
 
-      const filename = path.basename(file);
-
-      // prepare line to show
-      let output = "";
-      if (!options.l && !options.w && !options.c) {
-        //if no flag is used, show all
-        output += `${lines.toString().padStart(8)} ${words.toString().padStart(8)} ${bytes.toString().padStart(8)} ${filename}`;
-      } else {
-        if (options.l) output += lines.toString().padStart(8);
-        if (options.w) output += words.toString().padStart(8);
-        if (options.c) output += bytes.toString().padStart(8);
-        output += ` ${filename}`;
-      }
-
-      console.log(output);
-
+      console.log(formatOutput(lines, words, bytes, path.basename(file)));
     } catch (err) {
       console.error(`Error reading ${file}: ${err.message}`);
     }
   }
 
-  //If more than one file, show total
   if (files.length > 1) {
-    let totalOutput = "";
-    if (!options.l && !options.w && !options.c) {
-      totalOutput += `${totalLines.toString().padStart(8)} ${totalWords.toString().padStart(8)} ${totalBytes.toString().padStart(8)} total`;
-    } else {
-      if (options.l) totalOutput += totalLines.toString().padStart(8);
-      if (options.w) totalOutput += totalWords.toString().padStart(8);
-      if (options.c) totalOutput += totalBytes.toString().padStart(8);
-      totalOutput += " total";
-    }
-    console.log(totalOutput);
+    console.log(formatOutput(totalLines, totalWords, totalBytes, "total"));
   }
 });
 
-program.parse(); //start the command
+program.parse();
