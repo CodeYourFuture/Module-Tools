@@ -4,12 +4,11 @@ import sys
 
 def count_stats(text):
     """Count lines, words, and bytes in text"""
-    lines = text.split("\n")
-    line_count = len(lines) - 1
+    line_count = text.count("\n")
     
     # Count words (split by whitespace, filter out empty strings)
-    words = text.strip().split()
-    word_count = len([word for word in words if word])
+    word_count = len(text.split())
+
     
     # Count bytes (UTF-8 encoding)
     byte_count = len(text.encode("utf-8"))
