@@ -10,6 +10,17 @@ def list_directory(directory, show_all, one_per_line):
         print(f"ls: cannot access '{directory}': {e}", file=sys.stderr)
         return 1
 
+    if not show_all:
+        files = [f for f in files if not f.startswith('.')]
+    files.sort()
+
+    if one_per_line:
+        for file in files:
+            print(file)
+    else:
+        print(' '.join(files))
+
+    return 0
 
 def main():
     parser = argparse.ArgumentParser(description="A simplified ls implementation.")
