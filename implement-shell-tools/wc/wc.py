@@ -2,6 +2,18 @@ import argparse
 import sys
 import os
 
+def format_output(lines, words, bytes_, label, options):
+    output = ""
+    if not (options.l or options.w or options.c):
+        output += f"{lines:8}{words:8}{bytes_:8}"
+    else:
+        if options.l:
+            output += f"{lines:8}"
+        if options.w:
+            output += f"{words:8}"
+        if options.c:
+            output += f"{bytes_:8}"
+    return f"{output} {label}"
 
 def main():
     parser = argparse.ArgumentParser(description="Count lines, words, and bytes in files (like wc)")
