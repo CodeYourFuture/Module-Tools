@@ -21,6 +21,29 @@ def main():
             print(f"Error reading {path}: {e}", file=sys.stderr)
             sys.exit(1)
 
+    # If user used -b
+    if options.b:
+        line_num = 1
+        numbered_lines = []
+        for line in combined_data.split('\n'):
+            if line.strip() == '':
+                numbered_lines.append(line)  # Keep empty lines unnumbered
+            else:
+                numbered_lines.append(f"{line_num:6} {line}")
+                line_num += 1
+        sys.stdout.write('\n'.join(numbered_lines) + '\n')
+
+    # If user used -n
+    elif options.n:
+        numbered_lines = [
+            f"{i+1:6} {line}"
+            for i, line in enumerate(combined_data.split('\n'))
+        ]
+        sys.stdout.write('\n'.join(numbered_lines) + '\n')
+
+    # If user didn't use -n or -b
+    else:
+        sys.stdout.write(combined_data)
 
 if __name__ == "__main__":
     main()
