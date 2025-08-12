@@ -29,10 +29,10 @@ parser = argparse.ArgumentParser(
     description="Display contents of files with optional line numbering."
 )
 
-group = parser.add_mutually_exclusive_group()
+numbering_group = parser.add_mutually_exclusive_group()
 
-group.add_argument("-n", action="store_true", help="Number all lines")
-group.add_argument("-b", action="store_true", help="Number non-blank lines")
+numbering_group.add_argument("-n", action="store_true", help="Number all lines")
+numbering_group.add_argument("-b", action="store_true", help="Number non-blank lines")
 parser.add_argument("files", nargs="+", help="Files to display")
 
 args = parser.parse_args()
