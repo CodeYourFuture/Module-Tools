@@ -14,11 +14,11 @@ parser.add_argument("files", nargs="+", help="Text files to read")
 
 args = parser.parse_args()
 
-def format_output(line_count, word_count, char_count, args):
+def format_output(line_count, word_count, char_count, count_lines, count_words, count_chars):
     output_list = []
 
      # If no flag is given, show all
-    if not (args.l or args.w or args.c):
+    if not (count_lines or count_words or count_chars):
         output_list = [str(line_count), str(word_count), str(char_count)]
 
     else:
@@ -50,7 +50,7 @@ for file_path in args.files:
         total_words += word_count
         total_chars += char_count
         
-        output = format_output(line_count, word_count, char_count, args)
+        output = format_output(line_count, word_count, char_count, args.l, args.w, args.c)
 
         output.append(file_path)
         print(" ".join(output))
@@ -63,7 +63,7 @@ for file_path in args.files:
 
 # Show total only if multiple files given
 if len(args.files) > 1:
-    total_output = format_output(total_lines, total_words, total_chars, args)
+    total_output = format_output(total_lines, total_words, total_chars, args.l, args.w, args.c)
 
     total_output.append("total")
     print(" ".join(total_output))
