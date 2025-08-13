@@ -27,7 +27,7 @@ try {
 
   // Output
   if (options["1"]) {
-    allFiles.forEach((file) => console.log(file));
+    allFiles.forEach(console.log);
   } else {
     console.log(allFiles.join(" "));
   }
