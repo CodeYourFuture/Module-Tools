@@ -9,3 +9,5 @@ set -euo pipefail
 # 1 It looked delicious.
 # 2 I was tempted to take a bite of it.
 # 3 But this seemed like a bad idea...
+path="/Users/cyf/Documents/SDC/Module-Tools/individual-shell-tools/helper-files/helper-3.txt"
+cat -n "$path"
