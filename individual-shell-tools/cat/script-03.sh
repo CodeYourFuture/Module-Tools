@@ -9,3 +9,7 @@ set -euo pipefail
 # 1 It looked delicious.
 # 2 I was tempted to take a bite of it.
 # 3 But this seemed like a bad idea...
+
+echo hello world
+
+cat -n ../helper-files/helper-3.txt
