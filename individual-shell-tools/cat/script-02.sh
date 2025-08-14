@@ -11,3 +11,7 @@ set -euo pipefail
 # It looked delicious.
 # I was tempted to take a bite of it.
 # But this seemed like a bad idea...
+
+cat ../helper-files/*
+
+# * - matches all files in the specified directory. In our case, prints content of all files in the helper-files directory.
