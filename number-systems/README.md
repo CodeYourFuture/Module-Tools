@@ -5,61 +5,126 @@ Do not convert any binary numbers to decimal when solving a question unless the 
 The goal of these exercises is for you to gain an intuition for binary numbers. Using tools to solve the problems defeats the point.
 
 Convert the decimal number 14 to binary.
-Answer:
+Answer: Divide by 2 and record the remainders, then write the remainders in reverse order
+14 / 2 = 7 R 0
+7 / 2 = 3 R 1
+3 / 2 = 1 R 1
+1 / 2 = 0 R 1
+
+1110
+
 
 Convert the binary number 101101 to decimal:
 Answer:
 
+2^0 x 1 = 1
+2^1 x 0 = 0
+2^2 x 1 = 4
+2^3 x 1 = 8
+2^4 x 0 = 0
+2^5 x 1 = 32
+
+1 + 0 + 4 + 8 + 0 + 32 = 45
+
 Which is larger: 1000 or 0111?
-Answer:
+Answer: 1000 is larger than 111
 
 Which is larger: 00100 or 01011?
-Answer:
+Answer: 01011 is larger because 1011 is larger than 100
 
 What is 10101 + 01010?
-Answer:
+Answer: 
+  1 0 1 0 1
++ 0 1 0 1 0
+
+Adding from right to left
+
+1 + 0 = 1
+0 + 1 = 1
+1 + 0 = 1
+0 + 1 = 1
+1 + 0 = 1
+  11111
 
 What is 10001 + 10001?
 Answer:
+  1 0 0 0 1  
++ 1 0 0 0 1  
+
+Adding from right to left
+
+1 + 1 = 10  = 0 carry 1
+0 + 0 + carry 1 = 1
+0 + 0 = 0
+0 + 0 = 0
+1 + 1 = 10 
+
+100010 
 
 What's the largest number you can store with 4 bits, if you want to be able to represent the number 0?
-Answer:
+Answer: 1111
 
 How many bits would you need in order to store the numbers between 0 and 255 inclusive?
-Answer:
+Answer: 8
 
 How many bits would you need in order to store the numbers between 0 and 3 inclusive?
-Answer:
+Answer: 2
 
 How many bits would you need in order to store the numbers between 0 and 1000 inclusive?
-Answer:
+Answer: 10
 
 How can you test if a binary number is a power of two (e.g. 1, 2, 4, 8, 16, ...)?
-Answer:
+Answer: They all have only 1 bit and other bits are 0
 
 Convert the decimal number 14 to hex.
-Answer:
+Answer: E
 
 Convert the decimal number 386 to hex.
-Answer:
+Answer: 386 / 16 = 24 R 2
+        24 / 16 = 1 R 8
+        1 / 16 = 0 R 1
+        = 0x182
 
 Convert the hex number 386 to decimal.
 Answer:
+Going from right to left
+16^0 x 6 = 1 x 6 = 6
+16^1 x 8 = 16 x 8 = 128
+16^2 x 3 = 256 x 3 = 768
+  768 + 128 + 6 = 902
 
 Convert the hex number B to decimal.
-Answer:
+Answer: 11
 
 If reading the byte 0x21 as a number, what decimal number would it mean?
-Answer:
+Answer: 
+16^0 x 1 = 1 x 1 = 1
+16^1 x 2 = 16 x 2 = 32
+   32 + 1 = 33
 
 If reading the byte 0x21 as an ASCII character, what character would it mean?
-Answer:
+Answer: !
 
 If reading the byte 0x21 as a greyscale colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
-Answer:
+Answer: 0x21 = 33
+        The value of 33 out of 255 will be dark grey
 
 If reading the bytes 0xAA00FF as an RGB colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
-Answer:
+Answer: There's more blue, less red and no green = Bluish-purple
 
 If reading the bytes 0xAA00FF as a sequence of three one-byte decimal numbers, what decimal numbers would they be?
-Answer:
+Answer: 170, 0, 255
+0xAA
+A = 10
+16^0 x 10 = 1 x 10 = 10
+16^1 x 10 = 16 x 10 = 160
+  160 + 10 = 170
+
+0x00
+= 0
+
+0xFF
+F = 15
+16^0 x 15 = 1 x 15 = 15
+16^1 x 15 = 16 x 15 = 240
+   240 + 15 = 255
