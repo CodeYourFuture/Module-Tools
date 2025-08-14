@@ -5,3 +5,5 @@ set -euo pipefail
 # TODO: Write a command to output input.txt with all occurrences of the letter `i` replaced with `I`.
 # The output should contain 11 lines.
 # The first line of the output should be: "ThIs Is a sample fIle for experImentIng with sed.".
+path="/Users/cyf/Documents/SDC/Module-Tools/individual-shell-tools/sed/input.txt"
+sed 's/i/I/g' $path

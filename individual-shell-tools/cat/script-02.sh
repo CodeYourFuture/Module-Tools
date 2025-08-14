@@ -11,3 +11,5 @@ set -euo pipefail
 # It looked delicious.
 # I was tempted to take a bite of it.
 # But this seemed like a bad idea...
+path="/Users/cyf/Documents/SDC/Module-Tools/individual-shell-tools/helper-files"
+cat "$path"/*.txt
