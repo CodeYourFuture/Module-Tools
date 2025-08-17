@@ -20,11 +20,11 @@ for (const filePath of filePaths) {
 
   for (const line of content.split("\n")) {
     if (options.n) {
-      console.log(`${lineNumber}  ${line}`);
+      console.log(`${String(lineNumber).padStart(6, ' ')}  ${line}`);
       lineNumber++;
     } else if (options.b) {
       if (line.trim()) {
-        console.log(`${lineNumber}  ${line}`);
+        console.log(`${String(lineNumber).padStart(6, ' ')}  ${line}`);
         lineNumber++;
       } else {
         console.log("");
