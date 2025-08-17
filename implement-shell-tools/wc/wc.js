@@ -14,6 +14,20 @@ program.parse();
 const options = program.opts();
 const filePaths = program.args;
 
+function formatCounts(lines, words, chars, options) {
+  let result = "";
+
+  if (options.l || options.w || options.c) {
+    if (options.l) result += `${lines}  `;
+    if (options.w) result += `${words}  `;
+    if (options.c) result += `${chars}  `;
+  } else {
+    result += `${lines} ${words} ${chars} `;
+  }
+  
+  return result;
+}
+
 let totalLines = 0;
 let totalWords = 0;
 let totalChars = 0;
@@ -21,7 +35,7 @@ let totalChars = 0;
 for (const filePath of filePaths) {
   const content = await fs.readFile(filePath, "utf-8");
 
-  const lineCount = content.split("\n").length;
+  const lineCount = (content.match(/\n/g) || []).length;
   const wordCount = content.trim().split(/\s+/).length;
   const charCount = content.length;
 
@@ -29,29 +43,13 @@ for (const filePath of filePaths) {
   totalWords += wordCount;
   totalChars += charCount;
 
-  let output = "";
-
-  if (options.l || options.w || options.c) {
-    if (options.l) output += `${lineCount} `;
-    if (options.w) output += `${wordCount} `;
-    if (options.c) output += `${charCount} `;
-  } else {
-    output += `${lineCount} ${wordCount} ${charCount} `;
-  }
+  const output = formatCounts(lineCount, wordCount, charCount, options);
 
   console.log(`${output}${filePath}`);
 }
 
 if (filePaths.length > 1) {
-  let totalOutput = "";
-
-  if (options.l || options.w || options.c) {
-    if (options.l) totalOutput += `${totalLines} `;
-    if (options.w) totalOutput += `${totalWords} `;
-    if (options.c) totalOutput += `${totalChars} `;
-  } else {
-    totalOutput += `${totalLines} ${totalWords} ${totalChars} `;
-  }
+  const totalOutput = formatCounts(totalLines, totalWords, totalChars, options);
 
   console.log(`${totalOutput}total`);
 }
