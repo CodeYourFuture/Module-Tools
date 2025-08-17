@@ -18,7 +18,11 @@ const files = await fs.readdir(directory);
 
 const visibleFiles = options.a ? files : files.filter(file => !file.startsWith("."));
 
-for (const file of visibleFiles) {
-  console.log(file);
+if (options["1"]) {
+  for (const file of visibleFiles) {
+    console.log(file);
+  }
+} else {
+  console.log(visibleFiles.join("       "));
 }
   
