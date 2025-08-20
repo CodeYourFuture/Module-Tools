@@ -7,4 +7,4 @@ set -euo pipefail
 # Your output should be exactly the number 164.
 # jq '[.[].scores] | add | add' scores.json  
 
-jq '[.[].scores] | flatten | add' scores.json
+jq '[.[].scores[]] | add' scores.json
