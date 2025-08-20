@@ -38,9 +38,4 @@ def path_proceeding(path_argument):
         files = os.listdir(path_argument)
         arguments_proceeding(files)
     
-
-
 path_proceeding(args.path)
-
-
-
