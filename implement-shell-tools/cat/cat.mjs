@@ -13,6 +13,9 @@ program.parse();
 const options = program.opts();
 const paths = program.args;
 
+const numNonBlank = options.b;
+const numAll = !!options.n && !numNonBlank;
+
 let hadError = false;
 for(const path of paths){
     let content;
@@ -29,14 +32,14 @@ for(const path of paths){
     let lineNum = 1;
 
     for (const line of lines){
-        if(options.b){
+        if(numNonBlank){
             if(line.trim() !== ""){
                 console.log(`${lineNum.toString().padStart(5)}  ${line}`)
                 lineNum++;
             } else {
                 console.log("");
             }
-        } else if(options.n){
+        } else if(numAll){
             console.log(`${lineNum.toString().padStart(5)}  ${line}`)
             lineNum++;
         } else{
