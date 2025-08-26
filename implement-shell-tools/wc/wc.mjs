@@ -17,6 +17,7 @@ const paths = program.args;
 let totalLines = 0;
 let totalWords = 0;
 let totalBytes = 0;
+let hadError = false;
 
 for(const path of paths){
     let content;
@@ -24,6 +25,7 @@ for(const path of paths){
         content = await fs.readFile(path, "utf-8");
     } catch (err){
         console.error(`Error reading file "${path}":`, err.message);
+        hadError = true;
         continue;
     }
 
@@ -63,3 +65,5 @@ if (paths.length > 1) {
     console.log(`\t${totalLines}\t${totalWords}\t${totalBytes} total`);
   }
 }
+
+if (hadError) process.exit(1);
