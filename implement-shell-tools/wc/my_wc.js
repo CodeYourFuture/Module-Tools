@@ -42,23 +42,30 @@ const showLines = flags.l || (!flags.l && !flags.w && !flags.c);
 const showWords = flags.w || (!flags.l && !flags.w && !flags.c);
 const showBytes = flags.c || (!flags.l && !flags.w && !flags.c);
 
+function pad(num, width = 8) {
+  return num.toString().padStart(width, ' ');
+}
+
+function formatOutput({ lines, words, bytes }, label) {
+  let output = '';
+  if (showLines) output += pad(lines);
+  if (showWords) output += pad(words);
+  if (showBytes) output += pad(bytes);
+  output += ` ${label}`;
+  return output;
+}
+
 async function countFile(file) {
   try {
     const content = await fs.readFile(file, 'utf-8');
-    const lines = content.split('\n').filter(line => line.trim() !== '').length;
+    const lines = content.split('\n').length - 1;
     const words = content.trim().split(/\s+/).filter(Boolean).length;
     const bytes = Buffer.byteLength(content, 'utf-8');
 
-    let output = '';
-    if (showLines) output += `${lines} `;
-    if (showWords) output += `${words} `;
-    if (showBytes) output += `${bytes} `;
+    const counts = { lines, words, bytes };
+    console.log(formatOutput(counts, file));
 
-    output += file;
-
-    console.log(output.trim());
-
-    return { lines, words, bytes };
+    return counts;
   } catch (err) {
     console.error(`Cannot access '${file}': ${err.message}`);
     return null;
@@ -66,23 +73,23 @@ async function countFile(file) {
 }
 
 async function main() {
-  const counts = await Promise.all(files.map(countFile));
+  // Instead of .map, I can explicitly collect promises using forEach():
+  const promises = [];
+  files.forEach(file => {
+    promises.push(countFile(file));
+  });
+  const counts = await Promise.all(promises);
 
   const validCounts = counts.filter(c => c !== null);
 
   if (validCounts.length > 1) {
-    const totalLines = validCounts.reduce((sum, c) => sum + c.lines, 0);
-    const totalWords = validCounts.reduce((sum, c) => sum + c.words, 0);
-    const totalBytes = validCounts.reduce((sum, c) => sum + c.bytes, 0);
+    const totals = {
+      lines: validCounts.reduce((sum, c) => sum + c.lines, 0),
+      words: validCounts.reduce((sum, c) => sum + c.words, 0),
+      bytes: validCounts.reduce((sum, c) => sum + c.bytes, 0),
+    }
 
-    let totalOutput = '';
-    if (showLines) totalOutput += `${totalLines} `;
-    if (showWords) totalOutput += `${totalWords} `;
-    if (showBytes) totalOutput += `${totalBytes} `;
-
-    totalOutput += 'total';
-
-    console.log(totalOutput.trim());
+    console.log(formatOutput(totals, 'total'));
   }
 }
 
