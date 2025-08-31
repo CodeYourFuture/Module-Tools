@@ -1,29 +1,32 @@
 import { readdirSync } from 'node:fs';
 import { argv } from 'node:process';
 
-const args = argv.slice(2); // skip node and script name
+const args = argv.slice(2); // skips node and script name
 
-let showAll = false;
-let dir = '.'; //set dir to current directory
+const flags = args.filter(arg => arg.startsWith('-'));
+const operands = args.filter(arg => !arg.startsWith('-'));
 
-// Parse args to check weather or not to show hidden files
-//and ignore -1 because our output is already 1 per line
-args.forEach(arg => {
-  if (arg === '-a') {
-    showAll = true;
-  } else if (arg !== '-1') {
-    dir = arg; //assumes anything else is our target directory
+let showAll = flags.includes('-a');
+let onePerLine = flags.includes('-1');
+
+if (operands.length === 0) operands.push('.'); // defaults to current dir
+
+operands.forEach(dir => {
+  try {
+    let files = readdirSync(dir);  // Reads the contents of the dir synchronously (readdirSync)
+
+    if (!showAll) {
+      files = files.filter(file => !file.startsWith('.'));
+    }
+
+    files.sort((a, b) => a.localeCompare(b));
+
+    if (onePerLine) {
+      files.forEach(file => console.log(file));
+    } else {
+      console.log(files.join('   '));
+    }
+  } catch (err) {
+    console.error(`ls: cannot access '${dir}': ${err.message}`);
   }
 });
-
-try {
-  let files = readdirSync(dir); // Reads the contents of the dir synchronously (readdirSync)
-
-  if (!showAll) {
-    files = files.filter(file => !file.startsWith('.'));
-  }
-
-  files.forEach(file => console.log(file));
-} catch (err) {
-  console.error(`Cannot access '${dir}': ${err.message}`);
-}
