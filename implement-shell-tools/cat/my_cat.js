@@ -5,37 +5,39 @@ const args = argv.slice(2); // skip node and script name
 
 let showLineNumb = false;
 let showNoBlankNumb = false
-let file = '';
+const files = [];
 
 
 args.forEach(arg => {
   if (arg === '-n') {
     showLineNumb = true;
   } else if (arg === '-b') {
-    showLineNumb = false;
     showNoBlankNumb = true;
   }else {  
-    file = arg; 
+    files.push(arg); 
   }
 });
 
-try {
-  let content = await fs.readFile(file, 'utf-8');
-  const lines = content.split('\n');
+if (files.length === 0) {
+  console.error('No input file specified');
+  process.exit(1);
+}
 
-  if (showLineNumb) {
-    // Number all lines
-    content = lines.map((line, i) => `${i + 1}\t${line}`).join('\n');
-  }else  if (showNoBlankNumb) {
-    // Number only non-blank lines
-    let counter = 1;
-    content = lines.map(line => {
-      if (line.trim() === '') return '';
-      return `${counter++}\t${line}`;
-    }).join('\n');
-  }
+for (const file of files) {
+  try {
+    let content = await fs.readFile(file, 'utf-8');
+    const lines = content.split('\n');
 
-  console.log (content)
-} catch (err) {
+    if (showNoBlankNumb) {     // Number only non-blank lines
+        let counter = 1;
+        content = lines.map(line => 
+          line.trim() === '' ? '' : `${counter++}\t${line}`
+        ).join('\n');
+    } else if (showLineNumb) {  // Number all lines
+        content = lines.map((line, i) => `${i + 1}\t${line}`).join('\n');
+    }
+    console.log(content);
+  } catch (err) {
   console.error(`Cannot access '${file}': ${err.message}`);
+  }
 }
