@@ -23,18 +23,21 @@ if (files.length === 0) {
   process.exit(1);
 }
 
+// Global counters across all files
+let lineCounter = 1;
+let nonBlankCounter = 1;
+
 for (const file of files) {
   try {
     let content = await fs.readFile(file, 'utf-8');
     const lines = content.split('\n');
 
     if (showNoBlankNumb) {     // Number only non-blank lines
-        let counter = 1;
         content = lines.map(line => 
-          line.trim() === '' ? '' : `${counter++}\t${line}`
+          line.trim() === '' ? '' : `${nonBlankCounter++}\t${line}`
         ).join('\n');
     } else if (showLineNumb) {  // Number all lines
-        content = lines.map((line, i) => `${i + 1}\t${line}`).join('\n');
+        content = lines.map((line) => `${lineCounter++}\t${line}`).join('\n');
     }
     console.log(content);
   } catch (err) {
