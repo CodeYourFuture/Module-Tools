@@ -14,13 +14,14 @@ def main():
 
     args = parser.parse_args()
 
+    line_number = 1
+    non_blank_line_number = 1
+    
     for file_path in args.path:
         try:
             with open(file_path, 'r') as file:
                 content = file.read()
                 lines = content.split("\n")
-                line_number = 1
-                non_blank_line_number = 1
 
                 for i, line in enumerate(lines):
                     if i == len(lines) - 1 and line == "":  # Skip the last empty line if it exists

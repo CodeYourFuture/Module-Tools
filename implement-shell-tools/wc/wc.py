@@ -7,10 +7,24 @@ def wc_file(path):
     with open(path, "r", encoding="utf-8") as f:
         text = f.read()
     lines = text.count("\n")
+    if text and not text.endswith("\n"):
+        lines += 1  # Count last line if it doesn't end with newline
     words = len(text.split())
     chars = len(text.encode("utf-8"))  # byte count
     return lines, words, chars
 
+def format_counts(lines, words, chars, args, label):
+    """Return formatted output string for wc counts."""
+    parts = []
+    if args.l:
+        parts.append(str(lines).rjust(8))
+    if args.w:
+        parts.append(str(words).rjust(8))
+    if args.c:
+        parts.append(str(chars).rjust(8))
+    if label:
+        parts.append(label)
+    return " ".join(parts)
 
 def main():
     parser = argparse.ArgumentParser(
@@ -37,15 +51,7 @@ def main():
             total_words += words
             total_chars += chars
 
-            counts = []
-            if args.l:
-                counts.append(str(lines))
-            if args.w:
-                counts.append(str(words))
-            if args.c:
-                counts.append(str(chars))
-            counts.append(file_path)
-            print(" ".join(counts))
+            print(format_counts(lines, words, chars, args, file_path))
 
         except FileNotFoundError:
             print(f"wc: {file_path}: No such file or directory", file=sys.stderr)
@@ -53,15 +59,7 @@ def main():
             print(f"wc: {file_path}: {e}", file=sys.stderr)
 
     if len(args.path) > 1:
-        counts = []
-        if args.l:
-            counts.append(str(total_lines))
-        if args.w:
-            counts.append(str(total_words))
-        if args.c:
-            counts.append(str(total_chars))
-        counts.append("total")
-        print(" ".join(counts))
+        print(format_counts(total_lines, total_words, total_chars, args, "total"))
 
 if __name__ == "__main__":
     main()
