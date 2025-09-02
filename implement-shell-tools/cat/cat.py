@@ -14,8 +14,7 @@ def main():
 
     args = parser.parse_args()
 
-    line_number = 1
-    non_blank_line_number = 1
+    counter = 1
     
     for file_path in args.path:
         try:
@@ -27,14 +26,14 @@ def main():
                     if i == len(lines) - 1 and line == "":  # Skip the last empty line if it exists
                         break
                     prefix = ""
-                    if args.n:
-                        prefix = str(line_number).rjust(6) + " "
-                    elif args.b and line != "":
-                        prefix = str(non_blank_line_number).rjust(6) + " "
+                    if args.b:
+                        if line != "":
+                            prefix = str(counter).rjust(6) + " "
+                            counter += 1
+                    elif args.n:
+                        prefix = str(counter).rjust(6) + " "
+                        counter += 1
                     print(prefix + line)
-                    line_number += 1
-                    if line != "":
-                        non_blank_line_number += 1
 
         except FileNotFoundError:
             print(f"cat: {file_path}: No such file or directory")
