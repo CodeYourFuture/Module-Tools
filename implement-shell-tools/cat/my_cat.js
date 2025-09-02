@@ -24,8 +24,7 @@ if (files.length === 0) {
 }
 
 // Global counters across all files
-let lineCounter = 1;
-let nonBlankCounter = 1;
+let counter = 1;
 
 for (const file of files) {
   try {
@@ -34,10 +33,10 @@ for (const file of files) {
 
     if (showNoBlankNumb) {     // Number only non-blank lines
         content = lines.map(line => 
-          line.trim() === '' ? '' : `${nonBlankCounter++}\t${line}`
+          line.trim() === '' ? '' : `${counter++}\t${line}`
         ).join('\n');
     } else if (showLineNumb) {  // Number all lines
-        content = lines.map((line) => `${lineCounter++}\t${line}`).join('\n');
+        content = lines.map((line) => `${counter++}\t${line}`).join('\n');
     }
     console.log(content);
   } catch (err) {
