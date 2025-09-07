@@ -29,7 +29,7 @@ if not args.w and not args.c and not args.l:
     args.w = args.c = args.l = True
 numbers = []
 output = []
-
+column_widths = []
 for path in args.path:
     output_for_one_file = []
     if args.l or args.w:
@@ -64,20 +64,12 @@ if len(args.path) > 1:
 
     num_cols = len(total_results) - 1
     column_widths = [len(str(total_results[i])) for i in range(num_cols)]
-
-    for row in output:
-        line_parts = []
-        for i in range(num_cols):
-            # Right-align with 1 space padding (like wc)
-            line_parts.append(str(row[i]).rjust(column_widths[i] + 7))
-        print("".join(line_parts), row[-1])
 elif len(args.path) == 1:
     num_cols = len(output[0]) - 1
-    print(num_cols)
     column_widths = [len(str([output[0][i]])) for i in range(num_cols)]
-    for row in output:
-        line_parts = []
-        for i in range(num_cols):
-            # Right-align with 1 space padding (like wc)
-            line_parts.append(str(row[i]).rjust(column_widths[i] + 6))
-        print("".join(line_parts), row[-1])
+for row in output:
+    line_parts = []
+    for i in range(num_cols):
+        # Right-align with 1 space padding (like wc)
+        line_parts.append(str(row[i]).rjust(column_widths[i] + 6))
+    print("".join(line_parts), row[-1])
