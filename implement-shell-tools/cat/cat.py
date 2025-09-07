@@ -26,10 +26,10 @@ for path in args.path:
                     if lin == "":
                         print()
                     else:
-                        print(line_num, lin)
+                        print(str(line_num).rjust(6), lin)
                         line_num += 1
                 elif args.n:
-                    print("    ", line_num, lin)
+                    print(str(line_num).rjust(6), "", lin)
                     line_num += 1
 
                 else:
