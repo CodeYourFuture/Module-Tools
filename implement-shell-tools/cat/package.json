@@ -1,0 +1,15 @@
+{
+  "name": "cat",
+  "version": "1.0.0",
+  "description": "re-implementing shell tools like cat using Node.js",
+  "main": "cat.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Samira",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^13.1.0"
+  }
+}
