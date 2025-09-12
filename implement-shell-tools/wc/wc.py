@@ -27,7 +27,7 @@ args = parser.parse_args()
 
 if not args.w and not args.c and not args.l:
     args.w = args.c = args.l = True
-numbers = []
+per_file_totals = []
 output = []
 column_widths = []
 for path in args.path:
@@ -54,11 +54,11 @@ for path in args.path:
         output_for_one_file.append(file_size)
 
     if len(args.path) > 1:
-        numbers.append(output_for_one_file.copy())
+        per_file_totals.append(output_for_one_file.copy())
     output_for_one_file.append(path)
     output.append(output_for_one_file)
 if len(args.path) > 1:
-    total_results = [sum(i) for i in zip(*numbers)]
+    total_results = [sum(i) for i in zip(*per_file_totals)]
     total_results.append("total")
     output.append(total_results)
 
