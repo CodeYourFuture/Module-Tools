@@ -27,7 +27,6 @@ const programArgv = program.args;
       if (stats.isFile()) {
         await listFiles("file");
       } else if (stats.isDirectory()) {
-
         listFiles("directory");
       } else {
         console.error("Not a file or directory.");
@@ -46,56 +45,42 @@ const programArgv = program.args;
 })();
 
 const flag_1 = (files) => {
-  try {
-    files.forEach(function (file) {
-        console.log(file);
-        
-    });
-  } catch (err) {
-    console.error("Error reading directory:", err);
-  }
+  files.forEach(function (file) {
+    console.log(file);
+  });
 };
 
 const flag_a = (files) => {
-  try {
-    files.unshift("..");
-    files.unshift(".");
-    return files;
-  } catch (err) {
-    console.error("Error reading directory:", err);
-  }
+  files.unshift("..");
+  files.unshift(".");
+  return files;
 };
 
 async function listFiles(type) {
-  let output = []
-  try {
-    let formattedPath = "";
-    if (type == "directory") {
-      formattedPath = pathToFile;
-    } else if (type == "file") {
-      formattedPath = path.dirname(pathToFile);
-    }
-    const char = program.opts();
-    const files = await fs.readdir(formattedPath);
-    const sortedOutput = files.sort((a, b) => a.localeCompare(b));
+  let output = [];
+  let formattedPath = "";
+  if (type == "directory") {
+    formattedPath = pathToFile;
+  } else if (type == "file") {
+    formattedPath = path.dirname(pathToFile);
+  }
+  const char = program.opts();
+  const files = await fs.readdir(formattedPath);
+  const sortedOutput = files.sort((a, b) => a.localeCompare(b));
 
-    if (char["a"]){
-      output = flag_a(sortedOutput)
-    } else {
-      sortedOutput.forEach(function (file) {
+  if (char["a"]) {
+    output = flag_a(sortedOutput);
+  } else {
+    sortedOutput.forEach(function (file) {
+      if (file[0] != ".") {
+        output.push(file);
+      }
+    });
+  }
 
-        if (file[0] != "."){
-          output.push(file)
-        }
-      })
-    }
-
-    if (char["1"]){
-      flag_1(output)
-    } else {
-      console.log(output.join("   "));
-    }
-  } catch (err) {
-    console.error("Error reading directory:", err);
+  if (char["1"]) {
+    flag_1(output);
+  } else {
+    console.log(output.join("   "));
   }
 }
