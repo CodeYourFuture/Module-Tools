@@ -1,21 +1,53 @@
 #!/usr/bin/env node
-// wc.js — scaffold (no functionality yet)
-// Plan:
-//   1) single-file, no flags: print lines words bytes + filename
-//   2) multiple files: print per-file + "total"
-//   3) flags: -l (lines), -w (words), -c (bytes)
+// wc.js — ESM: single file, no flags
+// Prints: lines words bytes  filename
 
+import fs from "node:fs";
 import { pathToFileURL } from "node:url";
 
-function main() {
+async function main() {
   const args = process.argv.slice(2);
-  if (args.length === 0) {
-    console.error("Usage: node wc.js <file...> | [-l|-w|-c] <file...>");
+
+  // This commit supports exactly ONE file (no flags yet)
+  if (args.length !== 1) {
+    console.error("Usage (this commit): node wc.js <single-file>");
     process.exit(1);
   }
-  console.log("wc: scaffold ready (implementation comes in next commit)");
+
+  const file = args[0];
+
+  try {
+    const buf = await fs.promises.readFile(file); // Buffer
+    const bytes = buf.length;
+
+    // Count lines: number of newline characters '\n'
+    let lines = 0;
+    for (let i = 0; i < buf.length; i++) {
+      if (buf[i] === 0x0a) lines++; // '\n'
+    }
+
+    // Count words: sequences of non-whitespace
+    const text = buf.toString("utf8");
+    const words = (text.match(/\S+/g) || []).length;
+
+    console.log(`${pad(lines)} ${pad(words)} ${pad(bytes)} ${file}`);
+  } catch (err) {
+    if (err?.code === "ENOENT") {
+      console.error(`wc: ${file}: No such file or directory`);
+    } else if (err?.code === "EACCES") {
+      console.error(`wc: ${file}: Permission denied`);
+    } else {
+      console.error(`wc: ${file}: ${err?.message || "Error"}`);
+    }
+    process.exitCode = 1;
+  }
 }
 
-// run only when executed directly
+function pad(n) {
+  // Right-align like wc (fixed width helps match spacing)
+  return String(n).padStart(7, " ");
+}
+
+// Run only when executed directly
 const isDirect = import.meta.url === pathToFileURL(process.argv[1]).href;
-if (isDirect) main();
+if (isDirect) await main();
