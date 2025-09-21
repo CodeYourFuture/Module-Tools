@@ -25,41 +25,45 @@ const opts = program.opts();
 
 const total = [];
 const output = [];
+const countsPerFile = [];
+let columnWidth = 0;
 
 const flag_c = (content) => {
-  output.push(Buffer.byteLength(content, "utf8"));
+  return Buffer.byteLength(content, "utf8");
 };
 
 const flag_w = (content) => {
-  output.push(content.match(/\b[\w']+\b/g).length);
+  return content.match(/\b[\w']+\b/g).length;
 };
 
 const flag_l = (content) => {
-  output.push(content.split("\n").length - 1);
+  return content.split("\n").length - 1;
 };
 
 const countAndDisplay = async (path) => {
+  const outputPerFile = [];
   const content = await fs.readFile(path, "utf-8");
-  output.splice(0);
   if (opts["l"]) {
-    flag_l(content);
+    outputPerFile.push(flag_l(content));
   }
   if (opts["w"]) {
-    flag_w(content);
+    outputPerFile.push(flag_w(content));
   }
   if (opts["c"]) {
-    flag_c(content);
+    outputPerFile.push(flag_c(content));
   }
   if (argv.length > 1) {
     if (total.length == 0) {
-      total.push(...output);
+      total.push(...outputPerFile);
     } else {
-      for (let index = 0; index < output.length; index++) {
-        total[index] += output[index];
+      for (let index = 0; index < outputPerFile.length; index++) {
+        total[index] += outputPerFile[index];
       }
     }
+    countsPerFile.push(...outputPerFile);
   }
-  console.log([...output, path].join("     "));
+  outputPerFile.push(path);
+  output.push([...outputPerFile]);
 };
 
 const handleInput = async () => {
@@ -69,8 +73,23 @@ const handleInput = async () => {
   for (const path of argv) {
     await countAndDisplay(path);
   }
+  const numOfColumns = Object.keys(opts).length;
   if (argv.length > 1) {
-    console.log(`${total.join("     ")} total`);
+    total.push("total");
+    output.push(total);
+  }
+  for (const row of output) {
+    for (let i = 0; i < numOfColumns; i++) {
+      columnWidth = Math.max(columnWidth, String(row[i]).length);
+    }
+  }
+
+  for (let row of output) {
+    const line_parts = [];
+    for (let i = 0; i < numOfColumns; i++) {
+      line_parts.push(String(row[i]).padStart(columnWidth + 4));
+    }
+    console.log(line_parts.join(" "), row.at(-1));
   }
 };
 handleInput();
