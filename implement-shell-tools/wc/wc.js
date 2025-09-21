@@ -1,20 +1,50 @@
 #!/usr/bin/env node
-// wc.js — ESM: multiple files + total (no flags)
-// Prints per-file: lines words bytes  filename
-// If given >1 files, also prints a "total" line.
+// wc.js — ESM: supports flags -l (lines), -w (words), -c (bytes)
+// Behaviors covered by the README:
+//   - wc sample-files/*
+//   - wc -l sample-files/3.txt
+//   - wc -w sample-files/3.txt
+//   - wc -c sample-files/3.txt
+//   - wc -l sample-files/*
+// Also works with multiple flags (e.g., -lw), like GNU wc.
 
 import fs from "node:fs";
 import { pathToFileURL } from "node:url";
 
 async function main() {
-  const files = process.argv.slice(2);
+  const argv = process.argv.slice(2);
+
+  let showLines = false;
+  let showWords = false;
+  let showBytes = false;
+  const files = [];
+
+  // Parse flags + files. Support combined short flags like -lw, -cl, etc.
+  for (const arg of argv) {
+    if (arg.startsWith("-") && arg !== "-") {
+      for (const ch of arg.slice(1)) {
+        if (ch === "l") showLines = true;
+        else if (ch === "w") showWords = true;
+        else if (ch === "c") showBytes = true;
+        else {
+          // ignore unknown short options for this assignment
+        }
+      }
+    } else {
+      files.push(arg);
+    }
+  }
+
   if (files.length === 0) {
-    console.error("Usage (this commit): node wc.js <file...>");
+    console.error("Usage: node wc.js [-l|-w|-c] <file...>");
     process.exit(1);
   }
 
+  // No flags → show all three like wc
+  const showAll = !showLines && !showWords && !showBytes;
+
   let hadError = false;
-  let totalLines = 0, totalWords = 0, totalBytes = 0;
+  let total = { lines: 0, words: 0, bytes: 0 };
   const results = [];
 
   for (const file of files) {
@@ -25,9 +55,11 @@ async function main() {
         hadError = true;
         continue;
       }
-      const { lines, words, bytes } = await countFile(file);
-      results.push({ file, lines, words, bytes });
-      totalLines += lines; totalWords += words; totalBytes += bytes;
+      const counts = await countFile(file);
+      results.push({ file, ...counts });
+      total.lines += counts.lines;
+      total.words += counts.words;
+      total.bytes += counts.bytes;
     } catch (err) {
       if (err?.code === "ENOENT") {
         console.error(`wc: ${file}: No such file or directory`);
@@ -41,10 +73,10 @@ async function main() {
   }
 
   for (const r of results) {
-    console.log(`${pad(r.lines)} ${pad(r.words)} ${pad(r.bytes)} ${r.file}`);
+    console.log(formatRow(r, { showAll, showLines, showWords, showBytes }));
   }
   if (results.length > 1) {
-    console.log(`${pad(totalLines)} ${pad(totalWords)} ${pad(totalBytes)} total`);
+    console.log(formatRow({ file: "total", ...total }, { showAll, showLines, showWords, showBytes }));
   }
 
   if (hadError) process.exitCode = 1;
@@ -54,19 +86,27 @@ async function countFile(file) {
   const buf = await fs.promises.readFile(file); // Buffer
   const bytes = buf.length;
 
-  // lines: count '\n' bytes
+  // Lines: count '\n' bytes
   let lines = 0;
   for (let i = 0; i < buf.length; i++) if (buf[i] === 0x0a) lines++;
 
-  // words: sequences of non-whitespace (on UTF-8 text)
+  // Words: sequences of non-whitespace
   const text = buf.toString("utf8");
   const words = (text.match(/\S+/g) || []).length;
 
   return { lines, words, bytes };
 }
 
+function formatRow({ lines, words, bytes, file }, opts) {
+  const cols = [];
+  if (opts.showAll || opts.showLines) cols.push(pad(lines));
+  if (opts.showAll || opts.showWords) cols.push(pad(words));
+  if (opts.showAll || opts.showBytes) cols.push(pad(bytes));
+  return `${cols.join(" ")} ${file}`;
+}
+
 function pad(n) {
-  // Right-align like `wc` (fixed width works well for visual parity)
+  // Right-align like `wc`
   return String(n).padStart(7, " ");
 }
 
