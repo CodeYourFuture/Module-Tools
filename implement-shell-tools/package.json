@@ -1,0 +1,12 @@
+{
+  "type": "module",
+  "name": "implement-shell-tools-with-node",
+  "version": "1.0.0",
+  "description": "Your task is to re-implement shell tools you have used.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "pezhman azizi",
+  "license": "ISC"
+}
