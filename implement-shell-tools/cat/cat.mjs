@@ -6,10 +6,11 @@ program
   .description('Prints contents of files')
   .option('-n, --number-all-lines', 'Number all output lines')
   .option('-b, --number-non-blank', 'Number non-blank output lines')
-  .argument('<files...>', 'Files to read')
+  .argument('<files...>', 'Files to read');
+
 program.parse();
 
-const { numberAllLines, numNotBlank } = program.opts();
+const { numberAllLines, numberNonBlank } = program.opts();
 const files = program.args;
 
 let lineNumber = 1;
@@ -21,12 +22,12 @@ for (const file of files) {
       console.error(`cat: ${file}: Is a directory`);
       continue;
     }
+
     const content = await readFile(file, 'utf-8');
     const lines = content.split('\n');
 
     for (const line of lines) {
-      const shouldNumber = (numberAllLines && !numNotBlank) || (numNotBlank && line.trim() !== '');
-
+      const shouldNumber = (numberAllLines && !numberNonBlank) || (numberNonBlank && line.trim() !== '');
       if (shouldNumber) {
         console.log(`${lineNumber.toString().padStart(6)}  ${line}`);
         lineNumber++;

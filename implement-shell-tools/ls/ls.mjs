@@ -1,24 +1,37 @@
-import { program } from "commander"
-import process from "node:process"
-import { promises as fs } from "node:fs"
-import { readdir } from 'node:fs/promises'
+import { program } from "commander";
+import { promises as fs } from "fs";
+import process from "process";
 
 program
-    .name("ls")
-    .description("Lists the files in a directory")
-    .option("-1, --one", "One per line")
-    .option("-a", "Include files starting with dot")
-    .argument("filepath")
-program.parse(process.argv)
+  .name("ls")
+  .description("Lists the files in a directory")
+  .option("-1, --one", "One per line")
+  .option("-a, --all", "Include files starting with dot")
+  .argument("<path>", "Directory to list");
 
-const argv = program.args
-const opts = program.opts()
+program.parse(process.argv);
 
-if (argv.length != 1){
-    console.error("Expected 1 argument")
-    process.exit(1)
+const args = program.args;
+const opts = program.opts();
+
+if (args.length !== 1) {
+  console.error("Expected 1 argument");
+  process.exit(1);
 }
 
-const content = await fs.readdir(argv[0])
+try {
+  let files = await fs.readdir(args[0]);
+  if (!opts.all) {
+    files = files.filter(f => !f.startsWith('.'));
+  }
 
-console.log(content.join(opts.one ? "\n": " "))
+  files.sort();
+
+  if (opts.one) {
+    console.log(files.join('\n'));
+  } else {
+    console.log(files.join(' '));
+  }
+} catch (err) {
+  console.error(`ls: cannot access '${args[0]}': ${err.message}`);
+}

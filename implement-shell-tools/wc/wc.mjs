@@ -1,6 +1,6 @@
 import { program } from "commander";
-import process from "node:process";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync } from "fs";
+import process from "process";
 
 program
   .name("wc")
@@ -8,7 +8,8 @@ program
   .argument("[files...]", "Files to process")
   .option("-l, --lines", "Count lines")
   .option("-w, --words", "Count words")
-  .option("-c, --chars", "Count characters (bytes)")
+  .option("-c, --chars", "Count characters (bytes)");
+
 program.parse(process.argv);
 
 const options = program.opts();
@@ -31,14 +32,8 @@ function countFile(filePath, options) {
     return null;
   }
 
-  if (typeof content !== 'string') {
-    content = "";
-  }
-
   const lineCount = (content.match(/\n/g) || []).length;
-
   const wordCount = content.trim().split(/\s+/).filter(Boolean).length;
-
   const charCount = Buffer.byteLength(content, "utf8");
 
   return {
@@ -50,21 +45,18 @@ function countFile(filePath, options) {
 }
 
 const results = [];
-let totalLines = 0;
-let totalWords = 0;
-let totalChars = 0;
+let totalLines = 0, totalWords = 0, totalChars = 0;
 const hasMultipleFiles = files.length > 1;
 
-files.forEach(file => {
+for (const file of files) {
   const result = countFile(file, options);
   if (result) {
     results.push(result);
-
     if (result.lines !== null) totalLines += result.lines;
     if (result.words !== null) totalWords += result.words;
     if (result.chars !== null) totalChars += result.chars;
   }
-});
+}
 
 results.forEach(result => {
   const output = [];
@@ -76,14 +68,8 @@ results.forEach(result => {
 
 if (hasMultipleFiles && results.length > 0) {
   const totalOutput = [];
-  if (options.lines || (!options.words && !options.chars)) {
-    totalOutput.push(totalLines.toString().padStart(8));
-  }
-  if (options.words || (!options.lines && !options.chars)) {
-    totalOutput.push(totalWords.toString().padStart(8));
-  }
-  if (options.chars || (!options.lines && !options.words)) {
-    totalOutput.push(totalChars.toString().padStart(8));
-  }
+  if (options.lines || (!options.words && !options.chars)) totalOutput.push(totalLines.toString().padStart(8));
+  if (options.words || (!options.lines && !options.chars)) totalOutput.push(totalWords.toString().padStart(8));
+  if (options.chars || (!options.lines && !options.words)) totalOutput.push(totalChars.toString().padStart(8));
   console.log(totalOutput.join(" "), "total");
 }
