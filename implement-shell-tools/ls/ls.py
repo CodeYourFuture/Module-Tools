@@ -1,7 +1,8 @@
 import os
 import argparse
 
-def ls(path='.', one_column=False, show_hidden=False):
+def ls(path, one_column, show_hidden):
+    """List files in a directory, optionally in one column or including hidden files."""
     try:
         files = os.listdir(path)
         if not show_hidden:
@@ -14,6 +15,8 @@ def ls(path='.', one_column=False, show_hidden=False):
             print(*files)
     except FileNotFoundError:
         print(f"ls: cannot access '{path}': No such file or directory")
+    except NotADirectoryError:
+        print(f"ls: cannot access '{path}': Not a directory")
 
 def main():
     parser = argparse.ArgumentParser()

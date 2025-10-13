@@ -1,4 +1,3 @@
-import glob
 import argparse
 from enum import Enum
 
@@ -7,23 +6,27 @@ class Numbering(Enum):
     ALL = 1
     NONEMPTY = 2
 
-def cat(filepath, numbering=Numbering.NONE, line_counter=None):
+def print_numbered_line(line, line_number, pad=6):
+    print(f"{line_number:{pad}}\t{line}", end='')
+    return line_number + 1
+
+def cat(filepath, numbering, start_line):
+    line_number = start_line
     try:
         with open(filepath) as f:
             for line in f:
                 if numbering == Numbering.NONEMPTY:
                     if line.strip():
-                        print(f"{line_counter[0]:6}\t{line}", end='')
-                        line_counter[0] += 1
+                        line_number = print_numbered_line(line, line_number)
                     else:
                         print(line, end='')
                 elif numbering == Numbering.ALL:
-                    print(f"{line_counter[0]:6}\t{line}", end='')
-                    line_counter[0] += 1
+                    line_number = print_numbered_line(line, line_number)
                 else:
                     print(line, end='')
     except FileNotFoundError:
         print(f"cat: {filepath}: No such file or directory")
+    return line_number
 
 def main():
     parser = argparse.ArgumentParser(description="Concatenate files and print on the standard output.")
@@ -32,13 +35,6 @@ def main():
     parser.add_argument('files', nargs='+', help='files to concatenate')
     args = parser.parse_args()
 
-    files = []
-    for pattern in args.files:
-        files.extend(glob.glob(pattern) or [pattern])
-
-    line_counter = [1]
-
-    # Determine numbering mode (mutually exclusive)
     if args.n and args.b:
         parser.error("options -n and -b are mutually exclusive")
     elif args.n:
@@ -48,8 +44,9 @@ def main():
     else:
         numbering = Numbering.NONE
 
-    for file in sorted(files):
-        cat(file, numbering=numbering, line_counter=line_counter)
+    line_number = 1  # start line numbering
+    for file in args.files:
+        line_number = cat(file, numbering=numbering, start_line=line_number)
 
 if __name__ == "__main__":
     main()
