@@ -15,7 +15,14 @@ program.parse(process.argv);
 const options = program.opts();
 const files = program.args.length ? program.args : ["/dev/stdin"];
 
-function countFile(filePath, options) {
+// Determine active counts
+const activeCounts = {
+  lines: options.lines || (!options.words && !options.chars),
+  words: options.words || (!options.lines && !options.chars),
+  chars: options.chars || (!options.lines && !options.words),
+};
+
+function countFile(filePath) {
   let content = "";
   try {
     if (filePath === "/dev/stdin") {
@@ -38,10 +45,18 @@ function countFile(filePath, options) {
 
   return {
     file: filePath,
-    lines: options.lines || (!options.words && !options.chars) ? lineCount : null,
-    words: options.words || (!options.lines && !options.chars) ? wordCount : null,
-    chars: options.chars || (!options.lines && !options.words) ? charCount : null,
+    lines: activeCounts.lines ? lineCount : null,
+    words: activeCounts.words ? wordCount : null,
+    chars: activeCounts.chars ? charCount : null,
   };
+}
+
+function formatCounts(result) {
+  const output = [];
+  if (result.lines !== null) output.push(result.lines.toString().padStart(8));
+  if (result.words !== null) output.push(result.words.toString().padStart(8));
+  if (result.chars !== null) output.push(result.chars.toString().padStart(8));
+  return output.join(" ");
 }
 
 const results = [];
@@ -49,7 +64,7 @@ let totalLines = 0, totalWords = 0, totalChars = 0;
 const hasMultipleFiles = files.length > 1;
 
 for (const file of files) {
-  const result = countFile(file, options);
+  const result = countFile(file);
   if (result) {
     results.push(result);
     if (result.lines !== null) totalLines += result.lines;
@@ -58,18 +73,16 @@ for (const file of files) {
   }
 }
 
-results.forEach(result => {
-  const output = [];
-  if (result.lines !== null) output.push(result.lines.toString().padStart(8));
-  if (result.words !== null) output.push(result.words.toString().padStart(8));
-  if (result.chars !== null) output.push(result.chars.toString().padStart(8));
-  console.log(output.join(" "), result.file);
-});
+// Print per-file results
+results.forEach(result => console.log(`${formatCounts(result)} ${result.file}`));
 
+// Print totals if more than one file
 if (hasMultipleFiles && results.length > 0) {
-  const totalOutput = [];
-  if (options.lines || (!options.words && !options.chars)) totalOutput.push(totalLines.toString().padStart(8));
-  if (options.words || (!options.lines && !options.chars)) totalOutput.push(totalWords.toString().padStart(8));
-  if (options.chars || (!options.lines && !options.words)) totalOutput.push(totalChars.toString().padStart(8));
-  console.log(totalOutput.join(" "), "total");
+  const total = {
+    file: "total",
+    lines: activeCounts.lines ? totalLines : null,
+    words: activeCounts.words ? totalWords : null,
+    chars: activeCounts.chars ? totalChars : null,
+  };
+  console.log(`${formatCounts(total)} total`);
 }
