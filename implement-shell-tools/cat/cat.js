@@ -37,7 +37,8 @@ const numberAll = options.number && !numberNonBlank;
           }
         }
       } else if (numberAll) {
-        const maxDigits = String(lines.length * filePaths.length).length; // max digits to pad across files
+        const maxDigits = totalLines > 0 ? String(totalLines).length : 1;
+
 
         for (const line of lines) {
           const numStr = String(lineNumber++).padStart(maxDigits, " ");
