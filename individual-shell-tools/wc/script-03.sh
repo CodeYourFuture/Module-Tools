@@ -8,4 +8,4 @@ set -euo pipefail
 #        1       7      39 ../helper-files/helper-2.txt
 #        3      19      92 ../helper-files/helper-3.txt
 #        5      30     151 total
-wc -lwm "$(dirname "$0")"/../helper-files/*.txt
+wc "$(dirname "$0")"/../helper-files/*.txt
