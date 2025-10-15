@@ -41,7 +41,8 @@ def main():
     try:
         animal_func = getattr(cowsay, args.animal)
         output = animal_func(message)
-        print(output)
+        if output is not None:
+            print(output)
     except AttributeError:
         print(f"Error: '{args.animal}' is not a valid animal.", file=sys.stderr)
         sys.exit(1)
