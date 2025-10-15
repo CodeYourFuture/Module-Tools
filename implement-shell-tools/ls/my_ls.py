@@ -10,11 +10,13 @@ parser.add_argument("paths", nargs="*", default=["."], help="One or more file or
 parser.add_argument("-l", "--longList", action="store_true", help="Long listing format")
 parser.add_argument("-a", "--all", action="store_true", help="Include hidden files")
 
+parser.add_argument("-1", "--singleColumn", action="store_true", help="List one file per line") 
 args = parser.parse_args()
 
 file_paths = args.paths
 show_long = args.longList
 show_all = args.all
+force_single_column = args.singleColumn 
 
 def format_permissions(mode):
     return stat.filemode(mode)
@@ -38,6 +40,9 @@ for input_path in file_paths:
             if not show_all:
                 entries = [e for e in entries if not e.startswith(".")]
 
+            # Optional: sort entries for consistent output
+            entries.sort()  # (optional for predictable output)
+
             for entry in entries:
                 full_path = os.path.join(input_path, entry)
                 entry_stat = os.stat(full_path)
@@ -46,7 +51,7 @@ for input_path in file_paths:
                     size = str(entry_stat.st_size).rjust(6)
                     print(f"{perms}  {size}  {entry}")
                 else:
-                    print(entry)
+                    print(entry)  
 
     except Exception as e:
         print(f'Error reading "{input_path}": {e}', file=sys.stderr)
