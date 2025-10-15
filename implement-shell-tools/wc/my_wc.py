@@ -10,13 +10,9 @@ parser.add_argument("-w", "--word", action="store_true", help="Count words")
 parser.add_argument("-c", "--character", action="store_true", help="Count characters")
 
 args = parser.parse_args()
-file_paths = args.paths
 
-# Fallback: if no options passed, show all
-show_line = args.line
-show_word = args.word
-show_char = args.character
-show_all = not (show_line or show_word or show_char)
+# If no flags are set, show all
+show_all = not (args.line or args.word or args.character)
 
 # Count content in a string
 def count_content(content):
@@ -25,16 +21,23 @@ def count_content(content):
     characters = len(content)
     return len(lines), len(words), characters
 
-# Totals for multiple files
-total = {
-    "lines": 0,
-    "words": 0,
-    "characters": 0
-}
+# Format output line based on flags
+def format_output(lines, words, chars, label):
+    parts = []
+    if args.line or show_all:
+        parts.append(f"{lines:8}")
+    if args.word or show_all:
+        parts.append(f"{words:8}")
+    if args.character or show_all:
+        parts.append(f"{chars:8}")
+    parts.append(label)
+    return " ".join(parts)
 
+# Totals for multiple files
+total = {"lines": 0, "words": 0, "characters": 0}
 file_count = 0
 
-for input_path in file_paths:
+for input_path in args.paths:
     try:
         if os.path.isdir(input_path):
             print(f"{input_path} is a directory. Skipping.")
@@ -50,29 +53,16 @@ for input_path in file_paths:
         total["characters"] += characters
         file_count += 1
 
-        # Prepare output per file
-        output_parts = []
-        if show_line or show_all:
-            output_parts.append(f"{lines:8}")
-        if show_word or show_all:
-            output_parts.append(f"{words:8}")
-        if show_char or show_all:
-            output_parts.append(f"{characters:8}")
-
-        output_parts.append(input_path)
-        print(" ".join(output_parts))
+        print(format_output(lines, words, characters, input_path))
 
     except Exception as e:
         print(f'Error reading "{input_path}": {e}', file=sys.stderr)
 
 # Print totals if more than one file processed
 if file_count > 1:
-    output_parts = []
-    if show_line or show_all:
-        output_parts.append(f"{total['lines']:8}")
-    if show_word or show_all:
-        output_parts.append(f"{total['words']:8}")
-    if show_char or show_all:
-        output_parts.append(f"{total['characters']:8}")
-    output_parts.append("total")
-    print(" ".join(output_parts))
+    print(format_output(
+        total["lines"],
+        total["words"],
+        total["characters"],
+        "total"
+    ))
