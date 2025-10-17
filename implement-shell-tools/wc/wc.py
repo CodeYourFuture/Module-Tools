@@ -19,6 +19,22 @@ total_bytes = 0
 
 multiple_files = len(args.files) > 1 # to store totals if muliple files
 
+# Helper function to print counts in wc style
+def print_counts(lines, words, bytes_, filename):
+    output = []
+    if args.l:
+        output.append(str(lines))
+    if args.w:
+        output.append(str(words))
+    if args.c:
+        output.append(str(bytes_))
+    
+    # If no flags are given, print all three counts
+    if not output:
+        output = [f"{lines:>7}", f"{words:>7}", f"{bytes_:>7}"]
+    
+    print(" ".join(output), filename)
+
 for file in args.files:
     if not os.path.isfile(file):
         print(f"wc: {file}: No such file or directory")
@@ -31,33 +47,16 @@ for file in args.files:
         tbytes = os.path.getsize(file)
 
     
-        
         total_lines += lines
         total_words += words
         total_bytes += tbytes
 
-        if args.l:
-            print(f"{lines:} {file}")
-
-        elif args.w:
-            print(f"{words:} {file}")
-
-        elif args.c:
-            print(f"{tbytes:} {file}")        
-
-        else:
-            print(f"{lines:>3} {words:>3} {tbytes:>3} {file}") # to print data from per file
+        # Print counts per file
+        print_counts(lines, words, tbytes, file)
 
 #to print total output
 if multiple_files:
-    if args.l:
-        print(f"{total_lines:} total")
-
-    elif args.w:
-        print(f"{total_words:} total")
-
-    else:
-        print(f"{total_lines:>3} {total_words:>3} {total_bytes:>3} total")    
+    print_counts(total_lines, total_words, total_bytes, "total")   
                 
         
                 
