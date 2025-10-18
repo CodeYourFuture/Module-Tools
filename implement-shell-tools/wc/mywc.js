@@ -23,9 +23,14 @@ if (!options.l && !options.w && !options.c) {
   options.c = true;
 }
 
-const showLines = options.l;
-const showWords = options.w;
-const showBytes = options.c;
+function calculateOutput(lines, words, bytes, label) {
+  let output = "";
+  if (options.l) output += `${lines.toString().padStart(8)}`;
+  if (options.w) output += `${words.toString().padStart(8)}`;
+  if (options.c) output += `${bytes.toString().padStart(8)}`;
+  if (label) output += ` ${label}`;
+  return output;
+}
 
 // To support multiple files and a total
 let totalLines = 0;
@@ -44,13 +49,7 @@ for (const file of files) {
     totalWords += wordCount;
     totalBytes += byteCount;
 
-    let output = "";
-    if (showLines) output += `${lineCount.toString().padStart(8)}`;
-    if (showWords) output += `${wordCount.toString().padStart(8)}`;
-    if (showBytes) output += `${byteCount.toString().padStart(8)}`;
-    output += ` ${file}`;
-
-    console.log(output);
+    console.log(calculateOutput(lineCount, wordCount, byteCount, file));
   } catch (err) {
     console.error(`Error reading file ${file}: ${err.message}`);
   }
@@ -58,11 +57,5 @@ for (const file of files) {
 
 // If multiple files were given, show the total
 if (files.length > 1) {
-  let totalOutput = "";
-  if (showLines) totalOutput += `${totalLines.toString().padStart(8)}`;
-  if (showWords) totalOutput += `${totalWords.toString().padStart(8)}`;
-  if (showBytes) totalOutput += `${totalBytes.toString().padStart(8)}`;
-  totalOutput += " total";
-
-  console.log(totalOutput);
+  console.log(calculateOutput(totalLines, totalWords, totalBytes, "total"));
 }

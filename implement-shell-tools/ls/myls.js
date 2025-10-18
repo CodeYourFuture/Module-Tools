@@ -17,18 +17,25 @@ const directory = program.args[0] || ".";
 try {
   let files = await fs.readdir(directory);
 
-  // if "-a" is used, include hidden files; those that start with "." 
+  // if "-a" is used, include hidden files; those that start with "."
   if (options.a) {
     files = [".", "..", ...files];
   }
 
-  for (const file of files) {
-    // if "-a" is not used, skip hidden files; those that start with "."
-    if (!options.a && file.startsWith(".")) {
-      continue;
-    }
+  // If "-a" is not used, filter hidden files out
+  files = files.filter((file) => options.a || !file.startsWith("."));
 
-    console.log(file); // print file name; one file per line
+  // Sort alphabetically
+  files.sort();
+
+  if (options["1"]) {
+    // Print one file per line
+    for (const file of files) {
+      console.log(file);
+    }
+  } else {
+    // Print all files on a single line, separated by spaces
+    console.log(files.join(" "));
   }
 } catch (error) {
   console.error(`Error reading directory ${directory}:`, error.message);
