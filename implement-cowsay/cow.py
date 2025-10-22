@@ -1,7 +1,6 @@
 import cowsay
 import argparse
 
-# cowsay.cow(" ".join(sys.argv[1:]))
 
 
 parser = argparse.ArgumentParser(prog="cow.py", description="Make animals say things")
@@ -12,9 +11,6 @@ args = parser.parse_args()
 
 char_name = args.animal
 message = " ".join(args.message)
-
-# cowsay_func = getattr(cowsay, char_name)
-# cowsay_func(message)
 
 
 print(cowsay.get_output_string(args.animal, message))
