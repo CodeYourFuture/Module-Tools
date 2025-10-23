@@ -22,13 +22,13 @@ for path in args.paths:
     line_num = 1
 
     for line in lines:
-        if args.number_nonblank:
-            if line.strip() != "":
-                print(f"{line_num:6}\t{line}", end="")
-                line_num += 1
-            else:
-                print(line, end="")
-        elif args.number:
+        should_number = False
+        if args.number_nonblank and line.strip():
+            should_number = True
+        elif args.number and not args.number_nonblank:
+            should_number = True
+
+        if should_number:
             print(f"{line_num:6}\t{line}", end="")
             line_num += 1
         else:
