@@ -7,7 +7,7 @@ program
 .description("displays the contents of a file")
 .option("-n, --number", "Number all output lines")
 .option("-b, --number-nonblank", "Number non-blank output lines only")
-.argument("<filepath>");
+.argument("<filepaths...>");
 
 program.parse();
 
@@ -20,21 +20,28 @@ if (args.length === 0) {
   program.help();
 }
 
-const path = args[0]
-const content = await fs.readFile(path, "utf-8");
- const lines = content.split('\n');
-if(opts.number){
-     for (let i = 0; i < lines.length; i++) {
-        console.log(`${i + 1}\t${lines[i]}`);
-      }
-    }else if (opts.numberNonblank) {
-      let lineNumber = 1;
-      for (let i = 0; i < lines.length; i++) {
-        if (lines[i].trim() !== '') {
-          console.log(`${lineNumber.toString().padStart(6)}\t${lines[i]}`);
-          lineNumber++;
+let globalLineNumber = 1;
+
+for (const path of args) {
+  try {
+    const content = await fs.readFile(path, "utf-8");
+    const lines = content.split('\n');
+
+    if (opts.number) {
+      lines.forEach((line, idx) => {
+        console.log(`${idx + 1}\t${line}`);
+      });
+    } else if (opts.numberNonblank) {
+      for (const line of lines) {
+        if (line.trim() !== '') {
+          console.log(`${globalLineNumber}\t${line}`);
+          globalLineNumber++;
         }
-     }
-    }else console.log(content)
-    
-    
+      }
+    } else {
+      console.log(content);
+    }
+  } catch (err) {
+    console.error(`Error reading file "${path}": ${err.message}`);
+  }
+}
