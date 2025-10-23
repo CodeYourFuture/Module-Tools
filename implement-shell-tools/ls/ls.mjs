@@ -27,7 +27,7 @@ if (!opts.all) {
 }
 
 if (opts.one) {
-  visibleFiles.forEach(file => console.log(file));
+  visibleFiles.forEach(console.log);
 } else {
   console.log(visibleFiles.join(" "));
 }
