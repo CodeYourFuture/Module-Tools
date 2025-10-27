@@ -21,13 +21,15 @@ for path in args.paths:
         line_num = 1
         lines_arr = []
 
-        for line in content.split('\n'):
+        for line in content.splitlines():
             if line.strip() == '':
                 lines_arr.append(line) 
             else:
                 lines_arr.append(f"{line_num:6} {line}")
                 line_num += 1
-        sys.stdout.write('\n'.join(lines_arr) + '\n')
+        # sys.stdout.write('\n'.join(lines_arr) + '\n')
+        print('\n'.join(lines_arr) + '\n')
+
 
     elif args.n:
         lines_arr = [
