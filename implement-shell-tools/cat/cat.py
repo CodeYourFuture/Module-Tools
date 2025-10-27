@@ -27,7 +27,6 @@ for path in args.paths:
             else:
                 lines_arr.append(f"{line_num:6} {line}")
                 line_num += 1
-        # sys.stdout.write('\n'.join(lines_arr) + '\n')
         print('\n'.join(lines_arr) + '\n')
 
 
