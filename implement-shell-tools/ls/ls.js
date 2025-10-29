@@ -20,10 +20,10 @@ const files = await fs.readdir(directory);
 const visibleFiles = allFiles ? files : files.filter(file => !file.startsWith("."));
 
 if (listPerLine){
-    for(const file of visibleFiles){
-    console.log(file)
+    for (const file of visibleFiles){
+        console.log(file)
     }
-}else{
+} else {
         console.log(visibleFiles.join("     "))
     }
 
