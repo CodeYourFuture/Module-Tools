@@ -59,7 +59,7 @@ If reading the byte 0x21 as a greyscale colour, as described in "Approaches for 
 Answer: A dark shade of grey
 
 If reading the bytes 0xAA00FF as an RGB colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
-Answer:
+Answer: A bright shade of purple
 
 If reading the bytes 0xAA00FF as a sequence of three one-byte decimal numbers, what decimal numbers would they be?
-Answer:
+Answer: 170, 0, 255 respectively
