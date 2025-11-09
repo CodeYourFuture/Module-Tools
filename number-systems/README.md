@@ -38,10 +38,10 @@ How can you test if a binary number is a power of two (e.g. 1, 2, 4, 8, 16, ...)
 Answer: the most significant bit (on the left) always holds the value 1 while the rest of the bits (on the right) have 0s.
 
 Convert the decimal number 14 to hex.
-Answer:
+Answer: E
 
 Convert the decimal number 386 to hex.
-Answer:
+Answer: 182
 
 Convert the hex number 386 to decimal.
 Answer:
