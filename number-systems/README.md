@@ -23,19 +23,19 @@ What is 10001 + 10001?
 Answer: 100010
 
 What's the largest number you can store with 4 bits, if you want to be able to represent the number 0?
-Answer:
+Answer: 15
 
 How many bits would you need in order to store the numbers between 0 and 255 inclusive?
-Answer:
+Answer: 8 bits
 
 How many bits would you need in order to store the numbers between 0 and 3 inclusive?
-Answer:
+Answer: 2 bits
 
 How many bits would you need in order to store the numbers between 0 and 1000 inclusive?
-Answer:
+Answer: 10 bits
 
 How can you test if a binary number is a power of two (e.g. 1, 2, 4, 8, 16, ...)?
-Answer:
+Answer: the most significant bit (on the left) always holds the value 1 while the rest of the bits (on the right) have 0s.
 
 Convert the decimal number 14 to hex.
 Answer:
