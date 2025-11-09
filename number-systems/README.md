@@ -50,13 +50,13 @@ Convert the hex number B to decimal.
 Answer: 11
 
 If reading the byte 0x21 as a number, what decimal number would it mean?
-Answer:
+Answer: 528
 
 If reading the byte 0x21 as an ASCII character, what character would it mean?
-Answer:
+Answer: !
 
 If reading the byte 0x21 as a greyscale colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
-Answer:
+Answer: A dark shade of grey
 
 If reading the bytes 0xAA00FF as an RGB colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
 Answer:
