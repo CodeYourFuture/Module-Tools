@@ -36,16 +36,21 @@ How many bits would you need in order to store the numbers between 0 and 255 inc
 Answer:
 8 bits
 
-How many bits would you need in order to store the numbers between 0 and 1000 inclusive?
+How many bits would you need in order to store the numbers between 0 and 3 inclusive?
 Answer:
 2 bits
+
+How many bits would you need in order to store the numbers between 0 and 1000 inclusive?
+Answer:
+10 bits
 
 How can you test if a binary number is a power of two (e.g. 1, 2, 4, 8, 16, ...)?
 Answer:
 Every binary number is made from sums of powers of 2, but a number is a power of 2 itself if its binary representation has exactly one "1" and all the other bits are 0.
 
 Convert the decimal number 14 to hex.
-Answer: 0xE
+Answer: 
+0xE
 
 Convert the decimal number 386 to hex.
 Answer:
