@@ -1,4 +1,4 @@
-taDate	Time	Event	Name
+Date	Time	Event	Name
 2024-11-26	04:00	Entry	Sally
 2024-11-26	05:12	Entry	German
 2024-11-26	06:37	Exit	German
