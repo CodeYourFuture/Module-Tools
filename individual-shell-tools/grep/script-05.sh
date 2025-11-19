@@ -3,6 +3,6 @@
 set -euo pipefail
 
 # TODO: Write a command to output every line in dialogue.txt that contains the string "cure", as well as the line before that line.
-grep -iC 1 cure dialogue.txt
+grep -iB 1 cure dialogue.txt
 
 # The output should contain two pairs of two lines of text (with a separator between them).
