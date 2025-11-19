@@ -7,24 +7,39 @@ program
   .description(
     "The wc utility displays the number of lines, words, and bytes contained in each input file, or standard input"
   )
-  .argument("<path>", "The file path to process");
+  .argument("<path...>", "The file paths to process");
 
 //interpret the program
 program.parse();
 
-//use the parsed data
-const path = program.args[0];
+//initialise totals
+let totalLines = 0;
+let totalWords = 0;
+let totalCharacters = 0;
 
-//read the file
-const content = await fs.readFile(path, "utf-8");
+//process each file
 
-//count lines
-const lines = content.split("\n").length - 1;
+for (const path of program.args) {
+  //read the file
+  const content = await fs.readFile(path, "utf-8");
 
-//count words split by any whitespace
-const words = content.split(/\s+/).filter((word) => word.length > 0).length;
+  //count lines
+  const lines = content.split("\n").length - 1;
 
-//count character
-const characters = content.length;
+  //count words (split by any whitespace)
+  const words = content.split(/\s+/).filter((word) => word.length > 0).length;
 
-console.log(`${lines} ${words} ${characters} ${path}`);
+  //count character
+  const characters = content.length;
+
+  //Add to totals
+  totalLines += lines;
+  totalWords += words;
+  totalCharacters += characters;
+
+  console.log(`${lines} ${words} ${characters} ${path}`);
+}
+
+if (program.args.length > 1) {
+  console.log(`${totalLines} ${totalWords} ${totalCharacters} total`);
+}
