@@ -28,8 +28,12 @@ import { glob } from "glob";
             }
             //console.log(linesOfText);
             for(const line of linesOfText){
+                if (line.trim()==="" && flag==='-b'){
+                 console.log(line);
+                }else {
                 console.log(`${lineNumber} ${line}`);
                 lineNumber ++ ;
+                }
             }
             }
 
