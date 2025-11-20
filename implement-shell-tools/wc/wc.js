@@ -1,9 +1,16 @@
 import { promises as fs } from "node:fs";
 async function wcJsImplement() {
+
     let totalLines=0,totalWords=0,TotalBytes=0;
     let words,bytes;
     const commandLineArray=process.argv.slice(2);
-    //console.log(commandLineArray);
+    const flags = commandLineArray.filter((item) => item.startsWith("-"));
+    
+    if(flags.length !==0 )
+    {
+        commandLineArray.shift();
+    }
+
     for(const file of commandLineArray){
         const fileContent=await fs.readFile(file , 'utf-8');
         const fileBuffer=await fs.readFile(file);
@@ -26,9 +33,42 @@ async function wcJsImplement() {
             }
         }
         totalWords += wordsCount;
-        console.log(`${String(linesCount).padStart(4)}${String(wordsCount).padStart(4)}${String(bytes).padStart(4)} ${file}`);
+
+        switch (flags[0]) {
+          case "-l":
+            console.log(`${String(linesCount).padStart(4)} ${file}`);
+            break;
+          case "-w":
+            console.log(`${String(wordsCount).padStart(4)} ${file}`);
+            break;
+          case "-c":
+            console.log(`${String(bytes).padStart(4)} ${file}`);
+            break;
+          default:  
+           console.log(`${String(linesCount).padStart(4)}${String(wordsCount).padStart(4)}${String(bytes).padStart(4)} ${file}`);
+        }
+       
        
     }
-    console.log(`${String(totalLines).padStart(4)}${String(totalWords).padStart(4)}${String(TotalBytes).padStart(4)} total`);
+    if(commandLineArray.length>1){
+        switch (flags[0]) {
+          case "-l":
+            console.log(`${String(totalLines).padStart(4)} total`);
+            break;
+          case "-w":
+            console.log(`${String(totalWords).padStart(4)} total`);
+            break;
+          case "-c":
+            console.log(`${String(TotalBytes).padStart(4)} total`);
+            break;
+          default :
+            console.log(
+              `${String(totalLines).padStart(4)}${String(totalWords).padStart(
+                4
+              )}${String(TotalBytes).padStart(4)} total`
+            );
+                 }
+    }
+    
 }
 wcJsImplement();
