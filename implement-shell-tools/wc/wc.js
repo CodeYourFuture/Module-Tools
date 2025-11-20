@@ -26,9 +26,9 @@ async function wcJsImplement() {
             }
         }
         totalWords += wordsCount;
-        console.log(`${linesCount}   ${wordsCount}    ${bytes}  ${file}`);
+        console.log(`${String(linesCount).padStart(4)}${String(wordsCount).padStart(4)}${String(bytes).padStart(4)} ${file}`);
        
     }
-    console.log(`${totalLines}   ${totalWords}   ${TotalBytes}   total`);
+    console.log(`${String(totalLines).padStart(4)}${String(totalWords).padStart(4)}${String(TotalBytes).padStart(4)} total`);
 }
 wcJsImplement();
