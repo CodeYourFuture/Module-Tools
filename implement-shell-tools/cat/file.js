@@ -28,7 +28,14 @@ for (const file of files) {
       console.log(`${lineNumber.toString().padStart(6)}  ${line}`); // adding padding for formatting 
       lineNumber++;
     }  
-    else{
+    else if (options.numberNonblank) { // -b
+      if (line.trim() === "") {
+        console.log(line);
+      } else {
+        console.log(`${lineNumber.toString().padStart(6)}  ${line}`);
+        lineNumber++;
+      }
+    } else {
       console.log(line);  
     } 
     }
