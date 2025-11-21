@@ -22,6 +22,10 @@ program
 // parse command-line file arguments using the process.argv array
 program.parse(process.argv);
 
+function printNumberedLine(line, lineNumber) {
+    console.log(`${lineNumber.toString().padStart(6, ' ')}  ${line}`);
+    return lineNumber + 1; 
+}
 
 async function newCat(files, numberLines, numberNonBlank) {
     let lineNumber = 1;
@@ -43,15 +47,13 @@ async function newCat(files, numberLines, numberNonBlank) {
                 if (numberNonBlank) {
                     // check what is left on the line after trimming (truthy = text, falsy = blank)
                     if (line.trim()) {
-                    console.log(`${lineNumber.toString().padStart(6, ' ')}  ${line}`);
-                    lineNumber++   
+                    lineNumber = printNumberedLine(line, lineNumber);
                     }  else {
                         console.log(line)
                     } 
                 } else if (numberLines) {
                     // number all lines
-                    console.log(`${lineNumber.toString().padStart(6, ' ')}  ${line}`);
-                    lineNumber++
+                   lineNumber = printNumberedLine(line, lineNumber);
                 } else {
                     // if neither flag print normally
                     console.log(line)
