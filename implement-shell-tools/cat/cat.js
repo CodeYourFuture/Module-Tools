@@ -17,31 +17,47 @@ program.parse();
 const paths = program.args;
 const { number, numberNonBlank } = program.opts();
 
-console.log(number, numberNonBlank);
-
-let content = "",
-  output;
+// --- Read files ---
+let content = "";
 
 for (const path of paths) {
   content += await fs.readFile(path, "utf-8");
 }
 
-output = content.trim();
+// Remove the trailing newline
+// I do realise that this is not exactly how cat works, but for the files that we have, we get a trailing new line and this makes the output look just as it would with the Unix cat command.
+if (content.endsWith("\n")) {
+  content = content.slice(0, -1);
+}
+
+const contentLines = content.split("\n");
+
+// --- Numbering functions ---
+function numberAll(lines) {
+  return lines.map(
+    (line, index) => `${String(index + 1).padStart(6, " ")}  ${line}`
+  );
+}
+
+function numberNonEmpty(lines) {
+  let lineCounter = 1;
+  return lines.map((line) =>
+    line.trim() === ""
+      ? line
+      : `${String(lineCounter++).padStart(6, " ")}  ${line}`
+  );
+}
+
+// --- Output logic ---
+let output;
 
 if (numberNonBlank) {
-  const outputArr = output.split("\n");
-  let lineCounter = 1;
-  for (let i = 0; i < outputArr.length; i++) {
-    if (outputArr[i].trim() === "") continue;
-    outputArr[i] = `${String(lineCounter++).padStart(6, " ")}  ${outputArr[i]}`;
-  }
-  console.log(outputArr.join("\n"));
+  output = numberNonEmpty(contentLines);
 } else if (number) {
-  const outputArr = output.split("\n");
-  for (let i = 0; i < outputArr.length; i++) {
-    outputArr[i] = `${String(i + 1).padStart(6, " ")}  ${outputArr[i]}`;
-  }
-  console.log(outputArr.join("\n"));
+  output = numberAll(contentLines);
 } else {
-  console.log(output);
+  output = contentLines;
 }
+
+// --- Print output ---
+console.log(output.join("\n"));
