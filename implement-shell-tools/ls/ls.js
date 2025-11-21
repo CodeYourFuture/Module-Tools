@@ -17,6 +17,12 @@ const options = program.opts();
 
 const directoryContent = await fs.readdir(path);
 
+let allContent = directoryContent;
+
+if (!options.a) {
+    allContent = directoryContent.filter(name => name.startsWith("."));
+}
+
 for (const item of directoryContent) {
     if (options.one) {
         process.stdout.write(item + "\n");
