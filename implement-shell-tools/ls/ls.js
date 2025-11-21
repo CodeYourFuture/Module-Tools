@@ -21,7 +21,7 @@ for (const item of directoryContent) {
     if (options.one) {
         process.stdout.write(item + "\n");
     } else {
-        process.stdout.write(item);
+        process.stdout.write(item + "  ");
     }
     }
 
