@@ -17,4 +17,12 @@ const options = program.opts();
 
 const directoryContent = await fs.readdir(path);
 
+for (const item of directoryContent) {
+    if (options.one) {
+        process.stdout.write(item + "\n")
+    } 
+    }
 
+
+
+    
