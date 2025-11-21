@@ -1,5 +1,7 @@
 import process from "node:process";
 import {promises as fs} from "node:fs";
+import {program} from "commander";
+
 
 const argv = process.argv.slice(2);
 if (argv.length != 1) {
