@@ -2,6 +2,11 @@ import process from "node:process";
 import {promises as fs} from "node:fs";
 import {program} from "commander";
 
+program
+    .name("display-file-content")
+    .description("Output the content of a file to the terminal")
+    .option("-n", "Number the output lines")
+
 
 const argv = process.argv.slice(2);
 if (argv.length != 1) {
