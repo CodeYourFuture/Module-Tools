@@ -11,10 +11,13 @@ program
 
 program.parse();
 
-const argv = program.args;
+const paths = program.args;
 
-const path = argv[0];
+let content;
+for (const path of paths) {
+  content
+    ? (content += await fs.readFile(path, "utf-8"))
+    : (content = await fs.readFile(path, "utf-8"));
+}
 
-const content = await fs.readFile(path, "utf-8");
-
-console.log(content.trim());
+console.log(`${content.trim()}`);
