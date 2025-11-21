@@ -45,3 +45,5 @@ for (let line in linesArray) {
     }
 }
 
+process.stdout.write(outputLines.join("\n"));
+
