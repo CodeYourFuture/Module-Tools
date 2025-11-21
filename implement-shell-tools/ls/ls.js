@@ -11,6 +11,6 @@ program
 
 program.parse();
 
-const path = program.args;
+const path = program.args[0];
 
 const options = program.opts();
