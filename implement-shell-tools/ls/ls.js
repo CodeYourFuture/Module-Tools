@@ -14,3 +14,7 @@ program.parse();
 const path = program.args[0];
 
 const options = program.opts();
+
+const directoryContent = await fs.readdir(path);
+
+
