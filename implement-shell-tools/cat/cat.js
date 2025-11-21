@@ -8,6 +8,8 @@ program
     .argument("<path>", "The file path to process")
     .option("-n", "Number the output lines")
 
+program.parse();
+
 const argv = process.argv.slice(2);
 if (argv.length != 1) {
     console.error("Expected exactly 1 argument or a path but received ${argv.length.");
