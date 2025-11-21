@@ -10,15 +10,11 @@ program
 
 program.parse();
 
-const argv = program.args;
-if (argv.length != 1) {
-    console.error("Expected exactly 1 argument or a path but received ${argv.length.");
-    process.exit(1);
-}
+const paths = program.args;
 
-const path = argv[0];
 const options = program.opts();
 
+const path = paths[0];
 
 const displayFileContent = await fs.readFile(path, "utf-8");
 
