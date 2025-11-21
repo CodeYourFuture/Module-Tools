@@ -8,3 +8,7 @@ program
   .argument("<path>", "The file path to process")
   .option("-1", "Output one entry per line")
 //   .option("-a", "List all files & directories, including hidden ones");
+
+program.parse();
+
+const path = program.args;
