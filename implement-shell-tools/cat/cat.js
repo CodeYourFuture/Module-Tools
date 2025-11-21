@@ -13,40 +13,41 @@ program.parse();
 
 const paths = program.args;
 
-for (const path of paths) {
-    const filesContent = await fs.readFile(path, "utf-8");
-}
-
 const options = program.opts();
-
-
-const linesArray = displayFileContent.split("\n");
-
-if (linesArray[linesArray.length - 1] == "") {
-    linesArray.pop();
-}
-
-const outputLines = [];
 
 let lineNumber = 1;
 
-for (let line of linesArray) {
+for (const path of paths) {
+    const filesContent = await fs.readFile(path, "utf-8");
+
+    const lines = filesContent.split("\n");
+
+    if (lines[lines.length - 1] === "") {
+        lines.pop();
+    }
+
+    for (let line of lines) {
     if (options.n) {
-        const numberedLines = `${lineNumber}  ${line}`;
-        outputLines.push(numberedLines);
+        process.stdout.write(`${lineNumber}  ${line}\n`);
         lineNumber++;
     } else if (options.b) {
         if (line != "") {
-            const numberedLines = `${lineNumber}  ${line}`;
-            outputLines.push(numberedLines);
-            lineNumber++;
+        process.stdout.write(`${lineNumber}  ${line}\n`);
+        lineNumber++;
         } else {
-            outputLines.push("");
+        process.stdout.write("\n");
         }
     } else {
-        outputLines.push(line)
+        process.stdout.write(line + "\n");
+    }
     }
 }
 
-process.stdout.write(outputLines.join("\n"));
+
+
+
+
+
+
+
 
