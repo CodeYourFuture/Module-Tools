@@ -24,5 +24,11 @@ const numberedLinesArray = linesArray.map((line, index) => `${index + 1}  ${line
 
 const numberedLines = numberedLinesArray.join("\n")
 
-process.stdout.write(displayFileContent);
+if (options.n) {
+    process.stdout.write(numberedLines);
+} else {
+    process.stdout.write(displayFileContent);
+}
+
+
 
