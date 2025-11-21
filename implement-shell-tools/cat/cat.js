@@ -18,7 +18,11 @@ const path = paths[0];
 
 const displayFileContent = await fs.readFile(path, "utf-8");
 
-const lines = displayFileContent.split("\n");
+const linesArray = displayFileContent.split("\n");
+
+const numberedLinesArray = linesArray.map((line, index) => `${index + 1}  ${line}`);
+
+const numberedLines = numberedLinesArray.join("\n")
 
 process.stdout.write(displayFileContent);
 
