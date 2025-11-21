@@ -20,6 +20,10 @@ const displayFileContent = await fs.readFile(path, "utf-8");
 
 const linesArray = displayFileContent.split("\n");
 
+if (linesArray[linesArray.length - 1] == "") {
+    linesArray.pop();
+}
+
 const numberedLinesArray = linesArray.map((line, index) => `${index + 1}  ${line}`);
 
 const numberedLines = numberedLinesArray.join("\n")
