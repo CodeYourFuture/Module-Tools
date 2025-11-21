@@ -6,3 +6,5 @@ if (argv.length != 1) {
     console.error("Expected exactly 1 argument or a path but received ${argv.length.");
     process.exit(1);
 }
+
+const path = argv[0];
