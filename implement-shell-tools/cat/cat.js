@@ -25,15 +25,14 @@ if (linesArray[linesArray.length - 1] == "") {
     linesArray.pop();
 }
 
-const numberedLinesArray = linesArray.map((line, index) => `${index + 1}  ${line}`);
+const outputLines = [];
 
-const numberedLines = numberedLinesArray.join("\n")
+let lineNumber = 1;
 
-if (options.n) {
-    process.stdout.write(numberedLines);
-} else {
-    process.stdout.write(displayFileContent);
+for (let line in linesArray) {
+    if (options.n) {
+        const numberedLines = "${lineNumber}  ${line}";
+        lineNumber++;
+    }
 }
-
-
 
