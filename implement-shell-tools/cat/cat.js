@@ -19,25 +19,29 @@ const { number, numberNonBlank } = program.opts();
 
 console.log(number, numberNonBlank);
 
-let content,
-  output,
-  count = 1;
+let content = "",
+  output;
 
 for (const path of paths) {
-  content
-    ? (content += await fs.readFile(path, "utf-8"))
-    : (content = await fs.readFile(path, "utf-8"));
+  content += await fs.readFile(path, "utf-8");
 }
 
 output = content.trim();
 
-if (number) {
+if (numberNonBlank) {
+  const outputArr = output.split("\n");
+  let lineCounter = 1;
+  for (let i = 0; i < outputArr.length; i++) {
+    if (outputArr[i].trim() === "") continue;
+    outputArr[i] = `${String(lineCounter++).padStart(6, " ")}  ${outputArr[i]}`;
+  }
+  console.log(outputArr.join("\n"));
+} else if (number) {
   const outputArr = output.split("\n");
   for (let i = 0; i < outputArr.length; i++) {
     outputArr[i] = `${String(i + 1).padStart(6, " ")}  ${outputArr[i]}`;
   }
   console.log(outputArr.join("\n"));
+} else {
+  console.log(output);
 }
-
-
-// console.log(output);
