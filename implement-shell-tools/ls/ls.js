@@ -7,7 +7,7 @@ program
   .description("List all files and directories in a directory")
   .argument("<path>", "The file path to process")
   .option("-1, --one", "Output one entry per line")
-//   .option("-a", "List all files & directories, including hidden ones");
+  .option("-a", "List all files & directories, including hidden ones");
 
 program.parse();
 
