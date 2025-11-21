@@ -7,6 +7,7 @@ program
     .description("Output the content of a file to the terminal")
     .argument("<path>", "The file path to process")
     .option("-n", "Number the output lines")
+    .option("-b","Number the non-blank output lines")
 
 program.parse();
 
