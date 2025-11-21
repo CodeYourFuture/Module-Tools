@@ -25,6 +25,16 @@ program
 program.parse(process.argv);
 
 
+
+function sortEntries(entries) {
+    // localeCompare = take into account rules of system language/region for ordering 
+    // undefined = uses the system default, numeric = regular number sorting, base = ignore case & accents
+    return entries.sort((a, b) => 
+        a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
+    );
+}
+
+
 async function newLs(directory, oneFlag, allFlag) {
     try {
         // check if the path exists
@@ -37,28 +47,22 @@ async function newLs(directory, oneFlag, allFlag) {
         } 
 
         // read directory contents
-        let entries = await fs.readdir(directory);
+        const entries = await fs.readdir(directory);
 
         let finalEntries;
+        
+        // organize -a output (visible files (doesn't start with a .) and hidden files (starts with a .))
+        const visibleFiles = entries.filter(name => !name.startsWith('.'));
+        const hiddenFiles = entries.filter(name => name.startsWith('.') && name !== '.' && name !== '..');
 
-        // organize -a output ('.' and '..' first, then visible files, then hidden (starts with a .) files)
         if (allFlag) {
-            const dotEntries = ['.', '..'];
-            const visibleFiles = entries.filter(name => !name.startsWith('.'));
-            const hiddenFiles = entries.filter(name => name.startsWith('.') && name !== '.' && name !== '..');
-
-            // localeCompare = take into account rules of system language/region for ordering 
-            // undefined = uses the system default, numeric = regular number sorting, base = ignore case & accents            
-            visibleFiles.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
-            hiddenFiles.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
-
-            // combine to a single new array
-            finalEntries = dotEntries.concat(visibleFiles, hiddenFiles);
+            // add visible and hidden files to the new ['.', '..'] array literal
+            finalEntries = ['.', '..']
+                .concat(sortEntries(visibleFiles))
+                .concat(sortEntries(hiddenFiles));
         } else {
-            // sort just visible files
-            finalEntries = entries
-                .filter(name => !name.startsWith('.'))
-                .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+            // return sorted array with visible files
+            finalEntries = sortEntries(visibleFiles);
         }
 
         // organize -1 output
