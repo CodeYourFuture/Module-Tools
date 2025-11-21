@@ -31,8 +31,17 @@ let lineNumber = 1;
 
 for (let line in linesArray) {
     if (options.n) {
-        const numberedLines = "${lineNumber}  ${line}";
+        const numberedLines = '${lineNumber}  ${line}';
+        outputLines.push(numberedLines);
         lineNumber++;
+    } else if (options.b) {
+        if (line != "") {
+            const numberedLines = "${lineNumber}  ${line}";
+            outputLines.push(numberedLines);
+            lineNumber++;
+        } else {
+            outputLines.push("");
+        }
     }
 }
 
