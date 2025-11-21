@@ -6,7 +6,7 @@ program
   .name("list-files-in-directory")
   .description("List all files and directories in a directory")
   .argument("<path>", "The file path to process")
-  .option("-1", "Output one entry per line")
+  .option("-1, --one", "Output one entry per line")
 //   .option("-a", "List all files & directories, including hidden ones");
 
 program.parse();
@@ -19,8 +19,10 @@ const directoryContent = await fs.readdir(path);
 
 for (const item of directoryContent) {
     if (options.one) {
-        process.stdout.write(item + "\n")
-    } 
+        process.stdout.write(item + "\n");
+    } else {
+        process.stdout.write(item);
+    }
     }
 
 
