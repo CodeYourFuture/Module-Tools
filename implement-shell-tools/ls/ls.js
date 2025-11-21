@@ -20,10 +20,10 @@ const directoryContent = await fs.readdir(path);
 let allContent = directoryContent;
 
 if (!options.a) {
-    allContent = directoryContent.filter(name => name.startsWith("."));
+    allContent = directoryContent.filter(name => !name.startsWith("."));
 }
 
-for (const item of directoryContent) {
+for (const item of allContent) {
     if (options.one) {
         process.stdout.write(item + "\n");
     } else {
