@@ -8,3 +8,5 @@ if (argv.length != 1) {
 }
 
 const path = argv[0];
+
+const content = await fs.readFile(path, "utf-8");
