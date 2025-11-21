@@ -13,11 +13,12 @@ program.parse();
 
 const paths = program.args;
 
+for (const path of paths) {
+    const filesContent = await fs.readFile(path, "utf-8");
+}
+
 const options = program.opts();
 
-const path = paths[0];
-
-const displayFileContent = await fs.readFile(path, "utf-8");
 
 const linesArray = displayFileContent.split("\n");
 
