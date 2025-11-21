@@ -5,8 +5,8 @@ import {program} from "commander";
 program
     .name("display-file-content")
     .description("Output the content of a file to the terminal")
+    .argument("<path>", "The file path to process")
     .option("-n", "Number the output lines")
-
 
 const argv = process.argv.slice(2);
 if (argv.length != 1) {
