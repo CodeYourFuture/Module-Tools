@@ -11,5 +11,5 @@ const path = argv[0];
 
 const displayFileContent = await fs.readFile(path, "utf-8");
 
-
+process.stdout.write(displayFileContent);
 
