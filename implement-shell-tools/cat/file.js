@@ -1,7 +1,8 @@
+//On macOS (BSD cat), the -n option resets numbering for each file, so multiple files start again at 1,
+//when you run cat -n sample-files/*.txt
+//This Node.js script mimics GNU cat, where -n continues numbering across all files instead of restarting.
 import { program } from "commander";
 import {promises as fs} from "node:fs"
-
-
 
  //configuring the program here to run flags.
 
@@ -13,33 +14,43 @@ program
   .argument("<files...>", "File paths to display")
   .parse(process.argv);//Parse command line arguments (reads process.argv and interprets it)
   
+
+//Constants
+const paddingWidth = 6; // width for line number padding
+
+// Helper function to format a line with numbering
+function formatLine(line, lineNumber, numberAll, numberNonBlank) {
+  if (numberAll) {
+    return `${lineNumber.toString().padStart(paddingWidth)}  ${line}`;
+  }
+  if (numberNonBlank) {
+    if (line.trim() === "") {
+      return line; // blank line, no number
+    }
+    return `${lineNumber.toString().padStart(paddingWidth)}  ${line}`;
+  }
+  return line; // no numbering
+}
 const options = program.opts(); 
 const files = program.args; // Array of file paths passed as arguments
 
-let lineNumber = 1; // shared across all files, like GNU cat -n)
+let lineNumber = 1; // shared across all files
 
 for (const file of files) {
   const content = await fs.readFile(file, "utf-8"); 
-  const lines = content.split("\n");
-
-  for (const line of lines) {
-   
-    if (options.number) {
-      console.log(`${lineNumber.toString().padStart(6)}  ${line}`); // adding padding for formatting 
-      lineNumber++;
-    }  
-    else if (options.numberNonblank) { // -b
-      if (line.trim() === "") {
-        console.log(line);
-      } else {
-        console.log(`${lineNumber.toString().padStart(6)}  ${line}`);
-        lineNumber++;
-      }
-    } else {
-      console.log(line);  
-    } 
-    }
+  let lines = content.split("\n");
+  // Remove trailing empty line if file ends with newline
+  if (lines.length > 0 && lines[lines.length - 1] === "") {
+    lines.pop();
   }
 
+  for (const line of lines) {
+    const formatted = formatLine(line, lineNumber, options.number, options.numberNonblank);
+    console.log(formatted);
 
-
+    // Increment line number if numbering applies
+    if (options.number || (options.numberNonblank && line.trim() !== "")) {
+      lineNumber++;
+    }
+  }
+}
