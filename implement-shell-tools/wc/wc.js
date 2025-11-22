@@ -23,7 +23,8 @@ program
 
 //helper function to format string for output
 function formatCount(count) {
-    return count.toString().padStart(3);
+    const paddingStart = 3
+    return count.toString().padStart(paddingStart);
 }
 
 
@@ -52,7 +53,6 @@ async function newWc(files, options) {
     let totalBytes = 0;
 
     for (const file of files) {
-
         try {
             // read each file into a single text string
             const content = await fs.readFile(file, "utf8");

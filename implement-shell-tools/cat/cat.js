@@ -3,32 +3,35 @@ import { promises as fs } from "node:fs";
 import process from "node:process";
 
 // configure the CLI program with its name, description, arguments, options, and actions (the help instructions)
+// configure the CLI program with its name, description, arguments, options, and actions (the help instructions)
 program
     .name("cat")
     .description("An alternative to the 'cat' command")
     .argument("<files...>", "The file(s) to process") 
     .option("-n, --number", "Number all output lines")
     .option("-b, --number-nonblank", "Number non-blank output lines")
-    // actions to process the provided files with the specified options (-n, -b)
     .action(async (files, options) => {
         try {
-            // call newCat for all files
-            await newCat(files, options.number, options.numberNonblank)
+            await newCat(files, options);
         } catch (err) {
-        console.error(`Error: ${err.message}`);
+            console.error(`Error: ${err.message}`);
         }
-  });
+    });
 
-// parse command-line file arguments using the process.argv array
 program.parse(process.argv);
 
-function printNumberedLine(line, lineNumber) {
-    console.log(`${lineNumber.toString().padStart(6, ' ')}  ${line}`);
-    return lineNumber + 1; 
+//helper function to format output
+function printLine(line, lineNumber, padWidth) {
+    if (lineNumber !== null) {
+        console.log(`${lineNumber.toString().padStart(padWidth, '  ')}  ${line}`);
+    } else {
+        console.log(line);
+    }
 }
 
-async function newCat(files, numberLines, numberNonBlank) {
+async function newCat(files, options) {
     let lineNumber = 1;
+    const padWidth = 6;
 
     for (const file of files) {
         // read each file into a single text string
@@ -43,24 +46,21 @@ async function newCat(files, numberLines, numberNonBlank) {
                 lines.pop();
             }
 
-            for (const line of lines) {
-                if (numberNonBlank) {
-                    // check what is left on the line after trimming (truthy = text, falsy = blank)
-                    if (line.trim()) {
-                    lineNumber = printNumberedLine(line, lineNumber);
-                    }  else {
-                        console.log(line)
-                    } 
-                } else if (numberLines) {
+            lines.forEach(line => {
+                //line trim: truthy = text, falsy = blank
+                if (options.numberNonblank && line.trim()) {
+                    // number non-blank lines only
+                    printLine(line, lineNumber++, padWidth);
+                }  else if (options.number){
                     // number all lines
-                   lineNumber = printNumberedLine(line, lineNumber);
+                    printLine(line, lineNumber++, padWidth);
                 } else {
-                    // if neither flag print normally
-                    console.log(line)
+                    // neither flag, print normally
+                   printLine(line, null, padWidth)
                 }
-            }
+            });
         } catch (err) {
-              console.error(`Error reading file ${file}: ${err.message}`);
+            console.error(`Error reading file ${file}: ${err.message}`);
         }
     }
 }
