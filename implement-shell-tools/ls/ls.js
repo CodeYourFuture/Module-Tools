@@ -17,8 +17,15 @@ const directory = program.args[0] || "."; //get dir arg- 1st arg in program.args
 
 let files = await fs.readdir(directory); //read the dir to get array of filenames
 
-
-if (!options.all) { //Handle -a (include hidden files)
+//Handle -a (include hidden files)
+// Node's fs.readdir() does not include the special directory entries "." (current dir)
+// and ".." (parent dir). The real `ls -a` command shows them, so we add them manually here
+// to match the behavior of `ls -a`.
+if (options.all) { 
+  
+  files.unshift(".."); 
+  files.unshift(".");
+} else {
   files = files.filter(name => !name.startsWith("."));
 }
 
