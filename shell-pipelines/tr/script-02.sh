@@ -7,3 +7,8 @@ set -euo pipefail
 # so every Y should be a Z, and every Z should be a Y!
 #
 # TODO: Write a command to output the contents of text.txt with every Y and Z swapped (both upper and lower case).
+cat text.txt | tr 'YyZz' 'ZzYy' 
+
+# or we can do it this way where the tr command reads input from text.txt file and does the operation on the input
+
+tr 'YyZz' 'ZzYy' < text.txt
