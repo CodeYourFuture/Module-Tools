@@ -18,7 +18,12 @@ const { number, numberNonBlank } = program.opts();
 
 // --- Read files and sizes ---
 let content = "";
-let fileSize;
+let fileSize,
+  wordCount,
+  lineCount,
+  lineCountTotal = 0,
+  wordCountTotal = 0,
+  fileSizeTotal = 0;
 
 for (const path of paths) {
   content = await fs.readFile(path, "utf-8");
@@ -26,13 +31,23 @@ for (const path of paths) {
     content = content.slice(0, -1);
   }
   fileSize = await fs.stat(path);
+  fileSizeTotal += fileSize.size;
+  wordCount = getWordCount(content);
+  wordCountTotal += wordCount;
+  lineCount = getLineCount(content);
+  lineCountTotal += lineCount;
   console.log(
-    getLineCount(content),
-    getWordCount(content),
-    fileSize.size,
-    path
+    `${String(lineCount).padStart(3)}${String(wordCount).padStart(4)}${String(
+      fileSize.size
+    ).padStart(4)} ${path}`
   );
 }
+
+console.log(
+  `${String(lineCountTotal).padStart(3)}${String(wordCountTotal).padStart(
+    4
+  )}${String(fileSizeTotal).padStart(4)} total`
+);
 
 function getWordCount(text) {
   let words, lines;
