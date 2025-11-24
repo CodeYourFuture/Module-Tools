@@ -15,15 +15,8 @@ program.parse();
 
 const argv = program.args;
 
-const path = argv[0];
-
 const options = program.opts();
 
-
-if (argv.length < 1) {
-    console.error("You must pass at least one path!");
-    process.exit(1);
-}
 
 function counter(item) {
   const lines = item.trim().split("\n").length;
@@ -72,7 +65,7 @@ if (pathInfo.isFile()) {
         } else if (options.character) {
           console.log(`${stats.characters} ${filePath}`);
         } else {
-            console.log(`${stats.lines}       ${stats.words}    ${stats.characters} ${path}`);
+            console.log(`${stats.lines}       ${stats.words}    ${stats.characters} ${filePath}`);
         }
 
         totalLines += stats.lines;
