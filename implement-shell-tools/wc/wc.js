@@ -47,6 +47,7 @@ if (pathInfo.isFile()) {
     for (const file of files) {
         const filePath = `${path}/${file}`;
         const fileContent = await fs.readFile(filePath, "utf-8");
+        const stats = counter(fileContent)
     }
 }
 
