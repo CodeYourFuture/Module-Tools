@@ -44,11 +44,11 @@ if (pathInfo.isFile()) {
     const content = await fs.readFile(path, "utf-8");
     const stats = counter(content);
     if (options.line) {
-        console.log(`${stats.lines} ${path}`);
+        console.log(`     ${stats.lines} ${path}`);
     } else if (options.word) {
-        console.log(`${stats.words} ${path}`);
+        console.log(`     ${stats.words} ${path}`);
     } else if (options.character) {
-        console.log(`${stats.characters} ${path}`);
+        console.log(`     ${stats.characters} ${path}`);
     } else {
         console.log(`       ${stats.lines}       ${stats.words}       ${stats.characters} ${path}`);
     }
@@ -66,11 +66,11 @@ if (pathInfo.isFile()) {
         const stats = counter(fileContent);
 
         if (options.line) {
-            console.log(`${stats.lines} ${filePath}`);
+            console.log(`   ${stats.lines} ${filePath}`);
         } else if (options.word) {
-           console.log(`${stats.words} ${filePath}`); 
+           console.log(`    ${stats.words} ${filePath}`); 
         } else if (options.character) {
-          console.log(`${stats.characters} ${filePath}`);
+          console.log(`     ${stats.characters} ${filePath}`);
         } else {
             console.log(`       ${stats.lines}       ${stats.words}       ${stats.characters} ${path}`);
         }
@@ -86,12 +86,12 @@ if (pathInfo.isFile()) {
 
 if (fileCount > 1) {
     if (options.line) {
-        console.log(`${totalLines} total`);
+        console.log(`     ${totalLines}`);
     } else if (options.word) {
-      console.log(`${totalWords} total`);
+      console.log(`       ${totalWords}`);
     } else if (options.character) {
-       console.log(`${totalCharacters} total`); 
+       console.log(`      ${totalCharacters}`); 
     } else {
-       console.log(`       ${stats.lines}       ${stats.words}       ${stats.characters} ${path}`); 
+       console.log(`       ${totalLines}       ${totalWords}       ${totalCharacters}`); 
     }
 }
