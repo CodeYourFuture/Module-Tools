@@ -40,5 +40,6 @@ if (pathInfo.isFile()) {
 
 function counter(item) {
     const lines = item.split("\n");
-    const words = item,split(/\s+/).filter(Boolean).length;
+    const words = item.split(/\s+/).filter(Boolean).length;
+    const characters = item.length;
 }
