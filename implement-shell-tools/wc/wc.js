@@ -37,3 +37,7 @@ if (pathInfo.isFile()) {
         const fileContent = await fs.readFile(filePath, "utf-8");
     }
 }
+
+function counter(item) {
+    const lines = item.split("\n");
+}
