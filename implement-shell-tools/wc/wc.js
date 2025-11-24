@@ -29,7 +29,15 @@ for (const path of filePaths) {
   let fileStats;
   let fileData = {};
 
+  // Count of flags and arguments provided -- basically state
+  fileData.countOfFlags = Object.values(program.opts()).filter(Boolean).length;
+  fileData.filePaths = filePaths.length;
+
   fileContent = await fs.readFile(path, "utf-8");
+
+  if (fileContent.endsWith("\n")) {
+    fileContent = fileContent.slice(0, -1);
+  }
 
   fileData.lineCount = getLineCount(fileContent);
   lineCountTotal += fileData.lineCount;
@@ -49,17 +57,35 @@ console.log(outputData.map(formatOutput).join("\n"));
 
 if (filePaths.length > 1) {
   console.log(
-    `${String(lineCountTotal).padStart(3)}${String(wordCountTotal).padStart(
-      4
-    )}${String(fileSizeTotal).padStart(4)} total`
+    formatOutput({
+      lineCount: lineCountTotal,
+      wordCount: wordCountTotal,
+      fileSize: fileSizeTotal,
+      path: "total",
+    })
   );
 }
 
-function formatOutput({ lineCount, wordCount, fileSize, path }) {
+function formatOutput({
+  lineCount,
+  wordCount,
+  fileSize,
+  path,
+  countOfFlags,
+  filePaths,
+}) {
   let output = [];
-  if (lines || showAll) output.push(String(lineCount).padStart(3));
-  if (words || showAll) output.push(String(wordCount).padStart(4));
-  if (bytes || showAll) output.push(String(fileSize).padStart(4));
+
+  // I've added this if statement as I found my node wc output looked misaligned compared to the Unix wc output when only one flag and one file were provided.
+  if (countOfFlags === 1 && filePaths <= 1) {
+    if (lines || showAll) output.push(String(lineCount));
+    if (words || showAll) output.push(String(wordCount));
+    if (bytes || showAll) output.push(String(fileSize));
+  } else {
+    if (lines || showAll) output.push(String(lineCount).padStart(3));
+    if (words || showAll) output.push(String(wordCount).padStart(4));
+    if (bytes || showAll) output.push(String(fileSize).padStart(4));
+  }
 
   return `${output.join("")} ${path}`;
 }
