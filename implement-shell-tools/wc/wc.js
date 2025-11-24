@@ -8,6 +8,7 @@ program
   .description("Counts lines, words or characters in a file (or all files) inside a directory")
   .option("-l, --line", "The number of lines in each file")
   .option("-w, --word", "The number of words in each file")
+  .option("-c, --character", "The number of characters in each file")
   .argument("<path...>", "The file path to process");
 
 program.parse();
@@ -44,8 +45,10 @@ if (pathInfo.isFile()) {
     const stats = counter(content);
     if (options.line) {
         console.log(`${stats.lines} ${path}`);
+    } else if (options.word) {
+        console.log(`${stats.words} ${path}`);
     } else {
-        console.log(`${stats.lines} ${stats.words} ${stats.characters} ${path}`);
+        console.log(`${stats.characters} ${path}`);
     }
 
     totalLines += stats.lines;
@@ -62,8 +65,10 @@ if (pathInfo.isFile()) {
 
         if (options.line) {
             console.log(`${stats.lines} ${filePath}`);
+        } else if (options.word) {
+           console.log(`${stats.words} ${filePath}`); 
         } else {
-           console.log(`${stats.lines} ${stats.words} ${stats.characters} ${filePath}`); 
+          console.log(`${stats.characters} ${filePath}`);  
         }
 
         totalLines += stats.lines;
@@ -78,7 +83,9 @@ if (pathInfo.isFile()) {
 if (fileCount > 1) {
     if (options.line) {
         console.log(`${totalLines} total`);
+    } else if (options.word) {
+      console.log(`${totalWords} total`);
     } else {
-        console.log(`${totalLines} ${totalWords} ${totalCharacters} total`);
+       console.log(`${totalCharacters} total`); 
     }
 }
