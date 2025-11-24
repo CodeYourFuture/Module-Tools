@@ -25,3 +25,5 @@ const path = argv[0];
 const options = program.opts();
 
 const content = await fs.readdir(path);
+
+const pathInfo = await stat(path);
