@@ -12,6 +12,11 @@ parser.add_argument("-c", "--chars", action="store_true", help="Count characters
 
 args = parser.parse_args()
 
+# Track totals
+total_lines = 0
+total_words = 0
+total_chars = 0
+
 for path in args.paths:
     # Read the file
     with open(path, "r") as f:
@@ -22,6 +27,11 @@ for path in args.paths:
     words = len(content.split())
     chars = len(content)
 
+    # Add to totals
+    total_lines += lines
+    total_words += words
+    total_chars += chars
+
     if args.lines:
         print(f"{lines:8} {path}")
     elif args.words:
@@ -30,3 +40,16 @@ for path in args.paths:
         print(f"{chars:8} {path}")
     else:
         print(f"{lines:8}{words:8}{chars:8} {path}")  
+
+        
+# Print totals if multiple files
+if len(args.paths) > 1:
+    if args.lines:
+        print(f"{total_lines:8} total")
+    elif args.words:
+        print(f"{total_words:8} total")
+    elif args.chars:
+        print(f"{total_chars:8} total")
+    else:
+        print(f"{total_lines:8}{total_words:8}{total_chars:8} total")        
+
