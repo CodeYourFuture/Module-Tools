@@ -7,7 +7,7 @@ program
   .name("count-containing-lines-words-characters")
   .description("Counts lines, words or characters in a file (or all files) inside a directory")
   .option("-l, --line", "The number of lines in each file")
-  .argument("<path>", "The file path to process");
+  .argument("<path...>", "The file path to process");
 
 program.parse();
 
@@ -40,7 +40,7 @@ if (pathInfo.isFile()) {
     if (options.line) {
         console.log(`${stats.lines} ${path}`);
     } else {
-        console.log(`${stats.lines} ${stats.words} ${stats.chars} ${path}`);
+        console.log(`${stats.lines} ${stats.words} ${stats.characters} ${path}`);
     }
 } else if (pathInfo.isDirectory()) {
     const files = await fs.readdir(path);
@@ -52,7 +52,7 @@ if (pathInfo.isFile()) {
         if (options.line) {
             console.log(`${stats.lines} ${filePath}`);
         } else {
-           console.log(`${stats.lines} ${stats.words} ${stats.chars} ${filePath}`); 
+           console.log(`${stats.lines} ${stats.words} ${stats.characters} ${filePath}`); 
         }
     }
 }
