@@ -14,13 +14,16 @@ program.parse();
 const argv = program.args;
 
 
-
 const path = argv[0];
 
 const options = program.opts();
 
 
-const pathInfo = await stat(path);
+
+if (argv.length < 1) {
+    console.error("You must pass at least one path!");
+    process.exit(1);
+}
 
 function counter(item) {
   const lines = item.trim().split("\n").length;
@@ -28,6 +31,9 @@ function counter(item) {
   const characters = item.length;
   return { lines, words, characters };
 }
+
+for (const path of argv) {
+    const pathInfo = await stat(path);
 
 if (pathInfo.isFile()) {
     const content = await fs.readFile(path, "utf-8");
@@ -52,3 +58,4 @@ if (pathInfo.isFile()) {
     }
 }
 
+}
