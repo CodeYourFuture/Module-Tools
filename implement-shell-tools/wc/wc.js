@@ -28,7 +28,7 @@ const options = program.opts();
 const pathInfo = await stat(path);
 
 function counter(item) {
-  const lines = item.split("\n");
+  const lines = item.split("\n").length;
   const words = item.split(/\s+/).filter(Boolean).length;
   const characters = item.length;
   return { lines, words, characters };
