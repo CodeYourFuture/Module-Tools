@@ -28,8 +28,16 @@ const content = await fs.readdir(path);
 
 const pathInfo = await stat(path);
 
+function counter(item) {
+  const lines = item.split("\n");
+  const words = item.split(/\s+/).filter(Boolean).length;
+  const characters = item.length;
+  return { lines, words, characters };
+}
+
 if (pathInfo.isFile()) {
     const content = await fs.readFile(path, "utf-8");
+    const stats = counter(content);
 } else if (pathInfo.isDirectory()) {
     const files = await fs.readdir(path);
     for (const file of files) {
@@ -38,9 +46,3 @@ if (pathInfo.isFile()) {
     }
 }
 
-function counter(item) {
-    const lines = item.split("\n");
-    const words = item.split(/\s+/).filter(Boolean).length;
-    const characters = item.length;
-    return {lines, words, characters};
-}
