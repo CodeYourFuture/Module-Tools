@@ -47,7 +47,13 @@ if (pathInfo.isFile()) {
     for (const file of files) {
         const filePath = `${path}/${file}`;
         const fileContent = await fs.readFile(filePath, "utf-8");
-        const stats = counter(fileContent)
+        const stats = counter(fileContent);
+
+        if (options.line) {
+            console.log(`${stats.lines} ${filePath}`);
+        } else {
+           console.log(`${stats.lines} ${stats.words} ${stats.chars} ${fileContent}`); 
+        }
     }
 }
 
