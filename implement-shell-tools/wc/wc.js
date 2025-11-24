@@ -2,52 +2,75 @@ import { program } from "commander";
 import { promises as fs } from "node:fs";
 
 program
-  .name("node-cat")
-  .description("A Node.js implementation of the Unix cat command")
-  .option("-n, --number", "Number all output lines")
-  .option(
-    "-b, --numberNonBlank",
-    "Numbers only non-empty lines. Overrides -n option"
-  )
+  .name("node-wc")
+  .description("A Node.js implementation of the Unix wc command")
+  .option("-l, --lines", "Print the newline counts")
+  .option("-w, --words", "Print the word counts")
+  .option("-c, --bytes", "Print the byte counts")
   .argument("<path...>", "The file path to process");
 
 program.parse();
 
 const paths = program.args;
-const { number, numberNonBlank } = program.opts();
+const { lines, words, bytes } = program.opts();
+
+const showAll = !lines && !words && !bytes;
 
 // --- Read files and sizes ---
 let content = "";
-let fileSize,
-  wordCount,
-  lineCount,
-  lineCountTotal = 0,
+let output = [];
+
+let lineCountTotal = 0,
   wordCountTotal = 0,
   fileSizeTotal = 0;
 
+if (Object.keys(program.opts()).length === 1) {
+}
+
 for (const path of paths) {
+  let fileStats;
+  let data = {};
+
   content = await fs.readFile(path, "utf-8");
   if (content.endsWith("\n")) {
     content = content.slice(0, -1);
   }
-  fileSize = await fs.stat(path);
-  fileSizeTotal += fileSize.size;
-  wordCount = getWordCount(content);
-  wordCountTotal += wordCount;
-  lineCount = getLineCount(content);
-  lineCountTotal += lineCount;
+
+  data.lineCount = getLineCount(content);
+  lineCountTotal += data.lineCount;
+
+  data.wordCount = getWordCount(content);
+  wordCountTotal += data.wordCount;
+
+  fileStats = await fs.stat(path);
+  data.fileSize = fileStats.size;
+  fileSizeTotal += data.fileSize;
+
+  data.path = path;
+  output.push(data);
+}
+
+console.log(output);
+
+if (paths.length > 1) {
   console.log(
-    `${String(lineCount).padStart(3)}${String(wordCount).padStart(4)}${String(
-      fileSize.size
-    ).padStart(4)} ${path}`
+    `${String(lineCountTotal).padStart(3)}${String(wordCountTotal).padStart(
+      4
+    )}${String(fileSizeTotal).padStart(4)} total`
   );
 }
 
-console.log(
-  `${String(lineCountTotal).padStart(3)}${String(wordCountTotal).padStart(
-    4
-  )}${String(fileSizeTotal).padStart(4)} total`
-);
+// output.push(String(fileSize.size).padStart(4));
+// console.log(`${output.join("")} ${path}`);
+
+function formatOutput({ lineCount, wordCount, fileSize, path }) {
+  let output = [];
+  if (lines || showAll) output.push(String(lineCount).padStart(3));
+  if (words || showAll) output.push(String(wordCount).padStart(4));
+  if (bytes || showAll) output.push(String(fileSize).padStart(4));
+
+  return `${output.join("")} ${path}`;
+}
 
 function getWordCount(text) {
   let words, lines;
