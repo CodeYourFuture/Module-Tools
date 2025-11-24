@@ -14,15 +14,21 @@ program
   .argument("[directory]", "The file path to process");
 program.parse();
 
-const paths = program.args;
 const { 1: onePerLine, all } = program.opts();
-
-const directory = paths.length === 0 ? "." : paths[0];
+const directory = program.args[0];
 
 let entries = await fs.readdir(directory);
 
-if (onePerLine) {
-  console.log(entries.filter((entry) => entry[0] !== ".").join("\n"));
-  // entries.filter((entry) => { entry[0] === "." })
+// If -a is used, I've included  "." and ".." to mimic what the Unix ls does
+if (all) {
+  entries = [".", "..", ...entries];
+} else {
+  // hide dotfiles
+  entries = entries.filter((entry) => entry[0] !== ".");
 }
 
+if (onePerLine) {
+  console.log(entries.join("\n"));
+} else {
+  console.log(entries.join("  "));
+}
