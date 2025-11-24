@@ -20,3 +20,7 @@ if (argv.length != 1) {
 }
 
 const path = argv[0];
+
+const options = program.opts();
+
+const content = await fs.readdir(path);
