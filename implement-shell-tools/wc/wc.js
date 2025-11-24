@@ -11,57 +11,49 @@ program
 
 program.parse();
 
-const paths = program.args;
+const filePaths = program.args;
 const { lines, words, bytes } = program.opts();
 
+// When no options are provided, show all counts
 const showAll = !lines && !words && !bytes;
 
 // --- Read files and sizes ---
-let content = "";
-let output = [];
+let fileContent = "";
+let outputData = [];
 
 let lineCountTotal = 0,
   wordCountTotal = 0,
   fileSizeTotal = 0;
 
-if (Object.keys(program.opts()).length === 1) {
-}
-
-for (const path of paths) {
+for (const path of filePaths) {
   let fileStats;
-  let data = {};
+  let fileData = {};
 
-  content = await fs.readFile(path, "utf-8");
-  if (content.endsWith("\n")) {
-    content = content.slice(0, -1);
-  }
+  fileContent = await fs.readFile(path, "utf-8");
 
-  data.lineCount = getLineCount(content);
-  lineCountTotal += data.lineCount;
+  fileData.lineCount = getLineCount(fileContent);
+  lineCountTotal += fileData.lineCount;
 
-  data.wordCount = getWordCount(content);
-  wordCountTotal += data.wordCount;
+  fileData.wordCount = getWordCount(fileContent);
+  wordCountTotal += fileData.wordCount;
 
   fileStats = await fs.stat(path);
-  data.fileSize = fileStats.size;
-  fileSizeTotal += data.fileSize;
+  fileData.fileSize = fileStats.size;
+  fileSizeTotal += fileData.fileSize;
 
-  data.path = path;
-  output.push(data);
+  fileData.path = path;
+  outputData.push(fileData);
 }
 
-console.log(output);
+console.log(outputData.map(formatOutput).join("\n"));
 
-if (paths.length > 1) {
+if (filePaths.length > 1) {
   console.log(
     `${String(lineCountTotal).padStart(3)}${String(wordCountTotal).padStart(
       4
     )}${String(fileSizeTotal).padStart(4)} total`
   );
 }
-
-// output.push(String(fileSize.size).padStart(4));
-// console.log(`${output.join("")} ${path}`);
 
 function formatOutput({ lineCount, wordCount, fileSize, path }) {
   let output = [];
@@ -76,18 +68,11 @@ function getWordCount(text) {
   let words, lines;
 
   lines = text.split("\n");
-  // console.log(lines);
   words = lines.flatMap((line) => line.split(" "));
 
   return words.filter((word) => word.length > 0).length;
 }
 
 function getLineCount(text) {
-  let lines;
-  return (lines = text.split("\n").length);
+  return text.split("\n").length;
 }
-
-// 1   4  20 sample-files/1.txt
-// 1   7  39 sample-files/2.txt
-// 5  24 125 sample-files/3.txt
-// 7  35 184 total
