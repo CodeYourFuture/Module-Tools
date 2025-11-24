@@ -18,3 +18,5 @@ if (argv.length != 1) {
   );
   process.exit(1);
 }
+
+const path = argv[0];
