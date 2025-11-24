@@ -27,3 +27,9 @@ const options = program.opts();
 const content = await fs.readdir(path);
 
 const pathInfo = await stat(path);
+
+if (pathInfo.isFile()) {
+    const fileContent = await fs.readFile(path, "utf-8");
+} else if (pathInfo.isDirectory()) {
+    const directoryContent = await fs.readdir(path);
+}
