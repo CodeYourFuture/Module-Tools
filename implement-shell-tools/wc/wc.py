@@ -6,6 +6,9 @@ parser = argparse.ArgumentParser(
     description="Count lines, words, and characters"
 )
 parser.add_argument("paths", nargs='+', help="Files to count")
+parser.add_argument("-l", "--lines", action="store_true", help="Count lines only")
+parser.add_argument("-w", "--words", action="store_true", help="Count words only")
+parser.add_argument("-c", "--chars", action="store_true", help="Count characters only")
 
 args = parser.parse_args()
 
@@ -19,4 +22,11 @@ for path in args.paths:
     words = len(content.split())
     chars = len(content)
 
-    print(f"{lines:8}{words:8}{chars:8} {path}")  
+    if args.lines:
+        print(f"{lines:8} {path}")
+    elif args.words:
+        print(f"{words:8} {path}")
+    elif args.chars:
+        print(f"{chars:8} {path}")
+    else:
+        print(f"{lines:8}{words:8}{chars:8} {path}")  
