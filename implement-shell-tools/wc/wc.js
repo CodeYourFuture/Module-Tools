@@ -73,3 +73,11 @@ if (pathInfo.isFile()) {
 }
 
 }
+
+if (fileCount > 1) {
+    if (options.line) {
+        console.log(`${totalLines} total`);
+    } else {
+        console.log(`${totalLines} ${totalWords} ${totalCharacters} total`);
+    }
+}
