@@ -38,6 +38,11 @@ function counter(item) {
 if (pathInfo.isFile()) {
     const content = await fs.readFile(path, "utf-8");
     const stats = counter(content);
+    if (options.line) {
+        console.log(`${stats.lines} ${path}`);
+    } else {
+        console.log(`${stats.lines} ${stats.words} ${stats.chars} ${path}`);
+    }
 } else if (pathInfo.isDirectory()) {
     const files = await fs.readdir(path);
     for (const file of files) {
