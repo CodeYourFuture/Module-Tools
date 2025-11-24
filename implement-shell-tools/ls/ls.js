@@ -13,7 +13,7 @@ program
 program.parse();
 
 const { 1: onePerLine, all } = program.opts();
-const directory = program.args[0];
+const directory = program.args[0] ? program.args[0] : ".";
 
 let entries = await fs.readdir(directory);
 
