@@ -1,4 +1,5 @@
 import { program } from "commander";
+import { on } from "node:events";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
@@ -14,24 +15,14 @@ program
 program.parse();
 
 const paths = program.args;
+const { 1: onePerLine, all } = program.opts();
 
 const directory = paths.length === 0 ? "." : paths[0];
 
 let entries = await fs.readdir(directory);
-console.log(entries.join("  "));
 
+if (onePerLine) {
+  console.log(entries.filter((entry) => entry[0] !== ".").join("\n"));
+  // entries.filter((entry) => { entry[0] === "." })
+}
 
-// entries.forEach((entry) => {
-//   console.log(entry);
-// });
-
-// Read directory entries
-// console.log(entries);
-// for (const directory of directories) {
-
-//   console.log(entries);
-// }
-
-// console.log(entries);
-
-// --- Read directory contents ---
