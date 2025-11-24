@@ -7,6 +7,7 @@ program
   .name("count-containing-lines-words-characters")
   .description("Counts lines, words or characters in a file (or all files) inside a directory")
   .option("-l, --line", "The number of lines in each file")
+  .option("-w, --word", "The number of words in each file")
   .argument("<path...>", "The file path to process");
 
 program.parse();
