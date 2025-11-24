@@ -1,7 +1,5 @@
 import { program } from "commander";
-import { on } from "node:events";
 import { promises as fs } from "node:fs";
-import path from "node:path";
 
 program
   .name("node-ls")
