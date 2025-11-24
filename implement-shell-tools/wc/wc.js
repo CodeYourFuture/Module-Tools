@@ -13,11 +13,9 @@ program.parse();
 
 const argv = program.args;
 
-
 const path = argv[0];
 
 const options = program.opts();
-
 
 
 if (argv.length < 1) {
@@ -32,6 +30,11 @@ function counter(item) {
   return { lines, words, characters };
 }
 
+let totalLines = 0;
+let totalWords = 0;
+let totalCharacters = 0;
+let fileCount = 0;
+
 for (const path of argv) {
     const pathInfo = await stat(path);
 
@@ -43,6 +46,12 @@ if (pathInfo.isFile()) {
     } else {
         console.log(`${stats.lines} ${stats.words} ${stats.characters} ${path}`);
     }
+
+    totalLines += stats.lines;
+    totalWords += stats.words;
+    totalCharacters += stats.characters;
+    fileCount++;
+
 } else if (pathInfo.isDirectory()) {
     const files = await fs.readdir(path);
     for (const file of files) {
@@ -55,6 +64,11 @@ if (pathInfo.isFile()) {
         } else {
            console.log(`${stats.lines} ${stats.words} ${stats.characters} ${filePath}`); 
         }
+
+        totalLines += stats.lines;
+        totalWords += stats.words;
+        totalCharacters += stats.characters;
+        fileCount++;
     }
 }
 
