@@ -47,8 +47,10 @@ if (pathInfo.isFile()) {
         console.log(`${stats.lines} ${path}`);
     } else if (options.word) {
         console.log(`${stats.words} ${path}`);
-    } else {
+    } else if (options.character) {
         console.log(`${stats.characters} ${path}`);
+    } else {
+        console.log(`       ${stats.lines}       ${stats.words}       ${stats.characters} ${path}`);
     }
 
     totalLines += stats.lines;
@@ -67,8 +69,10 @@ if (pathInfo.isFile()) {
             console.log(`${stats.lines} ${filePath}`);
         } else if (options.word) {
            console.log(`${stats.words} ${filePath}`); 
+        } else if (options.character) {
+          console.log(`${stats.characters} ${filePath}`);
         } else {
-          console.log(`${stats.characters} ${filePath}`);  
+            console.log(`       ${stats.lines}       ${stats.words}       ${stats.characters} ${path}`);
         }
 
         totalLines += stats.lines;
@@ -85,7 +89,9 @@ if (fileCount > 1) {
         console.log(`${totalLines} total`);
     } else if (options.word) {
       console.log(`${totalWords} total`);
-    } else {
+    } else if (options.character) {
        console.log(`${totalCharacters} total`); 
+    } else {
+       console.log(`       ${stats.lines}       ${stats.words}       ${stats.characters} ${path}`); 
     }
 }
