@@ -52,7 +52,7 @@ if (pathInfo.isFile()) {
         if (options.line) {
             console.log(`${stats.lines} ${filePath}`);
         } else {
-           console.log(`${stats.lines} ${stats.words} ${stats.chars} ${fileContent}`); 
+           console.log(`${stats.lines} ${stats.words} ${stats.chars} ${filePath}`); 
         }
     }
 }
