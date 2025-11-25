@@ -11,8 +11,7 @@ program
 
 program.parse();
 
-const args = program.args;
-const files = args;
+const files = program.args;
 const opts = program.opts();
 let lineNumber = 1;
 
