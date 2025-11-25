@@ -1,0 +1,21 @@
+{
+  "name": "cat",
+  "version": "1.0.0",
+  "description": "You should already be familiar with the `cat` command line tool.",
+  "main": "cat.js",
+  "type": "module",
+  "dependencies": {
+    "commander": "^14.0.2",
+    "glob": "^13.0.0",
+    "lru-cache": "^11.2.2",
+    "minimatch": "^10.1.1",
+    "minipass": "^7.1.2",
+    "path-scurry": "^2.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
