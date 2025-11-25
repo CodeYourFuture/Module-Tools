@@ -13,4 +13,5 @@ elif "--animal" in flags :
     print(animalName)
     message=" ".join(args[args.index("--animal")+2:])
     print(message)
-
+    if hasattr(cowsay,animalName) :
+        getattr(cowsay,animalName)(message)
