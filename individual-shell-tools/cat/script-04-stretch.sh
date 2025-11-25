@@ -16,7 +16,9 @@ set -euo pipefail
 
 
 
-nl -b a ../helper-files/helper-1.txt ../helper-files/helper-2.txt ../helper-files/helper-3.txt
+cat ../helper-files/helper-*.txt | nl -b a
+
+
 
 
 
