@@ -8,8 +8,16 @@ parser.add_argument("-n",action="store_true",help="number the output lines")
 parser.add_argument("-b",action="store_true",help="number the output lines without blank ones")
 parser.add_argument("path",nargs="*",help="files to read")
 args=parser.parse_args()
-print(args)
+# print(args)
+line_number=1
 for per_file in args.path :
     with open(per_file,"r") as f:
-     print(f.read())
+        if args.n :
+            lines=f.readlines()
+            for line in lines :
+                print(line_number,line,end="")
+                line_number=line_number+1
+     
+
+        print(f.read())
         
