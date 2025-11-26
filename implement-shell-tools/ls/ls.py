@@ -13,6 +13,9 @@ if len(paths)==0 : paths=["."]
 for path in paths :
     files_list=os.listdir(path)
     files_list.sort(key=str.lower)
-if args.one :
-    for item in files_list :  
-      print(item)
+for item in files_list :
+  if args.one and args.a :
+     print(item)
+  elif args.one :
+      if not item.startswith(".") : 
+        print(item)
