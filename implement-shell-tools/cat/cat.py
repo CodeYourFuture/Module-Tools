@@ -12,12 +12,14 @@ args=parser.parse_args()
 line_number=1
 for per_file in args.path :
     with open(per_file,"r") as f:
-        if args.n :
+        if args.n or args.b :
             lines=f.readlines()
             for line in lines :
-                print(line_number,line,end="")
-                line_number=line_number+1
-     
-
-        print(f.read())
+                if line=="\n" and args.b :
+                    print(line,end="")
+                else :   
+                    print(line_number,line,end="")
+                    line_number=line_number+1
+        else :
+            print(f.read())
         
