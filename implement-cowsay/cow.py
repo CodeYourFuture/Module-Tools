@@ -4,7 +4,7 @@ import argparse
 
 parser=argparse.ArgumentParser(prog="cowsay",
                                description="Make animals say things.")
-parser.add_argument("message",help="The message to say.")
+parser.add_argument("message",nargs="+",help="The message to say.")
 valid_animals=cowsay.char_names;
 parser.add_argument("--animal",
                     choices=valid_animals,
@@ -12,23 +12,6 @@ parser.add_argument("--animal",
                     default="cow")
 
 args=parser.parse_args();
-getattr(cowsay,args.animal)(args.message)
-# args=sys.argv[1:]
-# print(sys.argv)
-# flags=list(filter(lambda arg : arg.startswith("-"),args))
-# print(flags)
-# validAnimals=cowsay.char_names;
-# print(validAnimals)
+getattr(cowsay,args.animal)(" ".join(args.message))
 
-# if len(flags)==0 : 
-#     cowsay.cow(" ".join(sys.argv[1:]))
-# elif "--help" in flags or "--h" in flags :
-#     print("help!!!!!!!!!!!!!!!!")
-# elif "--animal" in flags :
-#     animalName=args[args.index("--animal")+1]
-#     print(animalName)
-#     message=" ".join(args[args.index("--animal")+2:])
-#     print(message)
-#     if hasattr(cowsay,animalName) :
-#         getattr(cowsay,animalName)(message)
        
