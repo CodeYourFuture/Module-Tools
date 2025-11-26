@@ -21,5 +21,5 @@ for per_file in args.path :
                     print(line_number,line,end="")
                     line_number=line_number+1
         else :
-            print(f.read())
+            print(f.read(),end="")
         
