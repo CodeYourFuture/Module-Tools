@@ -1,5 +1,3 @@
-import sys
-import glob
 import argparse
 
 parser=argparse.ArgumentParser(prog="cat",
