@@ -2,10 +2,13 @@ import argparse
 import os
 
 parser=argparse.ArgumentParser(prog="wc",usage="implement a simple wc in python")
+parser.add_argument("-l",action="store_true",help="count of lines")
+parser.add_argument("-w",action="store_true",help="count of words")
+parser.add_argument("-c",action="store_true",help="count of bytes")
 parser.add_argument("path",nargs="+")
 args=parser.parse_args()
 
-# print(args.path)
+print(args)
 paths=args.path
 words_count=0
 total_lines=0
@@ -21,8 +24,15 @@ for file in paths :
             words_count+=len(line.split())
         total_lines +=lines_count
         total_bytes += bytes_count
-        total_words +=words_count    
-        print(f"{lines_count:<5}{words_count:<5}{bytes_count:<5}{file:<20}")
+        total_words +=words_count   
+        if not (args.l or args.w or args.c):
+            args.l = True
+            args.w = True
+            args.c = True 
+        print((f"{lines_count:<5}" if args.l else "")+
+              (f"{words_count:<5}" if args.w else "")+
+              (f"{bytes_count:<5}" if args.c else "")+
+              f"{file:<20}")
         words_count=0
         
 print(f"{total_lines:<5}{total_words:<5}{total_bytes:<5}total")        
