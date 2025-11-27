@@ -8,7 +8,7 @@ Convert the decimal number 14 to binary.
 Answer:1110
 
 Convert the binary number 101101 to decimal:
-Answer:
+Answer:45
 
 Which is larger: 1000 or 0111?
 Answer:1000
@@ -20,7 +20,7 @@ What is 10101 + 01010?
 Answer:11111
 
 What is 10001 + 10001?
-Answer:
+Answer:100010
 
 What's the largest number you can store with 4 bits, if you want to be able to represent the number 0?
 Answer:15
