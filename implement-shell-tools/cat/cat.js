@@ -3,7 +3,6 @@ import { promises as fs } from "node:fs";
 import process from "node:process";
 
 // configure the CLI program with its name, description, arguments, options, and actions (the help instructions)
-// configure the CLI program with its name, description, arguments, options, and actions (the help instructions)
 program
     .name("cat")
     .description("An alternative to the 'cat' command")

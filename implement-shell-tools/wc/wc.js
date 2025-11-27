@@ -7,9 +7,9 @@ program
   .name("wc")
   .description("An alternative to the 'wc' command")
   .argument("<files...>", "The file(s) to count lines/words/bytes")
-  .option("-l", "Count lines")
-  .option("-w", "Count words")
-  .option("-c", "Count bytes")
+  .option("-l", "--lines", "Print the newline counts")
+  .option("-w", "--words", "Print the word counts")
+  .option("-c", "--bytes", "Print the byte counts")
   .action(async (files, options) => {
         try {
             // call newWc for all files
