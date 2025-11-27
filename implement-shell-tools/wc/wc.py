@@ -22,7 +22,7 @@ for file in paths :
         total_lines +=lines_count
         total_bytes += bytes_count
         total_words +=words_count    
-        print(lines_count ,words_count , bytes_count, file)
+        print(f"{lines_count:<5}{words_count:<5}{bytes_count:<5}{file:<20}")
         words_count=0
         
-print(total_lines,total_words,total_bytes,"total")        
+print(f"{total_lines:<5}{total_words:<5}{total_bytes:<5}total")        
