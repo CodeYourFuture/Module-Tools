@@ -8,7 +8,7 @@ parser.add_argument("-c",action="store_true",help="count of bytes")
 parser.add_argument("path",nargs="+")
 args=parser.parse_args()
 
-print(args)
+
 paths=args.path
 words_count=0
 total_lines=0
@@ -34,5 +34,9 @@ for file in paths :
               (f"{bytes_count:<5}" if args.c else "")+
               f"{file:<20}")
         words_count=0
-        
-print(f"{total_lines:<5}{total_words:<5}{total_bytes:<5}total")        
+
+if len(paths)>1 :        
+    print((f"{total_lines:<5}" if args.l else "")+
+        (f"{total_words:<5}" if args.w else "")+
+        (f"{total_bytes:<5}" if args.c else "")+
+        "total")        
