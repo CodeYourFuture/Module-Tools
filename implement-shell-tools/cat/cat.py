@@ -11,4 +11,15 @@ parser.add_argument("path", nargs="+", help="The file path to process")
 
 args = parser.parse_args()
 
-    
+# Read and concatenate file contents
+content = ""
+
+for path in args.path:
+    with open(path, "r") as f:
+        content += f.read()
+             
+# Remove trailing newline if present
+if content.endswith("\n"):
+    content = content[:-1]
+
+print(content) 
