@@ -15,4 +15,4 @@ args = parser.parse_args()
 message = " ".join(args.message)
 animal = args.animal or "cow"
 
-
+animal_says = getattr(cowsay, animal)
