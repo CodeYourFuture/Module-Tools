@@ -16,3 +16,5 @@ message = " ".join(args.message)
 animal = args.animal or "cow"
 
 animal_says = getattr(cowsay, animal)
+
+print(animal_says(message))
