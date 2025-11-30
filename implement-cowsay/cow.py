@@ -13,5 +13,6 @@ parser.add_argument("message", nargs ="+", help="The message that the animal say
 args = parser.parse_args()
 
 message = " ".join(args.message)
+animal = args.animal or "cow"
 
 
