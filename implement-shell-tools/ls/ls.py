@@ -27,10 +27,12 @@ def print_directory_entries(path, one_per_line=False, show_all=False):
 
     # By default, ls hides "dotfiles" (names starting with ".").
     # Only include them if the -a flag (show_all=True) is set.
-    if not show_all:
-        directory_entries = [entry for entry in directory_entries if not entry.startswith(".")]
-
-    # Sort entries alphabetically for consistent output
+    if show_all:
+        directory_entries.extend([".",".."])
+    else:
+        #Filter out hidden files
+        directory_entries = [entry for entry in directory_entries if not entry.startwith(".")]
+    #output consistent with the default ls behavior.
     directory_entries.sort()
 
     if one_per_line:
