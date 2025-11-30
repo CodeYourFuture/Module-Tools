@@ -8,3 +8,4 @@ parser = argparse.ArgumentParser(
 )
 
 parser.add_argument("--animal", help="Select an animal to say anything")
+parser.add_argument("message", nargs ="+" help="The message that the animal says")
