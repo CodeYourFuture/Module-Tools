@@ -15,6 +15,14 @@ args = parser.parse_args()
 message = " ".join(args.message)
 animal = args.animal or "cow"
 
+listed_animals = [listed_animal for listed_animal in dir(cowsay) if callable(getattr(cowsay, listed_animal)) and not listed_animal.startswith("__")]
+
+if animal not in cowsay.listed_animals():
+    print(f"Error: argument --animal: invalid choice: '{animal}'")
+    exit(1)
+
 animal_says = getattr(cowsay, animal)
 
 print(animal_says(message))
+
+print(dir(cowsay))
