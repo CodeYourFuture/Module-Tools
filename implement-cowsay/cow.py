@@ -15,10 +15,10 @@ args = parser.parse_args()
 message = " ".join(args.message)
 animal = args.animal or "cow"
 
-listed_animals = [listed_animal for listed_animal in dir(cowsay) if callable(getattr(cowsay, listed_animal)) and not listed_animal.startswith("__")]
+listed_animals = [listed_animal for listed_animal in dir(cowsay) if callable(getattr(cowsay, listed_animal)) and not listed_animal.startswith("__") and listed_animal not in ["draw", "func", "get_output_string", "CowsayError"]]
 
 if animal not in listed_animals:
-    print(f"Error: argument --animal: invalid choice: '{animal}'")
+    print(f"Error: argument --animal: invalid choice: '{animal}'. Choose from: {', '.join(listed_animals)}")
     exit(1)
 
 animal_says = getattr(cowsay, animal)
