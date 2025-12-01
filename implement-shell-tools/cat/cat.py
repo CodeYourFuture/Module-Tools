@@ -76,7 +76,7 @@ with open(args.path, "r") as f:
             else:
                 print("\n")
         else:
-            print(f"{line} + \n")
+            print(f"{line}")
 
 
 
