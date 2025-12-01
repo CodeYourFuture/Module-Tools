@@ -67,11 +67,11 @@ with open(args.path, "r") as f:
 
     for line in lines:
         if args.n:
-            print(f"{line_number}  ${line}\n")
+            print(f"{line_number} {line}\n")
             line_number += 1
         elif args.b:
             if line != "":
-                print(f"{line_number}  ${line}\n")
+                print(f"{line_number} {line}\n")
                 line_number += 1
             else:
                 print("\n")
