@@ -1,45 +1,36 @@
 # import process from "node:process";
-# import {promises as fs} from "node:fs";
-# import {program} from "commander";
+# import { promises as fs } from "node:fs";
+# import { program } from "commander";
 
 # program
-#     .name("display-file-content")
-#     .description("Output the content of a file to the terminal")
-#     .argument("<path...>", "The file path to process")
-#     .option("-n", "Number the output lines")
-#     .option("-b","Number the non-blank output lines")
+#   .name("list-files-in-directory")
+#   .description("List all files and directories in a directory")
+#   .argument("<path>", "The file path to process")
+#   .option("-1, --one", "Output one entry per line")
+#   .option("-a", "List all files & directories, including hidden ones");
 
 # program.parse();
 
-# const paths = program.args;
+# const path = program.args[0];
 
 # const options = program.opts();
 
-# let lineNumber = 1;
+# const directoryContent = await fs.readdir(path);
 
-# for (const path of paths) {
-#     const filesContent = await fs.readFile(path, "utf-8");
+# let allContent = directoryContent;
 
-#     const lines = filesContent.split("\n");
-
-#     if (lines[lines.length - 1] === "") {
-#         lines.pop();
-#     }
-
-#     for (let line of lines) {
-#     if (options.n) {
-#         process.stdout.write(`${lineNumber}  ${line}\n`);
-#         lineNumber++;
-#     } else if (options.b) {
-#         if (line != "") {
-#         process.stdout.write(`${lineNumber}  ${line}\n`);
-#         lineNumber++;
-#         } else {
-#         process.stdout.write("\n");
-#         }
-#     } else {
-#         process.stdout.write(line + "\n");
-#     }
-#     }
+# if (!options.a) {
+#     allContent = directoryContent.filter(name => !name.startsWith("."));
 # }
 
+# for (const item of allContent) {
+#     if (options.one) {
+#         process.stdout.write(item + "\n");
+#     } else {
+#         process.stdout.write(item + "  ");
+#     }
+#     }
+
+
+
+    
