@@ -60,6 +60,9 @@ with open(args.path, "r") as f:
     content = f.read()
 
     lines = content.split("\n")
+    if lines[len(lines) - 1] == "":
+        lines.pop()
+
 
 
 
