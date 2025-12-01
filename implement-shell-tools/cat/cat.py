@@ -1,7 +1,7 @@
 import argparse
 parser = argparse.ArgumentParser(
-    prog="count-containing-words",
-    description="Counts words in a file that contain a particular character",
+    prog="my-cat",
+    description="Simple cat clone with -n and -b options",
 )
 
 counterNumber = 1
