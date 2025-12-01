@@ -32,6 +32,7 @@
 #     }
 
 import argparse
+import os
 
 parser = argparse.ArgumentParser(
     prog="list-files-in-directory",
@@ -43,6 +44,9 @@ parser.add_argument("-a", help="List all files & directories, including hidden o
 parser.add_argument("path", help="The file path to read from")
 
 args = parser.parse_args()
+
+with open(args.path, "r") as f:
+    content = f.read()
 
 
 
