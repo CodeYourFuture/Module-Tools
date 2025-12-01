@@ -50,7 +50,7 @@ parser = argparse.ArgumentParser(
     description="Output the content of a file to the terminal",
 )
 
-
+parser.add_argument("-n", help="Number the output lines")
 
 
 
