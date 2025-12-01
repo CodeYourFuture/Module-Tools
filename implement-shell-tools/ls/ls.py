@@ -54,7 +54,7 @@ if not args.a:
 
 for item in content:
     if args.one:
-        print(item + "\n")
+        print(item)
     else:
         print(item + " ")
 
