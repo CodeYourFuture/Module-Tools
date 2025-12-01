@@ -42,6 +42,10 @@ parser.add_argument("-1", help="Output one entry per line", action="store_true")
 parser.add_argument("-a", help="List all files & directories, including hidden ones", action="store_true")
 parser.add_argument("paths", help="The file(s)/path(s) to read from", nargs="+")
 
+args = parser.parse_args()
+
+
+
 
 
     
