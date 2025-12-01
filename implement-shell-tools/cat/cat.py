@@ -54,13 +54,13 @@ parser.add_argument("-n", help="Number the output lines")
 parser.add_argument("-b", help="Number the non-blank output lines")
 parser.add_argument("path", help="The file to read from")
 
-args = parser.parse_args
+args = parser.parse_args()
 
 with open(args.path, "r") as f:
     content = f.read()
 
 
-
+print(f)
 
 
 
