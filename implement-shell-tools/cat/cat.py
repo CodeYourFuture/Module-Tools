@@ -45,6 +45,11 @@
 
 import argparse
 
+parser = argparse.ArgumentParser(
+    prog="display-file-content",
+    description="Output the content of a file to the terminal",
+)
+
 
 
 
