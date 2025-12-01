@@ -40,13 +40,13 @@ parser = argparse.ArgumentParser(
 )
 
 parser.add_argument("-1", help="Output one entry per line", action="store_true")
-parser.add_argument("-a", help="List all files & directories, including hidden ones", action="store_true")
+parser.add_argument("-a", "--one", help="List all files & directories, including hidden ones", action="store_true")
 parser.add_argument("path", help="The file path to read from")
 
 args = parser.parse_args()
 
-with open(args.path, "r") as f:
-    content = f.read()
+content = os.listdir(args.path)
+
 
 
 
