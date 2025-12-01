@@ -56,12 +56,19 @@ parser.add_argument("path", help="The file to read from")
 
 args = parser.parse_args()
 
+line_number = 1
+
 with open(args.path, "r") as f:
     content = f.read()
 
     lines = content.split("\n")
     if lines[len(lines) - 1] == "":
         lines.pop()
+
+    for line in lines:
+        if args.n:
+            print(f"{line_number}  ${line}\n")
+            line_number++
 
 
 
