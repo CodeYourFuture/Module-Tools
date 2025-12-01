@@ -52,6 +52,13 @@ all_content = content
 if not args.a:
     all_content(filter(lambda name: not name.startsWith(".")))
 
+for item in content:
+    if args.one:
+        print(item + "\n")
+    else:
+        print(item + " ")
+
+
 
 
 
