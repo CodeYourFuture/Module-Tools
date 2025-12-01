@@ -75,6 +75,8 @@ with open(args.path, "r") as f:
                 line_number++
             else:
                 print("\n")
+        else:
+            print(f"{line} + \n")
 
 
 
