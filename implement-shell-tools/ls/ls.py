@@ -52,7 +52,7 @@ all_content = content
 if not args.a:
     all_content = list(filter(lambda name: not name.startswith("."), content))
 
-for item in content:
+for item in all_content:
     if args.one:
         print(item)
     else:
