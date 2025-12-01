@@ -50,8 +50,8 @@ parser = argparse.ArgumentParser(
     description="Output the content of a file to the terminal",
 )
 
-parser.add_argument("-n", help="Number the output lines")
-parser.add_argument("-b", help="Number the non-blank output lines")
+parser.add_argument("-n", help="Number the output lines", action="store_true")
+parser.add_argument("-b", help="Number the non-blank output lines", action="store_true")
 parser.add_argument("path", help="The file to read from")
 
 args = parser.parse_args()
