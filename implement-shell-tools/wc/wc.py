@@ -88,3 +88,17 @@
 #        console.log(`${totalLines}       ${totalWords}       ${totalCharacters} total`); 
 #     }
 # }
+
+import argparse
+
+parser = argparse.ArgumentParser(
+    prog="counter",
+    description="Counts lines, words or characters in a file (or all files) inside a directory",
+)
+
+parser.add_argument("-l", "--line", dest="line", help="The number of lines in each file", action="store_true")
+parser.add_argument("-w", "---word", dest="word", help="The number of words in each file", action="store_true")
+parser.add_argument("-c", "--char", dest="char", help="The number of characters in each file")
+parser.add_argument("paths", help="The file(s)/path(s) to read from", nargs="+")
+
+args = parser.parse_args()
