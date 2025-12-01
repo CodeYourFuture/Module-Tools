@@ -47,7 +47,10 @@ args = parser.parse_args()
 
 content = os.listdir(args.path)
 
+all_content = content
 
+if not args.a:
+    all_content(filter(lambda name: not name.startsWith(".")))
 
 
 
