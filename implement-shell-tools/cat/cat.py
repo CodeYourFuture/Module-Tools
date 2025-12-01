@@ -59,8 +59,9 @@ args = parser.parse_args()
 with open(args.path, "r") as f:
     content = f.read()
 
+    lines = content.split("\n")
 
-print(f)
+
 
 
 
