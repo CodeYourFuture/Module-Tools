@@ -69,6 +69,14 @@ with open(args.path, "r") as f:
         if args.n:
             print(f"{line_number}  ${line}\n")
             line_number++
+        elif args.b:
+            if line != "":
+                print(f"{line_number}  ${line}\n")
+                line_number++
+            else:
+                print("\n")
+
+
 
 
 
