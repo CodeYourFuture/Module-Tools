@@ -15,6 +15,9 @@ args = parser.parse_args()
 file_paths = args.path
 
 file_details_list = []
+line_count_total = 0
+word_count_total = 0
+file_size_total = 0
 
 # Get file details
 for file_path in file_paths:
@@ -22,25 +25,28 @@ for file_path in file_paths:
         content = f.read()
 
     details = {
-        "file_path": file_path,
-        "file_size": os.path.getsize(file_path),
         "line_count": content.count("\n"),      # matches real wc -l
         "word_count": len(content.split()),     # split on whitespace
+        "file_size": os.path.getsize(file_path),
+        "file_path": file_path,
     }
+    # Update totals
+    line_count_total += details["line_count"]
+    word_count_total += details["word_count"]
+    file_size_total += details["file_size"]
+    total_path = "Total"
 
     file_details_list.append(details)
 
-
-print(file_details_list)
-
-def get_line_count(text):
-    return text.count("\n")
-
-
-def get_word_count(text):
-    return len(text.split())
+totals_details = {
+    "line_count": line_count_total,
+    "word_count": word_count_total,
+    "file_size": file_size_total,
+    "file_path": "total"
+}
 
 
+print(totals_details)
 
 show_all = not (args.lines or args.words or args.bytes)
 
