@@ -56,7 +56,8 @@ parser.add_argument("path", help="The file to read from")
 
 args = parser.parse_args
 
-
+with open(args.path, "r") as f:
+    content = f.read()
 
 
 
