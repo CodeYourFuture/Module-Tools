@@ -3,12 +3,15 @@ class Person:
         self.name = name
         self.age = age
         self.preferred_operating_system = preferred_operating_system
-
 imran = Person("Imran", 22, "Ubuntu")
 print(imran.name)
-print(imran.address)
+#print(imran.address)
 
 eliza = Person("Eliza", 34, "Arch Linux")
 print(eliza.name)
-print(eliza.address)
-# error said person has no attribute "address" in line 9 and 13
+#print(eliza.address)
+
+def is_adult(person: Person) -> bool:
+    return person.age >= 18
+
+print(is_adult(imran))
