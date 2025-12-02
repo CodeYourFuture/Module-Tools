@@ -1,4 +1,4 @@
-def open_account(balances, name, amount):
+def open_account(balances: dict[str,int], name : str, amount:int):
     balances[name] = amount
 
 def sum_balances(accounts):
