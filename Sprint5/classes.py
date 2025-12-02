@@ -15,3 +15,6 @@ def is_adult(person: Person) -> bool:
     return person.age >= 18
 
 print(is_adult(imran))
+
+def works_at(person: Person) -> str:
+    return person.jobcompany
