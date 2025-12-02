@@ -19,7 +19,7 @@ class Person:
     
 
 p1 = Person("Sara", date(1996, 10, 28), "macOS")
-print(p1.is_adult())   # True
+print(p1)  
 
-p2 = Person("Muhib", date(2018, 6, 22), "Linux")
-print(p2.is_adult())   # False
+p2 = Person("Sara", date(1996, 10, 28), "macOS")
+print(p1 == p2)  
