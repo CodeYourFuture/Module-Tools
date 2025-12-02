@@ -102,3 +102,17 @@ parser.add_argument("-c", "--char", dest="char", help="The number of characters 
 parser.add_argument("paths", help="The file(s)/path(s) to read from", nargs="+")
 
 args = parser.parse_args()
+
+def counter(item):
+    lines = len(item.trim().split("\n"))
+    words = item.split()
+
+
+
+for path in args.paths:
+    with open(path, "r") as f:
+        content = f.read()
+    if args.l:
+        
+
+
