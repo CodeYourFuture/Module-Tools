@@ -6,8 +6,9 @@
 #return types of this code. Run the code through mypy, and fix all of the bugs that show up. When you’re
 #confident all of the type annotations are correct, and the bugs are fixed, run the code and check it works.
 
+from typing import Dict
 
-def open_account(balances, name, amount) ->int:
+def open_account(balances: Dict[str, int], name: str, amount: int) ->int:
     balances[name] = amount
 
 def sum_balances(accounts):
