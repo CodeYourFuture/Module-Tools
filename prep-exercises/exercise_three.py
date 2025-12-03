@@ -8,18 +8,18 @@
 
 from typing import Dict
 
-def open_account(balances: Dict[str, int], name: str, amount: int) ->int:
+def open_account(balances: Dict[str, float], name: str, amount: float) ->float:
     balances[name] = amount
     return balances[name]
 
-def sum_balances(accounts: Dict[str, int]) ->int:
+def sum_balances(accounts: Dict[str, float]) ->float:
     total = 0
     for name, pence in accounts.items():
         print(f"{name} had balance {pence}")
         total += pence
     return total
 
-def format_pence_as_string(total_pence: int) ->str:
+def format_pence_as_string(total_pence: float) ->str:
     if total_pence < 100:
         return f"{total_pence}p"
     pounds = int(total_pence / 100)
