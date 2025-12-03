@@ -12,7 +12,7 @@ def open_account(balances: Dict[str, int], name: str, amount: int) ->int:
     balances[name] = amount
     return balances[name]
 
-def sum_balances(accounts) ->int:
+def sum_balances(accounts: Dict[str, int]) ->int:
     total = 0
     for name, pence in accounts.items():
         print(f"{name} had balance {pence}")
