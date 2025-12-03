@@ -37,4 +37,10 @@ def is_engineer(person: Person) -> bool:
 
 print(is_engineer(eliza))
 
+# After running through mypy, 2 errors related to the new function were reported:
+# 1) exercise_five.py:36: error: Returning Any from function declared to return "bool"  [no-any-return]
+# since person does not have "profession" as attribute and thus its type is unknown, thus this function could be returning any type. Hence the error above.
+# 2) exercise_five.py:36: error: "Person" has no attribute "profession"  [attr-defined]
+# The error above simply stating that attribute "profession" does not exist in the class "Person"
+
 
