@@ -8,11 +8,10 @@
 
 from typing import Dict
 
-def open_account(name: str, amount: int) ->int:
+def open_account(balances: Dict[str, int], name: str, amount: int) ->None:
     balances[name] = amount
-    return balances[name]
 
-def sum_balances(accounts: Dict[str, int]) ->int
+def sum_balances(accounts: Dict[str, int]) ->int:
     total = 0
     for name, pence in accounts.items():
         print(f"{name} had balance {pence}")
