@@ -14,6 +14,10 @@ class Person:
 
     def is_adult(self):
         return self.age >= 18
+    
+# Add date_of_birth attribute to the Person class
+setattr(Person, "date_of_birth", "date_of_birth")
+
 
 imran = Person("Imran", 22, "Ubuntu")
 print(imran.is_adult())
