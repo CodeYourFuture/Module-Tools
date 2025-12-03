@@ -14,7 +14,10 @@ class Person:
         self.date_of_birth = date_of_birth
 
     def is_adult(self):
-        return self.age >= 18
+        age_in_days = (date.today() - self.date_of_birth).days 
+        age_in_years = age_in_days / 365.25
+        return age_in_years >= 18
+    
     
 
 
