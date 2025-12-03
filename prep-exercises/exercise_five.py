@@ -30,3 +30,11 @@ def is_adult(person: Person) -> bool:
 print(is_adult(imran))
 
 
+
+# New function: "is_engineer" takes "Person" as a parameter and tries to access "profession" - a property that does not exist.
+def is_engineer(person: Person) -> bool:
+    return person.profession == "Engineer"
+
+print(is_engineer(eliza))
+
+
