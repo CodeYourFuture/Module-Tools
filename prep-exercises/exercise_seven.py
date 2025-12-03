@@ -22,8 +22,6 @@ class Person:
 
 
 
-
-
 imran = Person("Imran", 22, "Ubuntu")
 print(imran.is_adult())
 
