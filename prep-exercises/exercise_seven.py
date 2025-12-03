@@ -10,7 +10,7 @@ class Person:
 imran = Person("Imran", 22, "Ubuntu")
 print(imran.is_adult())
 
-# hange the Person class to take a date of birth (using the standard library’s datetime.date class) and
+#Change the Person class to take a date of birth (using the standard library’s datetime.date class) and
 #store it in a field instead of age.
 
 #Update the is_adult method to act the same as before.
