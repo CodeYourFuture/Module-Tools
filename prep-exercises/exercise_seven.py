@@ -7,16 +7,19 @@ from datetime import date
 
 
 class Person:
-    def __init__(self, name: str, age: int, preferred_operating_system: str):
+    def __init__(self, name: str, age: int, preferred_operating_system: str, date_of_birth: dict):
         self.name = name
         self.age = age
         self.preferred_operating_system = preferred_operating_system
+        #Add "date_of_birth" attribute to the "Person" class
+        self.date_of_birth = date_of_birth
 
     def is_adult(self):
         return self.age >= 18
     
-# Add date_of_birth attribute to the Person class
-setattr(Person, "date_of_birth", "date_of_birth")
+
+
+
 
 
 imran = Person("Imran", 22, "Ubuntu")
