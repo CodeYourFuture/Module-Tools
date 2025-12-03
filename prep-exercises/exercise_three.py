@@ -10,6 +10,7 @@ from typing import Dict
 
 def open_account(balances: Dict[str, int], name: str, amount: int) ->int:
     balances[name] = amount
+    return balances[name]
 
 def sum_balances(accounts):
     total = 0
