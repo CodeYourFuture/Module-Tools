@@ -15,3 +15,6 @@ print(eliza.address)
 # Save the above code to a file, and run it through mypy.
 
 #Read the error, and make sure you understand what it’s telling you.
+
+# The error message simply says that the class: Person does not have "address" as an attribute.
+# Therefore, the instances of the class: Person can not inheret an attribute that does not exist.
