@@ -3,25 +3,42 @@ import { promises as fs } from "node:fs";
 import process from "node:process";
 
 program
-  .name("count-containing-words")
-  .description("Counts words in a file that contain a particular character")
-  .option("-c, --char <char>", "The character to search for", "e")
-  .argument("<path>", "The file path to process");
+  .name("display-file-content")
+  .description("Implement cat command with -n and -b flag support")
+  .option("-n, --number-all-lines", "Number every line in the file")
+  .option("-b, --number-non-empty-lines", "Number non empty lines in the file")
+  .argument("<paths...>", "File paths to process");
 
-program.parse();
+program.parse(process.argv);
 
-const argv = program.args;
-if (argv.length != 1) {
-  console.error(
-    `Expected exactly 1 argument (a path) to be passed but got ${argv.length}.`
-  );
-  process.exit(1);
-}
-const path = argv[0];
-const char = program.opts().char;
+const args = program.args; //Array all file paths
 
-const content = await fs.readFile(path, "utf-8");
-const countOfWordsContainingChar = content
-  .split(" ")
-  .filter((word) => word.includes(char)).length;
-console.log(countOfWordsContainingChar);
+//read flags user typed and return them as object.
+const opts = program.opts();
+
+let lineNumber = 1;
+
+// Loop over every filepath in args
+args.forEach(async (filepath) => {
+  const content = await fs.readFile(filepath, "utf8");
+  const lines = content.split("\n");
+
+  lines.forEach((line) => {
+    if (opts.numberAllLines) {
+      // -n: number every line
+      console.log(`${lineNumber} ${line}`);
+      lineNumber++;
+    } else if (opts.numberNonEmptyLines) {
+      // -b: number non-empty lines only
+      if (line.trim() === "") {
+        console.log(line);
+      } else {
+        console.log(`${lineNumber} ${line}`);
+        lineNumber++;
+      }
+    } else {
+      // No flag: just print
+      console.log(line);
+    }
+  });
+});
