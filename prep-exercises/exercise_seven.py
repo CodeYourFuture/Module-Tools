@@ -7,7 +7,7 @@ from datetime import date
 
 
 class Person:
-    def __init__(self, name: str, date_of_birth: dict, preferred_operating_system: str):
+    def __init__(self, name: str, date_of_birth: date, preferred_operating_system: str):
         self.name = name
         self.preferred_operating_system = preferred_operating_system
         #Add "date_of_birth" attribute to the "Person" class
