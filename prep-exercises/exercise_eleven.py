@@ -43,7 +43,7 @@ laptops = [
 
 name_input = input("What's your name? ")
 age_input = int(input("What's your age? "))
-preferred_operating_system_input = input("What's your preferred operating system? ")
+preferred_operating_system_input = input("What's your preferred operating system? ").lower()
 
 def person_builder(name_input: str, age_input:int, preferred_operating_system_input:str) ->Person:
 
