@@ -63,13 +63,15 @@ def user_prompt() -> Person:
             raise ValueError("Name must contain only alphabetic characters.")
         
         age = int(input("Please enter your age: "))
-        if age <= 0:
-            raise ValueError("Age must be positive.")
+        minimum_age = 18
+        if age < minimum_age: 
+            raise ValueError("Age must be 18 or over.")
+
         
         # define valid OS options
         valid_os = [os.value for os in OperatingSystem]
 
-        # dynamically display the os options
+        # dynamically display the os options (no need for str type here as input always returns a string)
         preferred_os = input(f"Please enter correct operating system name, either {', '.join(valid_os)}: ").strip()
 
         # validate the OS
@@ -97,7 +99,7 @@ def main() -> None:
     # get the counts of the laptops for an OS e.g. os_counts = {OperatingSystem.MACOS: 4,OperatingSystem.ARCH: 2,OperatingSystem.UBUNTU: 3}
     os_counts = Counter(laptop.operating_system for laptop in laptops)
 
-    print(f"{user_details.name}, there are {len(matching_laptops)} laptops available with your preferred operating system ({user_details.preferred_operating_systems.value}).")
+    print(f"\n{user_details.name}, there are {len(matching_laptops)} laptops available with your preferred operating system ({user_details.preferred_operating_systems.value}).\n")
 
     if matching_laptops:
         print("Matching laptops:")
@@ -113,10 +115,10 @@ def main() -> None:
     alternative_os = [(os, count) for os, count in os_counts.items() if count > user_os_count]
 
     if alternative_os:
-        print("However, there are more laptops available with the following operating systems:")
+        print("\nHowever, there are more laptops available with the following operating systems:")
         for os, count in alternative_os:
             print(f"- {os.value}: {count} laptops")
-        print("If you consider one of these options, you will have a greater chance of getting a laptop.")
+        print("\nIf you consider one of these options, you will have a greater chance of getting a laptop.")
     else: 
         print("Your preferred operating system has the most laptops available.")
 
