@@ -1,6 +1,7 @@
 import cowsay
 import argparse
 
+# Get dynamic list of animals from the cowsay library
 animals = cowsay.char_names
 
 parser = argparse.ArgumentParser(
@@ -8,25 +9,18 @@ parser = argparse.ArgumentParser(
     description="Make animals say things"
 )
 
-parser.add_argument("-a", "--animal", choices=animals, help="The animal to be saying things.")
+parser.add_argument("--animal", choices=animals, help="The animal to be saying things.")
 parser.add_argument("message", nargs="+", help="The message to say.")
 
 args = parser.parse_args()
 
+# Join all message words into a single string
 message = " ".join(args.message)
 
-print(args)
 
 if args.animal:
-    # cowsay[args.animal](message)
-    print(cowsay.get_output_string(args.animal, message))
-    # print('hi')
+    cowsay.char_funcs[args.animal](message)
 else:
-    # print(cowsay.get_output_string('cow', 'Hello World'))
-    cowsay.cow(message) # if no animal is provided, use default
+    # if no animal is provided, use default
+    cowsay.cow(message)
 
-
-
-print(animals)
-
- 
