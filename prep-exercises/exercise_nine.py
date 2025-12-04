@@ -1,6 +1,3 @@
-#Fix the above code so that it works. You must not change the print on line 17 - we do want to print the
-#children’s ages. (Feel free to invent the ages of Imran’s children.)
-
 from dataclasses import dataclass
 from typing import List
 
@@ -20,3 +17,9 @@ def print_family_tree(person: Person) -> None:
         print(f"- {child.name} ({child.age})")
 
 print_family_tree(imran)
+
+
+#Fix the above code so that it works. You must not change the print on line 17 - we do want to print the
+#children’s ages. (Feel free to invent the ages of Imran’s children.)
+
+
