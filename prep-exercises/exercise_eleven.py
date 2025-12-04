@@ -11,6 +11,24 @@
 #types as quickly as possible, and should output errors to stderr and terminate the program with a non-
 #zero exit code if the user input bad values.
 
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class person:
+    name: str
+    age: int
+    preferred_operating_system: str
+
+
+@dataclass(frozen=True)
+class Laptop:
+    id: int
+    manufacturer: str
+    model: str
+    screen_size_in_inches: float
+    operating_system: str
+
 
 laptops = [
     Laptop(id=1, manufacturer="HP", model="Chromebook Plus 514", screen_size_in_inches=14, operating_system="ChromeOS"),
