@@ -12,6 +12,7 @@
 #zero exit code if the user input bad values.
 
 from dataclasses import dataclass
+import sys
 
 
 @dataclass(frozen=True)
@@ -46,6 +47,9 @@ age_input = int(input("What's your age? "))
 preferred_operating_system_input = input("What's your preferred operating system? ").lower()
 
 def person_builder(name_input: str, age_input:int, preferred_operating_system_input:str) ->Person:
+    if(not type(name_input) | type(age_input) | type(preferred_operating_system_input)):
+        print(f"Ensure that {name_input} is a {type(name_input)}, {age_input} is a {type(age_input)} and {preferred_operating_system_input} is a {type(preferred_operating_system_input)} ")
+        sys.exit(1)
 
     return Person(name_input, age_input, preferred_operating_system_input)
 
