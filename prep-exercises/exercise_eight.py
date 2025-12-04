@@ -13,11 +13,10 @@ class Person:
         date_of_birth: date
         preferred_operating_system: str
         
-        
-    def is_adult(self) ->bool:
-        age_in_days = (date.today() - self.date_of_birth).days 
-        age_in_years = age_in_days / 365.2425
-        return age_in_years >= 18
+        def is_adult(self) ->bool:
+            age_in_days = (date.today() - self.date_of_birth).days 
+            age_in_years = age_in_days / 365.2425
+            return age_in_years >= 18
     
     
 
