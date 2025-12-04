@@ -24,27 +24,41 @@ class Laptop:
     operating_system: OperatingSystem
 
 laptops = [
-    Laptop(id=1, manufacturer="Dell", model="XPS", screen_size_in_inches=13, operating_system="Arch Linux"),
-    Laptop(id=2, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system="Ubuntu"),
-    Laptop(id=3, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system="Ubuntu"),
-    Laptop(id=4, manufacturer="Apple", model="macBook", screen_size_in_inches=13, operating_system="macOS"),
+    Laptop(id=1, manufacturer="Dell", model="XPS", screen_size_in_inches=13, operating_system=OperatingSystem.ARCH),
+    Laptop(id=2, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.UBUNTU),
+    Laptop(id=3, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.UBUNTU),
+    Laptop(id=4, manufacturer="Apple", model="macBook", screen_size_in_inches=13, operating_system=OperatingSystem.MACOS),
 ] 
 people = [
-    Person(name="Imran", age=22, preferred_operating_system=["Arch Linux","Ubuntu"]),
-    Person(name="Eliza", age=34, preferred_operating_system=["Arch Linux","macOS","Ubuntu"]),
-    Person(name="Leila", age=45, preferred_operating_system=["macOS","Ubuntu","Arch Linux",]),    
-   Person(name="Mary", age=35, preferred_operating_system=["macOS","Arch Linux"]),
+    Person(name="Imran", age=22, preferred_operating_system=[OperatingSystem.ARCH,OperatingSystem.UBUNTU]),
+    Person(name="Eliza", age=34, preferred_operating_system=[OperatingSystem.ARCH,OperatingSystem.MACOS,OperatingSystem.UBUNTU]),
+    Person(name="Leila", age=45, preferred_operating_system=[OperatingSystem.MACOS,OperatingSystem.UBUNTU,OperatingSystem.ARCH]),    
+    Person(name="Mary", age=35, preferred_operating_system=[OperatingSystem.MACOS,OperatingSystem.ARCH]),
 ]
 def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]: 
+    allocated_history : Dict[Person,Laptop] ={}
+    sadness=0
     for person in people :
-     allocated=False
+     allocated_flag=False
      for i in range(len(person.preferred_operating_system)) :
           for laptop in laptops :
               if person.preferred_operating_system[i] == laptop.operating_system :
-                  print(person.name,laptop.id,laptop.operating_system,i)
+                  allocated_history[person.name]=laptop
+                #   print(person.name,laptop.id,laptop.operating_system,i)
+                  sadness += i
                   laptops.remove(laptop)
-                  allocated=True
+                  allocated_flag=True
                   break
-          if allocated : break        
+          if allocated_flag : 
+            break     
+          
+     if not allocated_flag :
+        allocated_history[person.name]=laptops[0]
+        laptops.remove(laptops[0])
+        sadness +=100       
+            
+         
+          
+    return allocated_history ,sadness            
     
-allocate_laptops(people,laptops)    
+print(allocate_laptops(people,laptops)) 
