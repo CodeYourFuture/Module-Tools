@@ -49,4 +49,4 @@ def person_builder(name_input: str, age_input:int, preferred_operating_system_in
 
     return Person(name_input, age_input, preferred_operating_system_input)
 
-print(Person(name_input, age_input, preferred_operating_system_input))
+print(person_builder(name_input, age_input, preferred_operating_system_input))
