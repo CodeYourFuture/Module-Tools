@@ -22,15 +22,18 @@ def sum_balances(accounts: dict[str, int]) -> int:
         total += pence
     return total
 
-# added integer type annotation and a return type of string for the output
-def format_pence_as_string(total_pence: int) -> str:
-    if total_pence < 100:
-        return f"{total_pence}p"
-    pounds = int(total_pence / 100)
-    pence = total_pence % 100
+# added integer type annotation and a return type of string for the output and renamed the function
+# parameter to avoid shadowing issue with variable name in the outer scope
+def format_pence_as_string(total_pence_amount: int) -> str:
+    if total_pence_amount < 100:
+        return f"{total_pence_amount}p"
+    pounds = int(total_pence_amount / 100)
+    pence = total_pence_amount % 100
     return f"£{pounds}.{pence:02d}"
 
-balances = {
+# renamed variable from 'balances' to 'account_balances' to avoid shadowing the function parameter
+# 'balances' in open_account function.
+account_balances = {
     "Sima": 700,
     "Linn": 545,
     "Georg": 831,
@@ -38,10 +41,10 @@ balances = {
 
 # added the balances dictionary as first argument (as required above)
 # and altered the amounts types from float 9.13 and string "7.13" to integers
-open_account(balances, "Tobi", 913)
-open_account(balances, "Olya", 713)
+open_account(account_balances, "Tobi", 913)
+open_account(account_balances, "Olya", 713)
 
-total_pence = sum_balances(balances)
+total_pence = sum_balances(account_balances)
 # corrected the function name (originally was "format_pence_as_str")
 total_string = format_pence_as_string(total_pence)
 
