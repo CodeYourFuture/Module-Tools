@@ -5,7 +5,7 @@ from typing import List
 class Person:
     name: str
     age: int
-    preferred_operating_system: str
+    preferred_operating_system: List[str]
 
 
 @dataclass(frozen=True)
