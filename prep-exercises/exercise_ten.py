@@ -40,3 +40,16 @@ laptops = [
 for person in people:
     possible_laptops = find_possible_laptops(laptops, person)
     print(f"Possible laptops for {person.name}: {possible_laptops}")
+
+
+#Try changing the type annotation of Person.preferred_operating_system from str to List[str].
+    
+#Run mypy on the code.
+    
+#It tells us different places that our code is now wrong, because we’re passing values of the wrong type.
+    
+#We probably also want to rename our field - lists are plural. Rename the field to preferred_operating_systems.
+    
+#Run mypy again.
+
+#Fix all of the places that mypy tells you need changing. Make sure the program works as you’d expect.
