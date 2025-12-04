@@ -10,7 +10,7 @@ def main():
         description="Make animals say things"
     )
 
-    parser.add_argument("--animal", choices=animals, help="The animal to be saying things.")
+    parser.add_argument("--animal", choices=animals, default="cow",help="The animal to be saying things.")
     parser.add_argument("message", nargs="+", help="The message to say.")
 
     args = parser.parse_args()
@@ -18,10 +18,9 @@ def main():
     # Join all message words into a single string
     message = " ".join(args.message)
 
-    if args.animal:
-        cowsay.char_funcs[args.animal](message)
-    else:
-        cowsay.cow(message)
+    # Output the message using the selected animal or the default cow
+    cowsay.char_funcs[args.animal](message)
+    
 
 if __name__ == "__main__":
     main()
