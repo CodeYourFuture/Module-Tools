@@ -1,6 +1,7 @@
 #Write a program which:
-#1. Already has a list of Laptops that a library has to lend out.
-#2. Accepts user input to create a new Person - it should use the input function to read a person’s
+
+#1.Already has a list of Laptops that a library has to lend out.
+#2.Accepts user input to create a new Person - it should use the input function to read a person’s
 #name, age, and preferred operating system.
 #3.Tells the user how many laptops the library has that have that operating system.
 #4.If there is an operating system that has more laptops available, tells the user that if they’re willing to
