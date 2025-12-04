@@ -41,10 +41,12 @@ laptops = [
     Laptop(id=8, manufacturer="Apple", model="MacBook", screen_size_in_inches=13.3, operating_system="macOS"),
 ]
 
-name = input("What's your name? ")
-age = input("What's your age? ")
-preferred_operating_system = input("What's your preferred operating system? ")
+name_input = input("What's your name? ")
+age_input = input("What's your age? ")
+preferred_operating_system_input = input("What's your preferred operating system? ")
 
-def person_builder(name: str, age:int, preferred_operating_system:str) ->Person:
-    return Person(name, age, preferred_operating_system)
+def person_builder(name_input: str, age_input:int, preferred_operating_system_input:str) ->Person:
 
+    return Person(name_input, age_input, preferred_operating_system_input)
+
+print(Person(name_input, age_input, preferred_operating_system_input))
