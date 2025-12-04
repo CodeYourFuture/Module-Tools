@@ -88,3 +88,6 @@ for pair in os_counts.items():
         best_count = count
 
 print("Best OS:", best_os, "with", best_count, "laptops")
+if best_os != preferred_os:
+    print(f"If you’re willing to accept {best_os.value}, "
+          f"you’re more likely to get a laptop since there are {best_count} available.")
