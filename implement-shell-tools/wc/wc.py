@@ -121,12 +121,12 @@ for path in args.paths:
         content = f.read()
     stats = counter(content)
     if args.line:
-        print(f"{stats[lines]} {path}")
+        print(f"{stats['lines']} {path}")
     elif args.word:
-        print()
+        print(f"{stats['words']} {path}")
     elif args.char:
-        print()
+        print(f"{stats['characters']} {path}")
     else:
-        print("")
+        print(f"{stats['lines']} {stats['words']} {stats['characters']} {path}")
 
 
