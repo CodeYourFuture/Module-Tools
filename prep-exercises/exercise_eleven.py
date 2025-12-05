@@ -29,7 +29,7 @@ class Laptop:
     manufacturer: str
     model: str
     screen_size_in_inches: float
-    operating_system: str
+    operating_system: operatingSystem
 
 
 class operatingSystem(Enum):
@@ -43,14 +43,14 @@ class operatingSystem(Enum):
 
 
 laptops = [
-    Laptop(id=1, manufacturer="HP", model="Chromebook Plus 514", screen_size_in_inches=14, operating_system="ChromeOS"),
-    Laptop(id=2, manufacturer="Microsoft", model="XPS", screen_size_in_inches=13.8, operating_system="Windows"),
-    Laptop(id=3, manufacturer="Apple", model="MacBook Air", screen_size_in_inches=15, operating_system="macOS"),
-    Laptop(id=4, manufacturer="Lenovo", model="ThinkPad X220", screen_size_in_inches=12.5, operating_system="Linux"),
-    Laptop(id=5, manufacturer="Dell", model="XPS", screen_size_in_inches=13.7, operating_system="Arch Linux"),
-    Laptop(id=6, manufacturer="Dell", model="XPS", screen_size_in_inches=15.5, operating_system="Ubuntu"),
-    Laptop(id=7, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system="ubuntu"),
-    Laptop(id=8, manufacturer="Apple", model="MacBook", screen_size_in_inches=13.3, operating_system="macOS"),
+    Laptop(id=1, manufacturer="HP", model="Chromebook Plus 514", screen_size_in_inches=14, operating_system=operatingSystem.CHROMEOS),
+    Laptop(id=2, manufacturer="Microsoft", model="XPS", screen_size_in_inches=13.8, operating_system=operatingSystem.WINDOWS),
+    Laptop(id=3, manufacturer="Apple", model="MacBook Air", screen_size_in_inches=15, operating_system=operatingSystem.MACOS),
+    Laptop(id=4, manufacturer="Lenovo", model="ThinkPad X220", screen_size_in_inches=12.5, operating_system=operatingSystem.LINUX),
+    Laptop(id=5, manufacturer="Dell", model="XPS", screen_size_in_inches=13.7, operating_system=operatingSystem.ARCH),
+    Laptop(id=6, manufacturer="Dell", model="XPS", screen_size_in_inches=15.5, operating_system=operatingSystem.UBUNTU),
+    Laptop(id=7, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=operatingSystem.UBUNTU),
+    Laptop(id=8, manufacturer="Apple", model="MacBook", screen_size_in_inches=13.3, operating_system=operatingSystem.MACOS),
 ]
 
 name_input = input("What's your name? ")
