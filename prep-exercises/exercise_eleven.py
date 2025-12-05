@@ -15,6 +15,15 @@ from dataclasses import dataclass
 import sys
 from enum import Enum
 
+class operatingSystem(Enum):
+    CHROMEOS = "ChromeOS"
+    WINDOWS = "Windows"
+    MACOS = "macOS"
+    LINUX = "Linux"
+    ARCH = "Arch Linux"
+    UBUNTU = "Ubuntu"
+
+
 
 @dataclass(frozen=True)
 class Person:
@@ -30,15 +39,6 @@ class Laptop:
     model: str
     screen_size_in_inches: float
     operating_system: operatingSystem
-
-
-class operatingSystem(Enum):
-    CHROMEOS = "ChromeOS"
-    WINDOWS = "Windows"
-    MACOS = "macOS"
-    LINUX = "Linux"
-    ARCH = "Arch Linux"
-    UBUNTU = "Ubuntu"
 
 
 
