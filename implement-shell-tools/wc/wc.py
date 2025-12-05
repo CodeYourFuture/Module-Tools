@@ -118,16 +118,17 @@ file_count = 0
 
 
 for path in args.paths:
-    with open(path, "r") as f:
-        content = f.read()
-    stats = counter(content)
-    if args.line:
-        print(f"{stats['lines']} {path}")
-    elif args.word:
-        print(f"{stats['words']} {path}")
-    elif args.char:
-        print(f"{stats['characters']} {path}")
-    else:
-        print(f"{stats['lines']} {stats['words']} {stats['characters']} {path}")
+    if os.path.isfile(path):
+        with open(path, "r") as f:
+            content = f.read()
+        stats = counter(content)
+        if args.line:
+            print(f"{stats['lines']} {path}")
+        elif args.word:
+            print(f"{stats['words']} {path}")
+        elif args.char:
+            print(f"{stats['characters']} {path}")
+        else:
+            print(f"{stats['lines']} {stats['words']} {stats['characters']} {path}")
 
 
