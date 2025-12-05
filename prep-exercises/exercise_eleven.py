@@ -13,6 +13,7 @@
 
 from dataclasses import dataclass
 import sys
+from enum import Enum
 
 
 @dataclass(frozen=True)
@@ -31,6 +32,16 @@ class Laptop:
     operating_system: str
 
 
+class operatingSystem(Enum):
+    CHROMEOS = "ChromeOS"
+    WINDOWS = "Windows"
+    MACOS = "macOS"
+    LINUX = "Linux"
+    ARCH = "Arch Linux"
+    UBUNTU = "Ubuntu"
+
+
+
 laptops = [
     Laptop(id=1, manufacturer="HP", model="Chromebook Plus 514", screen_size_in_inches=14, operating_system="ChromeOS"),
     Laptop(id=2, manufacturer="Microsoft", model="XPS", screen_size_in_inches=13.8, operating_system="Windows"),
@@ -47,7 +58,7 @@ age_input = int(input("What's your age? "))
 preferred_operating_system_input = input("What's your preferred operating system? ").lower()
 
 def person_builder(name_input: str, age_input:int, preferred_operating_system_input:str) ->Person:
-    
+
     return Person(name_input, age_input, preferred_operating_system_input)
 
 print(person_builder(name_input, age_input, preferred_operating_system_input))
