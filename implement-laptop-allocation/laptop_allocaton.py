@@ -4,20 +4,23 @@ from enum import Enum
 from typing import List, Dict
 
 class OperatingSystem(Enum):
+    """enumeration of available operating systems."""
     MACOS = "macOS"
     ARCH = "Arch Linux"
     UBUNTU = "Ubuntu"
 
 @dataclass(frozen=True)
 class Person:
+    """represents a person with a name, age, and their OS preferences."""
     name: str
     age: int
-    # Sorted in order of preference, most preferred is first.
+    # listed in order of preference
     preferred_operating_systems: List[OperatingSystem]
 
 
 @dataclass(frozen=True)
 class Laptop:
+    """represents a laptop with specifications and an operating system."""
     id: int
     manufacturer: str
     model: str
@@ -41,10 +44,7 @@ laptops_list: List[Laptop] = [
     Laptop(id=3, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.UBUNTU),
     Laptop(id=4, manufacturer="Apple", model="MacBook", screen_size_in_inches=13, operating_system=OperatingSystem.MACOS),
     Laptop(id=5, manufacturer="Apple", model="MacBook Air", screen_size_in_inches=13, operating_system=OperatingSystem.MACOS),
-    Laptop(id=6, manufacturer="Lenovo", model="ThinkPad", screen_size_in_inches=14, operating_system=OperatingSystem.ARCH),
-    Laptop(id=7, manufacturer="Asus", model="ZenBook", screen_size_in_inches=13, operating_system=OperatingSystem.UBUNTU),
-    Laptop(id=8, manufacturer="HP", model="Spectre", screen_size_in_inches=14, operating_system=OperatingSystem.MACOS),
-    Laptop(id=9, manufacturer="Apple", model="MacBook Pro", screen_size_in_inches=16, operating_system=OperatingSystem.MACOS),
+    Laptop(id=6, manufacturer="HP", model="Spectre", screen_size_in_inches=14, operating_system=OperatingSystem.MACOS),
 ]
 
 people: List[Person] = [
@@ -56,7 +56,11 @@ people: List[Person] = [
 ]
 
 def user_prompt() -> Person:
+    """
+    prompt the user to input their details and preferred operating systems
+    """
     try:
+        
         # strip() whitespace before processing (no need for str type here as input always returns a string)
         name = input("Please enter your first name: ").strip()
         if not name.isalpha():
@@ -76,7 +80,10 @@ def user_prompt() -> Person:
         preferred_os = input(f"Please enter your preferred operating systems in order of preference, separated by commas (e.g., {', '.join(valid_os)}): ").strip()
 
         # split and validate the OS
-        preferred_os_list = [os.strip() for os in preferred_os.split(",")]
+        preferred_os_list = [os.strip() for os in preferred_os.split(",") if os.strip()]
+        if not preferred_os_list:
+            raise ValueError("You must enter at least one operating system.")
+
         preferred_os_enum = []
         for os_name in preferred_os_list:
             if os_name not in valid_os:
@@ -84,7 +91,7 @@ def user_prompt() -> Person:
         # convert to enum
             preferred_os_enum.append(OperatingSystem(os_name))
 
-        return Person(name=name, age=age, preferred_operating_systems=preferred_os_enum)
+        return Person(name=name, age=age, preferred_operating_systems=tuple(preferred_os_enum))
 
     # throw an error and exit for invalid age and os input
     except ValueError as error:
@@ -93,14 +100,59 @@ def user_prompt() -> Person:
 
 
 def find_possible_laptops(available_laptops: List[Laptop], current_person: Person) -> List[Laptop]:
+    """
+    find laptops that match a person's preferred operating systems.
+    """
     return [
         laptop for laptop in available_laptops
         if laptop.operating_system in current_person.preferred_operating_systems
     ]
 
-# allocated sequentially, in a first come first served order
-def allocate_laptops_sequentially(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]:
-   """
-    Allocate laptops to people sequentially based on the order in the people list.
-    This approach respects the 'wait your turn' principle.
+
+def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]:
     """
+    allocate laptops to people to minimize total sadness.
+    """
+    def calculate_sadness_score(person: Person, laptop: Laptop) -> int:
+        try:
+            return person.preferred_operating_systems.index(laptop.operating_system)
+        except ValueError:
+            return 100
+        
+    allocated_laptops = {}
+
+    # create a shallow copy of the laptops list
+    available_laptops = laptops[:]
+
+    for person in people:
+        # ensure available_laptops is not empty before calling min
+        if not available_laptops:
+            raise ValueError("No laptops available to allocate.")
+
+        # use min() to select the laptop with the lowest sadness score for the person.
+        # lambda function is scoring the person's preferences by calculating the "sadness score" for each laptop based on the index position
+        best_laptop = min(available_laptops, key=lambda laptop: calculate_sadness_score(person, laptop), default=None)
+        if best_laptop:
+            allocated_laptops[person.name] = best_laptop
+            available_laptops.remove(best_laptop)
+ 
+
+    if len(allocated_laptops) != len(people):
+        raise ValueError("Not enough laptops to allocate one to each person.")
+
+    return allocated_laptops
+
+
+def main():
+    # Prompt the user for their details and add them to the people list
+    new_person = user_prompt()
+    people.append(new_person)
+
+    # Allocate laptops and print the results
+    allocation = allocate_laptops(people, laptops_list)
+    for name, laptop in allocation.items():
+        print(f"{name} was allocated {laptop.manufacturer} {laptop.model} with {laptop.operating_system.value}")
+
+# Ensure the script runs only when executed directly
+if __name__ == "__main__":
+    main()
