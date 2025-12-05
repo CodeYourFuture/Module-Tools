@@ -98,8 +98,8 @@ parser = argparse.ArgumentParser(
 )
 
 parser.add_argument("-l", "--line", dest="line", help="The number of lines in each file", action="store_true")
-parser.add_argument("-w", "---word", dest="word", help="The number of words in each file", action="store_true")
-parser.add_argument("-c", "--char", dest="char", help="The number of characters in each file")
+parser.add_argument("-w", "--word", dest="word", help="The number of words in each file", action="store_true")
+parser.add_argument("-c", "--char", dest="char", help="The number of characters in each file", action="store_true")
 parser.add_argument("paths", help="The file(s)/path(s) to read from", nargs="+")
 
 args = parser.parse_args()
@@ -130,24 +130,47 @@ for path in args.paths:
             print(f"{stats['characters']} {path}")
         else:
             print(f"{stats['lines']} {stats['words']} {stats['characters']} {path}")
+
+        total_lines += stats['lines']
+        total_words += stats['words']
+        total_characters += stats['characters']
+        file_count += 1
+
     elif os.path.isdir(path):
-        directory = "folder"
+        for file in os.listdir(path):
+            file_path = os.path.join(path, file)
 
-        for file in os.listdir(directory):
-            path = os.path.join(directory, file)
-
-            if os.path.isfile(path):
-                with open(path, "r") as f:
+            if os.path.isfile(file_path):
+                with open(file_path, "r") as f:
                      content = f.read()
                 stats = counter(content)
                 if args.line:
-                    print(f"{stats['lines']} {path}")
+                    print(f"{stats['lines']} {file_path}")
                 elif args.word:
-                    print(f"{stats['words']} {path}")
+                    print(f"{stats['words']} {file_path}")
                 elif args.char:
-                    print(f"{stats['characters']} {path}")
+                    print(f"{stats['characters']} {file_path}")
                 else:
-                    print(f"{stats['lines']} {stats['words']} {stats['characters']} {path}")
+                    print(f"{stats['lines']} {stats['words']} {stats['characters']} {file_path}")
+
+                total_lines += stats['lines']
+                total_words += stats['words']
+                total_characters += stats['characters']
+                file_count += 1
+
+        
+
+
+
+if file_count > 1:
+    if args.line:
+        print(f"{total_lines} total")
+    elif args.word:
+        print(f"{total_words} total")
+    elif args.char:
+        print(f"{total_characters} total")
+    else:
+        print(f"{total_lines} {total_words} {total_characters} total")
 
 
 
