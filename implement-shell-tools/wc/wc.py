@@ -106,7 +106,14 @@ args = parser.parse_args()
 def counter(item):
     lines = len(item.trim().split("\n"))
     words = item.split()
+    characters = len(item)
+    return {lines, words, characters}
 
+
+total_lines = 0
+total_words = 0
+total_characters = 0
+file_count = 0
 
 
 for path in args.paths:
