@@ -98,3 +98,20 @@ def laptops_counter(preferred_operating_system_input:str) ->int:
          return f"There are {sum} laptops with {user_os} operating system"
 
 print(laptops_counter(preferred_operating_system_input))
+
+
+
+
+def more_available_os(user_os: operatingSystem) ->int:
+    os_counter = {}
+    for laptop in laptops:
+        os_counter[laptop.operating_system] = os_counter.get(laptop.operating_system, 0) + 1
+
+    max_count = max(os_counts.values())
+
+    user_os_count = os_counts.get(user_os, 0)
+    
+    if user_os_count < max_count:
+        print(f"If you’re open to using {user_os} operating system, you’ll have a better chance of getting a laptop.”")
+
+
