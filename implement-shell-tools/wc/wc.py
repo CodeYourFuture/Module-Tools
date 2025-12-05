@@ -119,7 +119,14 @@ file_count = 0
 for path in args.paths:
     with open(path, "r") as f:
         content = f.read()
-    if args.l:
-        
+    stats = counter(content)
+    if args.line:
+        print(f"{lines} {path}")
+    elif args.word:
+        print()
+    elif args.char:
+        print()
+    else:
+        print("")
 
 
