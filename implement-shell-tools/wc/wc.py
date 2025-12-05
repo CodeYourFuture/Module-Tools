@@ -104,10 +104,10 @@ parser.add_argument("paths", help="The file(s)/path(s) to read from", nargs="+")
 args = parser.parse_args()
 
 def counter(item):
-    lines = len(item.trim().split("\n"))
-    words = item.split()
+    lines = len(item.strip().split("\n"))
+    words = len(item.split())
     characters = len(item)
-    return {lines, words, characters}
+    return {"lines": lines, "words": words, "characters": characters}
 
 
 total_lines = 0
@@ -121,7 +121,7 @@ for path in args.paths:
         content = f.read()
     stats = counter(content)
     if args.line:
-        print(f"{lines} {path}")
+        print(f"{stats[lines]} {path}")
     elif args.word:
         print()
     elif args.char:
