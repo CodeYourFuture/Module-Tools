@@ -65,7 +65,7 @@ except ValueError:
     print("Enter a numeric value for the age!")
     sys.exit(1)
 
-preferred_operating_system_input = input("What's your preferred operating system? ").lower()
+preferred_operating_system_input = input("What's your preferred operating system? ")
 
 
 
@@ -73,4 +73,12 @@ def person_builder(name_input: str, age_input:int, preferred_operating_system_in
 
     return Person(name_input, age_input, preferred_operating_system_input)
 
-print(person_builder(name_input, age_input, preferred_operating_system_input))
+
+def laptops_counter(preferred_operating_system_input:str) ->int:
+    sum = 0
+    for laptop in laptops:
+        if preferred_operating_system_input == str(laptop.operating_system):
+            sum += 1
+    return f"There are {sum} laptops with {preferred_operating_system_input} operating system"
+
+print(laptops_counter(preferred_operating_system_input))
