@@ -91,6 +91,9 @@ def laptops_counter(preferred_operating_system_input:str) ->int:
     for laptop in laptops:
         if preferred_operating_system_input == laptop.operating_system:
             sum += 1
-    return f"There are {sum} laptops with {preferred_operating_system_input} operating system"
+    if sum == 1:
+        return f"There is {sum} laptop with {preferred_operating_system_input} operating system"
+    elif sum > 1:
+         return f"There are {sum} laptops with {preferred_operating_system_input} operating system"
 
 print(laptops_counter(preferred_operating_system_input))
