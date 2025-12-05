@@ -72,7 +72,6 @@ def parse_os_input(user_input: str) -> operatingSystem:
     for os in operatingSystem:
         if os.value.lower().replace(" ", "") == clean:
             return os
-
     print("Invalid operating system!", file=sys.stderr)
     sys.exit(1)
 
@@ -91,9 +90,10 @@ def laptops_counter(preferred_operating_system_input:str) ->int:
     for laptop in laptops:
         if preferred_operating_system_input == laptop.operating_system:
             sum += 1
+    user_os = preferred_operating_system_input.value
     if sum == 1:
-        return f"There is {sum} laptop with {preferred_operating_system_input} operating system"
+        return f"There is {sum} laptop with {user_os} operating system"
     elif sum > 1:
-         return f"There are {sum} laptops with {preferred_operating_system_input} operating system"
+         return f"There are {sum} laptops with {user_os} operating system"
 
 print(laptops_counter(preferred_operating_system_input))
