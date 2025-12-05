@@ -48,9 +48,10 @@ laptops = [
     Laptop(id=3, manufacturer="Apple", model="MacBook Air", screen_size_in_inches=15, operating_system=operatingSystem.MACOS),
     Laptop(id=4, manufacturer="Lenovo", model="ThinkPad X220", screen_size_in_inches=12.5, operating_system=operatingSystem.LINUX),
     Laptop(id=5, manufacturer="Dell", model="XPS", screen_size_in_inches=13.7, operating_system=operatingSystem.ARCH),
-    Laptop(id=6, manufacturer="Dell", model="XPS", screen_size_in_inches=15.5, operating_system=operatingSystem.UBUNTU),
-    Laptop(id=7, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=operatingSystem.UBUNTU),
-    Laptop(id=8, manufacturer="Apple", model="MacBook", screen_size_in_inches=13.3, operating_system=operatingSystem.MACOS),
+    Laptop(id=6, manufacturer="Dell", model="XPS", screen_size_in_inches=10.4, operating_system=operatingSystem.ARCH),
+    Laptop(id=7, manufacturer="Dell", model="XPS", screen_size_in_inches=15.5, operating_system=operatingSystem.UBUNTU),
+    Laptop(id=8, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=operatingSystem.UBUNTU),
+    Laptop(id=9, manufacturer="Apple", model="MacBook", screen_size_in_inches=13.3, operating_system=operatingSystem.MACOS),
 ]
 
 
@@ -94,6 +95,6 @@ def laptops_counter(preferred_operating_system_input:str) ->int:
     if sum == 1:
         return f"There is {sum} laptop with {user_os} operating system"
     elif sum > 1:
-         return f"There are {sum} laptops with {user_os} operating system"
+         return f"There are {sum} laptops with {user_os} operating system.\nIf you're happy with {user_os}, you’ll have a better chance of getting a laptop."
 
 print(laptops_counter(preferred_operating_system_input))
