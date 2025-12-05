@@ -53,9 +53,21 @@ laptops = [
     Laptop(id=8, manufacturer="Apple", model="MacBook", screen_size_in_inches=13.3, operating_system=operatingSystem.MACOS),
 ]
 
+
 name_input = input("What's your name? ")
-age_input = int(input("What's your age? "))
+if not name_input.isalpha():
+    print("Name must contain letters only!")
+    sys.exit(1)
+
+try:
+    age_input = int(input("What's your age? "))
+except ValueError:
+    print("Enter a numeric value for the age!")
+    sys.exit(1)
+
 preferred_operating_system_input = input("What's your preferred operating system? ").lower()
+
+
 
 def person_builder(name_input: str, age_input:int, preferred_operating_system_input:str) ->Person:
 
