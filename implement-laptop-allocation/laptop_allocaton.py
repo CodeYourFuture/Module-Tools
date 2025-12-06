@@ -55,12 +55,13 @@ people: List[Person] = [
     Person(name="Ger", age=51, preferred_operating_systems=[OperatingSystem.UBUNTU, OperatingSystem.MACOS]),
 ]
 
+
+# updated user prompt to include order of preference in selecting OS
 def user_prompt() -> Person:
     """
     prompt the user to input their details and preferred operating systems
     """
     try:
-        
         # strip() whitespace before processing (no need for str type here as input always returns a string)
         name = input("Please enter your first name: ").strip()
         if not name.isalpha():
@@ -88,7 +89,7 @@ def user_prompt() -> Person:
         for os_name in preferred_os_list:
             if os_name not in valid_os:
                 raise ValueError(f"Invalid operating system: {os_name}")
-        # convert to enum
+            # convert to enum
             preferred_os_enum.append(OperatingSystem(os_name))
 
         return Person(name=name, age=age, preferred_operating_systems=tuple(preferred_os_enum))
@@ -96,48 +97,37 @@ def user_prompt() -> Person:
     # throw an error and exit for invalid age and os input
     except ValueError as error:
         print(f"Invalid input: {error}", file=sys.stderr)
-        sys.exit(1)
 
-
-def find_possible_laptops(available_laptops: List[Laptop], current_person: Person) -> List[Laptop]:
-    """
-    find laptops that match a person's preferred operating systems.
-    """
-    return [
-        laptop for laptop in available_laptops
-        if laptop.operating_system in current_person.preferred_operating_systems
-    ]
 
 def sadness_score(person: Person, laptop: Laptop) -> int:
     """
     calculate the sadness score for a person based on the allocated laptop.
     """
-    try:
+    if laptop.operating_system in person.preferred_operating_systems:
         return person.preferred_operating_systems.index(laptop.operating_system)
-    except ValueError:
-        return 100
-    
+    return 100
 
 def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]:
     """
     allocate laptops to people to minimize total sadness.
     """
-    allocated_laptops = {}
+    allocated_laptops : Dict[str, Laptop ]= {}
 
     # create a shallow copy of the laptops list
     available_laptops = laptops[:]
 
-    for person in people:
+    sorted_people = sorted(people, key=lambda p: len(p.preferred_operating_systems))
+
+    for person in sorted_people:
         # ensure available_laptops is not empty before calling min
         if not available_laptops:
             raise ValueError("No laptops available to allocate.")
 
         # use min() to find the laptop that minimizes their 'sadness score'
         # lambda function is scoring the person's preferences by calculating the 'sadness score' for each laptop based on the index position
-        best_laptop = min(available_laptops, key=lambda laptop: sadness_score(person, laptop), default=None)
-        if best_laptop:
-            allocated_laptops[person.name] = best_laptop
-            available_laptops.remove(best_laptop)
+        best_laptop = min(available_laptops, key=lambda laptop: sadness_score(person, laptop))
+        allocated_laptops[person.name] = best_laptop
+        available_laptops.remove(best_laptop)
  
 
     if len(allocated_laptops) != len(people):
@@ -147,15 +137,24 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
 
 
 def main():
-    # Prompt the user for their details and add them to the people list
-    new_person = user_prompt()
-    people.append(new_person)
+    """
+    allocate laptops and display results
+    """
+    try:
+        # prompt the user for their details and add them to the people list
+        new_person = user_prompt()
+        people.append(new_person)
+        
+        # allocate laptops and print the results
+        allocation = allocate_laptops(people, laptops_list)
 
-    # Allocate laptops and print the results
-    allocation = allocate_laptops(people, laptops_list)
-    for name, laptop in allocation.items():
-        person_sadness_score = sadness_score(next(person for person in people if person.name == name), laptop)
-        print(f"{name} was allocated {laptop.manufacturer} {laptop.model} with {laptop.operating_system.value} (Score: {person_sadness_score})")
+        for name, laptop in allocation.items():
+            person = next(person for person in people if person.name == name)
+            person_sadness_score = sadness_score(person, laptop)
+            print(f"{name} was allocated {laptop.manufacturer} {laptop.model} with {laptop.operating_system.value} (Score: {person_sadness_score})")
+
+    except Exception as error:
+        print(f"An error occurred: {error}", file=sys.stderr)
 
 # Ensure the script runs only when executed directly
 if __name__ == "__main__":
