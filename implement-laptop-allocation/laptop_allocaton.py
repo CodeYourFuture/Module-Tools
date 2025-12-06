@@ -1,7 +1,7 @@
 import sys
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Dict
+from typing import List, Dict, Tuple
 
 class OperatingSystem(Enum):
     """enumeration of available operating systems."""
@@ -15,7 +15,7 @@ class Person:
     name: str
     age: int
     # listed in order of preference
-    preferred_operating_systems: List[OperatingSystem]
+    preferred_operating_systems: Tuple[OperatingSystem, ...]
 
 
 @dataclass(frozen=True)
@@ -108,17 +108,20 @@ def find_possible_laptops(available_laptops: List[Laptop], current_person: Perso
         if laptop.operating_system in current_person.preferred_operating_systems
     ]
 
+def sadness_score(person: Person, laptop: Laptop) -> int:
+    """
+    calculate the sadness score for a person based on the allocated laptop.
+    """
+    try:
+        return person.preferred_operating_systems.index(laptop.operating_system)
+    except ValueError:
+        return 100
+    
 
 def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]:
     """
     allocate laptops to people to minimize total sadness.
     """
-    def calculate_sadness_score(person: Person, laptop: Laptop) -> int:
-        try:
-            return person.preferred_operating_systems.index(laptop.operating_system)
-        except ValueError:
-            return 100
-        
     allocated_laptops = {}
 
     # create a shallow copy of the laptops list
@@ -129,9 +132,9 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
         if not available_laptops:
             raise ValueError("No laptops available to allocate.")
 
-        # use min() to select the laptop with the lowest sadness score for the person.
-        # lambda function is scoring the person's preferences by calculating the "sadness score" for each laptop based on the index position
-        best_laptop = min(available_laptops, key=lambda laptop: calculate_sadness_score(person, laptop), default=None)
+        # use min() to find the laptop that minimizes their 'sadness score'
+        # lambda function is scoring the person's preferences by calculating the 'sadness score' for each laptop based on the index position
+        best_laptop = min(available_laptops, key=lambda laptop: sadness_score(person, laptop), default=None)
         if best_laptop:
             allocated_laptops[person.name] = best_laptop
             available_laptops.remove(best_laptop)
@@ -151,7 +154,8 @@ def main():
     # Allocate laptops and print the results
     allocation = allocate_laptops(people, laptops_list)
     for name, laptop in allocation.items():
-        print(f"{name} was allocated {laptop.manufacturer} {laptop.model} with {laptop.operating_system.value}")
+        person_sadness_score = sadness_score(next(person for person in people if person.name == name), laptop)
+        print(f"{name} was allocated {laptop.manufacturer} {laptop.model} with {laptop.operating_system.value} (Score: {person_sadness_score})")
 
 # Ensure the script runs only when executed directly
 if __name__ == "__main__":
