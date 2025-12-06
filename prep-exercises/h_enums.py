@@ -1,7 +1,7 @@
 import sys
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Tuple
+from typing import List
 from collections import Counter
 
 class OperatingSystem(Enum):
