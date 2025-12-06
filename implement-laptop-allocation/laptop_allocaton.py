@@ -113,9 +113,10 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
     """
     allocated_laptops : Dict[str, Laptop ]= {}
 
-    # create a shallow copy of the laptops list
-    available_laptops = laptops[:]
-
+    # create a shallow copy of the laptops list sorted by id
+    available_laptops = sorted(laptops, key=lambda l: l.id)
+    
+    # sort people by length of their preferences first (avoids a score of 100 if possible)
     sorted_people = sorted(people, key=lambda p: len(p.preferred_operating_systems))
 
     for person in sorted_people:
