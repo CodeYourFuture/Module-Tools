@@ -1,7 +1,7 @@
 import sys
 from dataclasses import dataclass
 from enum import Enum
-from typing import List
+from typing import List, Tuple
 from collections import Counter
 
 class OperatingSystem(Enum):
@@ -58,7 +58,7 @@ laptops = [
 
 def user_prompt() -> Person:
     try:
-        name = str(input("Please enter your first name: "))
+        name = (input("Please enter your first name: ")).strip()
         if not name.isalpha():
             raise ValueError("Name must contain only alphabetic characters.")
         
@@ -97,7 +97,7 @@ def main() -> None:
     matching_laptops = find_possible_laptops(laptops, user_details)
 
     # get the counts of the laptops for an OS e.g. os_counts = {OperatingSystem.MACOS: 4,OperatingSystem.ARCH: 2,OperatingSystem.UBUNTU: 3}
-    os_counts = Counter(laptop.operating_system for laptop in laptops)
+    os_counts: Counter[OperatingSystem] = Counter(laptop.operating_system for laptop in laptops)
 
     print(f"\n{user_details.name}, there are {len(matching_laptops)} laptops available with your preferred operating system ({user_details.preferred_operating_systems.value}).\n")
 
@@ -111,9 +111,9 @@ def main() -> None:
     # get the count of laptops for users preferred OS
     user_os_count = os_counts[user_details.preferred_operating_systems]
 
-    # find the OSes with more laptops available
-    alternative_os = [(os, count) for os, count in os_counts.items() if count > user_os_count]
-
+    # sort alternative OS so most available OS is listed first
+    alternative_os = sorted([(os, count) for os, count in os_counts.items() if count > user_os_count], key=lambda x: x[1], reverse=True)
+    
     if alternative_os:
         print("\nHowever, there are more laptops available with the following operating systems:")
         for os, count in alternative_os:
