@@ -10,6 +10,8 @@ print(double("22"))
 # Under the hood, without throwing an error, Python would concatenate
 # the string "22" with itself, and the result would be "2222".
 
+# correction: later on I realised JavaScript and Python behave differently JS coerces so "22" * 2 returns 44 in JS whereas Python repeats the string according to the number, so "22" * 2 returns "2222".
+
 
 def double(number):
     return number * 3
