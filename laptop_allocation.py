@@ -74,7 +74,7 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
 
 def print_final_allocation(allocated_history:dict[Person,Laptop]) :
     for name , laptop in allocated_history.items() :
-        print(f"{name:<10} : Laptop Id {laptop.id:<3} - OS({laptop.operating_system}) ")
+        print(f"{name:<10} : Laptop Id {laptop.id:<3} - OS({laptop.operating_system.name}) ")
     print(f"Total sadness is : {sadness}")
 
 print_final_allocation(allocate_laptops(people,laptops))
