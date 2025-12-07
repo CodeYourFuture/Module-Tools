@@ -28,12 +28,15 @@ laptops = [
     Laptop(id=2, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.UBUNTU),
     Laptop(id=3, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.UBUNTU),
     Laptop(id=4, manufacturer="Apple", model="macBook", screen_size_in_inches=13, operating_system=OperatingSystem.MACOS),
+    Laptop(id=5, manufacturer="Apple", model="macBook", screen_size_in_inches=13, operating_system=OperatingSystem.MACOS),
+    Laptop(id=6, manufacturer="Apple", model="macBook", screen_size_in_inches=13, operating_system=OperatingSystem.ARCH),
 ] 
 people = [
     Person(name="Imran", age=22, preferred_operating_system=[OperatingSystem.ARCH,OperatingSystem.UBUNTU]),
     Person(name="Eliza", age=34, preferred_operating_system=[OperatingSystem.ARCH,OperatingSystem.MACOS,OperatingSystem.UBUNTU]),
     Person(name="Leila", age=45, preferred_operating_system=[OperatingSystem.MACOS,OperatingSystem.UBUNTU,OperatingSystem.ARCH]),    
     Person(name="Mary", age=35, preferred_operating_system=[OperatingSystem.MACOS,OperatingSystem.ARCH]),
+    Person(name="Sara", age=28, preferred_operating_system=[OperatingSystem.MACOS])
 ]
 sadness=0
 def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]: 
