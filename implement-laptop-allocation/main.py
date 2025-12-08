@@ -38,7 +38,7 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
     best_scenario_assignment = None
     best_total_sadness = float("inf")
 
-    for scenario in scenarios(laptops):
+    for scenario in permutations(laptops):
         total_sadness = 0
 
         #find the sadness level for each scenario
