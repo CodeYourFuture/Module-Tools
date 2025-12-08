@@ -50,4 +50,7 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
             best_total_sadness = total_sadness
             best_scenario_assignment = scenario
 
+    # Convert best_scenario_assignment into Dict[Person, Laptop]
+    return {person: laptop for person, laptop in zip(people, best_scenario_assignment)}
+
 
