@@ -36,7 +36,7 @@ def sadness(person: Person, laptop: Laptop) ->int:
 def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]:
 
     best_scenario_assignment = None
-    best_scenario_sadness = float("inf")
+    best_total_sadness = float("inf")
 
     for scenario in scenarios(laptops):
         total_sadness = 0
@@ -44,4 +44,10 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
         #find the sadness level for each scenario
         for person, laptop in zip(people, scenario):
             total_sadness += sadness(person, laptop)
+
+        #Check if this is the best scenario so far
+        if total_sadness < best_total_sadness:
+            best_total_sadness = total_sadness
+            best_scenario_assignment = scenario
+
 
