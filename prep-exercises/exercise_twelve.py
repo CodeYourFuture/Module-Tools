@@ -39,3 +39,5 @@ print(person2.get_full_name())
 person2.change_last_name("Tyurina")
 print(person2.get_name())
 print(person2.get_full_name())
+
+# I pridict that lines 38, 39, & 41 will through an error, since these methods simply don't exist in the parent class.
