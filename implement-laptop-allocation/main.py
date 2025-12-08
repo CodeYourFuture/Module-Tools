@@ -41,3 +41,7 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
     for scenario in scenarios(laptops):
         total_sadness = 0
 
+        #find the sadness level for each scenario
+        for person, laptop in zip(people, scenario):
+            total_sadness += sadness(person, laptop)
+
