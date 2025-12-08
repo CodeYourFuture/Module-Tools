@@ -1,3 +1,7 @@
+
+#Play computer with this code. Predict what you expect each line will do. Then run the code and check
+#your predictions. (If any lines cause errors, you may need to comment them out to check later lines).
+
 class Parent:
     def __init__(self, first_name: str, last_name: str):
         self.first_name = first_name
