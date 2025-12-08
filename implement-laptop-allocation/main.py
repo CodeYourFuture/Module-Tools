@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
 from typing import List
+from itertools import permutations
+
 
 class OperatingSystem(Enum):
     MACOS = "macOS"
