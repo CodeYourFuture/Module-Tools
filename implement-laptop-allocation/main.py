@@ -33,9 +33,4 @@ def sadness(person: Person, laptop: Laptop):
         return 100
 
 
-if laptop.operating_system == person.preferred_operating_system:
-    return index(Person.preferred_operating_system)
-else:
-    return "Sadness level is 100"
-
 def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]:
