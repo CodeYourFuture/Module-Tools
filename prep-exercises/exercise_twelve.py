@@ -35,9 +35,12 @@ print(person1.get_full_name())
 
 person2 = Parent("Elizaveta", "Alekseeva")
 print(person2.get_name())
-print(person2.get_full_name())
-person2.change_last_name("Tyurina")
+#print(person2.get_full_name())
+#person2.change_last_name("Tyurina")
 print(person2.get_name())
-print(person2.get_full_name())
+#print(person2.get_full_name())
+
 
 # I pridict that lines 38, 39, & 41 will through an error, since these methods simply don't exist in the parent class.
+
+# all problematic lines: 38, 39, 41 were commented one after the other while going through the error messages.
