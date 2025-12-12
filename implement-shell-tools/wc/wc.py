@@ -5,7 +5,7 @@ import re
 
 def main():
     # --------------------------------------------------------
-    # 1. Set up argparse
+    #  Set up argparse
     # --------------------------------------------------------
     parser= argparse.ArgumentParser(
         prog="wc",
@@ -21,7 +21,7 @@ def main():
     args = parser.parse_args()
 
     # --------------------------------------------------------
-    # 2. Ensures at least one path exists
+    #  Ensures at least one path exists
     # --------------------------------------------------------
     if len(args.paths) == 0:
         print("wc: no file specified", file=sys.stderr)
@@ -30,7 +30,7 @@ def main():
     totals= {"lines": 0, "words": 0, "chars": 0}
 
     # --------------------------------------------------------
-    # 3. Loop over each file path and process it
+    #  Loop over each file path and process it
     # --------------------------------------------------------
     for file_path in args.paths:
         try:
@@ -41,7 +41,7 @@ def main():
             continue
 
         # --------------------------------------------------------
-        # 4. Count values
+        #  Count values
         # --------------------------------------------------------
         line_count = len(content.split("\n"))
 
@@ -55,7 +55,7 @@ def main():
         totals["chars"] +=char_count
 
         # --------------------------------------------------------
-        # 5. Decide what to print based on flags
+        #  Decide what to print based on flags
         # --------------------------------------------------------
         no_flags = not args.l and not args.w and not args.c
 
@@ -74,7 +74,7 @@ def main():
 
 
     # --------------------------------------------------------
-    # 6. Print totals if there are multiple files
+    #  Print totals if there are multiple files
     # --------------------------------------------------------
     if len(args.paths) > 1:
         no_flags = not args.l and not args.w and not args.c
