@@ -11,3 +11,4 @@ env/
 
 # macOS Finder file (ignore if on Mac)
 .DS_Store
+name
