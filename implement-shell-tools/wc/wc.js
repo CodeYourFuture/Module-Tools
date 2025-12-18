@@ -10,11 +10,32 @@ async function wcJsImplement() {
     {
         commandLineArray.shift();
     }
+    
+    function printOutput(lines,words,bytes,lable){
+      switch (flags[0]) {
+        case "-l":
+          console.log(`${String(lines).padStart(4)} ${lable}`);
+          break;
+        case "-w":
+          console.log(`${String(words).padStart(4)} ${lable}`);
+          break;
+        case "-c":
+          console.log(`${String(bytes).padStart(4)} ${lable}`);
+          break;
+        default:
+          console.log(
+            `${String(lines).padStart(4)}${String(words).padStart(
+              4
+            )}${String(bytes).padStart(4)} ${lable}`
+          );
+      }
+    }
+
 
     for(const file of commandLineArray){
-        const fileContent=await fs.readFile(file , 'utf-8');
-        const fileBuffer=await fs.readFile(file);
-        bytes=fileBuffer.length;
+        const buffer = await fs.readFile(file);
+        const fileContent=buffer.toString("utf-8");
+        bytes=buffer.length;
         TotalBytes += bytes;
         
         const lines=fileContent.split(/\r?\n/);
@@ -33,41 +54,12 @@ async function wcJsImplement() {
             }
         }
         totalWords += wordsCount;
-
-        switch (flags[0]) {
-          case "-l":
-            console.log(`${String(linesCount).padStart(4)} ${file}`);
-            break;
-          case "-w":
-            console.log(`${String(wordsCount).padStart(4)} ${file}`);
-            break;
-          case "-c":
-            console.log(`${String(bytes).padStart(4)} ${file}`);
-            break;
-          default:  
-           console.log(`${String(linesCount).padStart(4)}${String(wordsCount).padStart(4)}${String(bytes).padStart(4)} ${file}`);
-        }
-       
-       
+        
+        printOutput(linesCount,wordsCount,bytes,file);
     }
+    
     if(commandLineArray.length>1){
-        switch (flags[0]) {
-          case "-l":
-            console.log(`${String(totalLines).padStart(4)} total`);
-            break;
-          case "-w":
-            console.log(`${String(totalWords).padStart(4)} total`);
-            break;
-          case "-c":
-            console.log(`${String(TotalBytes).padStart(4)} total`);
-            break;
-          default :
-            console.log(
-              `${String(totalLines).padStart(4)}${String(totalWords).padStart(
-                4
-              )}${String(TotalBytes).padStart(4)} total`
-            );
-                 }
+      printOutput(totalLines, totalWords, TotalBytes, "total");
     }
     
 }
