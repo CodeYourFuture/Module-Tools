@@ -23,7 +23,18 @@ async function getCounts(file){
   const byteCount = Buffer.byteLength(content, "utf-8"); //Calculate how many bytes the string uses in UTF-8 (important because some characters use more than 1 byte)
   return { lineCount, wordCount, byteCount };
 }
-//initiating totals
+//helper to remove duplicated output logic 
+function formatOutput(lines, words, bytes, filename, options) {
+   let formattedOutput = ""; 
+   if (options.lines) formattedOutput += `${lines} `; 
+   if (options.words) formattedOutput+= `${words} `; 
+   if (options.bytes) formattedOutput += `${bytes} `; 
+   if (!options.lines && !options.words && !options.bytes) { // default: print all three 
+     formattedOutput += `${lines} ${words} ${bytes} `; 
+    }
+    return formattedOutput + filename; 
+  }
+ //Initiating totals
 let totalLines = 0;
 let totalWords = 0;
 let totalBytes = 0;
@@ -35,27 +46,16 @@ for (const file of files) {
   totalWords += wordCount;
   totalBytes += byteCount;
 
-let output = "";
-  if (options.lines) output += `${lineCount} `;
-  if (options.words) output += `${wordCount} `;
-  if (options.bytes) output += `${byteCount} `;
-  if (!options.lines && !options.words && !options.bytes) {
-    output += `${lineCount} ${wordCount} ${byteCount} `;
-  }
-  output += file;
-  console.log(output);
+  const formatted = formatOutput(lineCount, wordCount, byteCount, file, options);
+  console.log(formatted);
 }
-  
-  
-  //Print totals if multiple files
+//Print totals if multiple files
 if (files.length > 1) {
-  let totalOutput = "";
-  if (options.lines) totalOutput += `${totalLines} `;
-  if (options.words) totalOutput += `${totalWords} `;
-  if (options.bytes) totalOutput += `${totalBytes} `;
-  if (!options.lines && !options.words && !options.bytes) {
-    totalOutput += `${totalLines} ${totalWords} ${totalBytes} `;
-  }
-  totalOutput += "total";
-  console.log(totalOutput);
+  const formattedTotals = formatOutput(totalLines, totalWords, totalBytes, "total", options);
+  console.log(formattedTotals);
 }
+
+
+
+
+  
