@@ -20,17 +20,15 @@ const paddingWidth = 6; // width for line number padding
 
 // Helper function to format a line with numbering
 function formatLine(line, lineNumber, numberAll, numberNonBlank) {
+  const numbered =`${lineNumber.toString().padStart(paddingWidth)}  ${line}`;
   if (numberAll) {
-    return `${lineNumber.toString().padStart(paddingWidth)}  ${line}`;
+    return numbered
   }
-  if (numberNonBlank) {
-    if (line.trim() === "") {
-      return line; // blank line, no number
-    }
-    return `${lineNumber.toString().padStart(paddingWidth)}  ${line}`;
-  }
-  return line; // no numbering
-}
+  if (numberNonBlank) { 
+    return line.trim() === "" ? line : numbered; 
+  } 
+  return line;
+ }
 const options = program.opts(); 
 const files = program.args; // Array of file paths passed as arguments
 
