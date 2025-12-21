@@ -15,18 +15,17 @@ for (let file of nonFlagArrArgv) {
 
   const linedText = content.split("\n");
 
-  const numbered = linedText.map((line) => {
-    if (numberNonemptyLines) {
-      if (line.trim() === "") {
-        return line;
-      } else {
-        return `${String(number++).padStart(3)}  ${line}`;
-      }
-    }
-    if (numberLines) {
-      return `${String(number++).padStart(3)}  ${line}`;
-    }
+  const formatLines = (line) => {
+    return `${String(number++).padStart(3)}  ${line}`;
+  };
 
+  const numbered = linedText.map((line) => {
+    if (numberNonemptyLines && line.trim() === "") {
+      return line;
+    }
+    if (numberNonemptyLines || numberLines) {
+      return formatLines(line);
+    }
     return line;
   });
   console.log(numbered.join("\n"));
