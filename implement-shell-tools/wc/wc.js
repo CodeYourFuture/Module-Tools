@@ -35,10 +35,6 @@ for (const path of filePaths) {
 
   fileContent = await fs.readFile(path, "utf-8");
 
-  if (fileContent.endsWith("\n")) {
-    fileContent = fileContent.slice(0, -1);
-  }
-
   fileData.lineCount = getLineCount(fileContent);
   lineCountTotal += fileData.lineCount;
 
@@ -100,5 +96,5 @@ function getWordCount(text) {
 }
 
 function getLineCount(text) {
-  return text.split("\n").length;
+  return (text.match(/\n/g) || []).length;
 }
