@@ -3,8 +3,6 @@ const { program } = require("commander");
 const fs = require("fs");
 const path = require("path");
 
-
-
 function expandWildcard(pattern) {
   const dir = path.dirname(pattern);
   const base = path.basename(pattern);
@@ -14,7 +12,7 @@ function expandWildcard(pattern) {
   let files;
   try {
     files = fs.readdirSync(dir);
-  } catch (e) {
+  } catch {
     console.error(`cat: ${pattern}: No such directory`);
     return [];
   }
@@ -36,23 +34,23 @@ function printFile(filename, options) {
   }
 
   const lines = text.split("\n");
-  if (lines[lines.length - 1] === "") {
-    lines.pop();
-  }
+  if (lines[lines.length - 1] === "") lines.pop();
+
   let counter = 1;
+  const paddingSize = 6;
 
   lines.forEach((line) => {
-    if (options.numberAll) {
-      const paddingSize = 6;
-      console.log(`${String(counter).padStart(paddingSize)}  ${line}`);
+    const isEmpty = line.trim() === "";
+
+    const shouldNumber =
+      options.numberAll ||
+      (options.numberNonempty && !isEmpty);
+
+    if (shouldNumber) {
+      console.log(
+        `${String(counter).padStart(paddingSize)}  ${line}`
+      );
       counter++;
-    } else if (options.numberNonempty) {
-      if (line.trim() === "") {
-        console.log("");
-      } else {
-        console.log(`${String(counter).padStart(paddingSize)}  ${line}`);
-        counter++;
-      }
     } else {
       console.log(line);
     }
@@ -76,4 +74,3 @@ program
   });
 
 program.parse();
-
