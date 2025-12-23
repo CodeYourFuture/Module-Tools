@@ -40,7 +40,8 @@ function listDirectory(dir, options) {
 program
   .name("myls")
   .description("Custom implementation of ls")
-  .option("-1", "list one file per line (default in our version)")
+  .option("-1", "list one file per line (required)")
+
   .option("-a, --all", "include hidden files")
   .argument("[dir]", "directory to list", ".")
   .action((dir, options) => {
