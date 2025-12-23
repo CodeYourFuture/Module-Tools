@@ -37,6 +37,24 @@ function countChars(text) {
   return Buffer.byteLength(text, "utf-8");
 }
 
+function formatOutput({ lines, words, chars }, options, label) {
+  const paddingSize = 7;
+
+  const paddedLines = String(lines).padStart(paddingSize);
+  const paddedWords = String(words).padStart(paddingSize);
+  const paddedChars = String(chars).padStart(paddingSize);
+
+  const onlyLines = options.lines && !options.words && !options.chars;
+  const onlyWords = options.words && !options.lines && !options.chars;
+  const onlyChars = options.chars && !options.lines && !options.words;
+
+  if (onlyLines) return `${paddedLines} ${label}`;
+  if (onlyWords) return `${paddedWords} ${label}`;
+  if (onlyChars) return `${paddedChars} ${label}`;
+
+  return `${paddedLines} ${paddedWords} ${paddedChars} ${label}`;
+}
+
 function wcFile(filename, options) {
   let text;
   try {
@@ -46,19 +64,14 @@ function wcFile(filename, options) {
     return null;
   }
 
-  const lineCount = countLines(text);
-  const wordCount = countWords(text);
-  const charCount = countChars(text);
+  const counts = {
+    lines: countLines(text),
+    words: countWords(text),
+    chars: countChars(text),
+  };
 
-  let output;
-  const paddingSize = 7;
-  if (options.lines && !options.words && !options.chars) output = `${lineCount} ${filename}`;
-  else if (options.words && !options.lines && !options.chars) output = `${wordCount} ${filename}`;
-  else if (options.chars && !options.lines && !options.words) output = `${charCount} ${filename}`;
-  else output = `${String(lineCount).padStart(paddingSize)} ${String(wordCount).padStart(paddingSize)} ${String(charCount).padStart(paddingSize)} ${filename}`;
-  console.log(output);
-
-  return { lines: lineCount, words: wordCount, chars: charCount };
+  console.log(formatOutput(counts, options, filename));
+  return counts;
 }
 
 program
@@ -70,9 +83,13 @@ program
   .argument("<files...>", "files or wildcard patterns")
   .action((patterns, options) => {
     let allFiles = [];
-    patterns.forEach(p => allFiles = allFiles.concat(expandWildcard(p)));
+    patterns.forEach(p => {
+      allFiles = allFiles.concat(expandWildcard(p));
+    });
 
-    let totalLines = 0, totalWords = 0, totalChars = 0;
+    let totalLines = 0;
+    let totalWords = 0;
+    let totalChars = 0;
 
     allFiles.forEach(file => {
       const result = wcFile(file, options);
@@ -82,15 +99,15 @@ program
         totalChars += result.chars;
       }
     });
-    const paddingSize = 7;
+
     if (allFiles.length > 1) {
-      if (options.lines && !options.words && !options.chars) console.log(`${totalLines} total`);
-      else if (options.words && !options.lines && !options.chars) console.log(`${totalWords} total`);
-      else if (options.chars && !options.lines && !options.words) console.log(`${totalChars} total`);
-      else console.log(
-        `${String(totalLines).padStart(paddingSize)} ` +
-        `${String(totalWords).padStart(paddingSize)} ` +
-        `${String(totalChars).padStart(paddingSize)} total`);
+      console.log(
+        formatOutput(
+          { lines: totalLines, words: totalWords, chars: totalChars },
+          options,
+          "total"
+        )
+      );
     }
   });
 
