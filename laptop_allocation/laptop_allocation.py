@@ -99,13 +99,17 @@ people = [
 # ============================================================================
 
 def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person,Laptop]:
+
     if len(laptops) < len(people):
          raise ValueError("Not enough laptops to allocate one per person")
+    
+
+    people_sorted = sorted(people, key = lambda p: len(p.preferred_operating_system))
          
     result={}
     available_laptops = laptops.copy()
 
-    for person in people:
+    for person in people_sorted:
         smallest_sadness = float("inf")
         best_laptop = None
 
