@@ -99,6 +99,9 @@ people = [
 # ============================================================================
 
 def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person,Laptop]:
+    if len(laptops) < len(people):
+         raise ValueError("Not enough laptops to allocate one per person")
+         
     result={}
     available_laptops = laptops.copy()
 
