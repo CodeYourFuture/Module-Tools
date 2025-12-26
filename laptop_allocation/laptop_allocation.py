@@ -19,7 +19,7 @@ class Person:
     name: str
     age: int
     # Sorted in order of preference, most preferred is first.
-    preferred_operating_system: List[OperatingSystem]
+    preferred_operating_system: tuple
 
 
 @dataclass(frozen=True)
@@ -31,7 +31,7 @@ class Laptop:
     operating_system: OperatingSystem
 
 # ============================================================================
-# HELPER FUNCTIONS
+# HELPER FUNCTION
 # ============================================================================
 """
     Calculates how "sad" a person would be with a given laptop allocation.
@@ -50,12 +50,6 @@ class Laptop:
     Returns:
         An integer representing sadness (0 = most happy, 100 = not in preferences)
     """
-def find_preferred_laptops(person:Person, laptops: List[Laptop]) -> list[Laptop]:
-    preferred_laptops = []
-    for laptop in laptops:
-        if laptop.operating_system in person.preferred_operating_system:
-            preferred_laptops.append(laptop)      
-    return preferred_laptops
 
 def calculate_sadness(person:Person, laptop:Laptop)-> int:
      if laptop.operating_system in person.preferred_operating_system:
@@ -90,12 +84,12 @@ laptops = [
 ]
 
 people = [
-    Person(name="Imran", age=22, preferred_operating_system=[OperatingSystem.UBUNTU, OperatingSystem.MACOS]),
-    Person(name="Eliza", age=34, preferred_operating_system=[OperatingSystem.ARCH, OperatingSystem.UBUNTU]),
-    Person(name="Marcus", age=28, preferred_operating_system=[OperatingSystem.MACOS, OperatingSystem.UBUNTU]),
-    Person(name="Sofia", age=31, preferred_operating_system=[OperatingSystem.UBUNTU]),
-    Person(name="James", age=25, preferred_operating_system=[OperatingSystem.ARCH, OperatingSystem.MACOS]),
-    Person(name="Nina", age=29, preferred_operating_system=[OperatingSystem.MACOS, OperatingSystem.ARCH, OperatingSystem.UBUNTU]),
+    Person(name="Imran", age=22, preferred_operating_system=(OperatingSystem.UBUNTU, OperatingSystem.MACOS)),
+    Person(name="Eliza", age=34, preferred_operating_system=(OperatingSystem.ARCH, OperatingSystem.UBUNTU)),
+    Person(name="Marcus", age=28, preferred_operating_system=(OperatingSystem.MACOS, OperatingSystem.UBUNTU)),
+    Person(name="Sofia", age=31, preferred_operating_system=(OperatingSystem.UBUNTU,)),
+    Person(name="James", age=25, preferred_operating_system=(OperatingSystem.ARCH, OperatingSystem.MACOS)),
+    Person(name="Nina", age=29, preferred_operating_system=(OperatingSystem.MACOS, OperatingSystem.ARCH, OperatingSystem.UBUNTU)),
 ]
 
 
@@ -103,10 +97,34 @@ people = [
 # ============================================================================
 # TESTING
 # ============================================================================
-# Test the helper functions
-for person in people:
-    print(f"\n{person.name}'s preferences: {[os.value for os in person.preferred_operating_system]}")
-    for laptop in laptops:
-        sadness= calculate_sadness(person, laptop)
-        print(f"Laptop {laptop.id} ({laptop.operating_system.value}): sadness = {sadness}")
-    
+
+def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person,Laptop]:
+    result={}
+    available_laptops = laptops.copy()
+
+    for person in people:
+        smallest_sadness = float("inf")
+        best_laptop = None
+
+        for laptop in available_laptops:
+            sadness = calculate_sadness(person, laptop)
+            if sadness < smallest_sadness:
+                smallest_sadness = sadness 
+                best_laptop = laptop
+
+        result[person]= best_laptop  
+        available_laptops.remove(best_laptop)      
+
+    return result
+
+allocate_laptops(people, laptops)
+allocation = allocate_laptops(people, laptops)
+
+print("\n" + "="*50)
+print("FINAL ALLOCATION:")
+print("="*50)
+for person, laptop in allocation.items():
+    print(f"{person.name}: {laptop.manufacturer} {laptop.model} ({laptop.operating_system.value})")
+
+
+
