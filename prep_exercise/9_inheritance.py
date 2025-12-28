@@ -33,10 +33,10 @@ print(person1.get_full_name())# works because it comes from Parent.get_name.
 
 
 person2 = Parent("Elizaveta", "Alekseeva")
-print(person2.get_name()) # works because it is the Parent class.
+print(person2.get_name()) # works because it is in the Parent class.
 print(person1.get_full_name())
-# print(person2.get_full_name()) #get_full_name is defined only in child
-# person2.change_last_name("Tyurina") #change_last_name is defined only in child not in parent
+# print(person2.get_full_name()) # crashes the program as get_full_name is defined only in child
+# person2.change_last_name("Tyurina") # crashes the program as change_last_name is defined only in child not in parent
 print(person2.get_name())
 # print(person2.get_full_name()) #get_full_name is defined only in child not in parent
 
