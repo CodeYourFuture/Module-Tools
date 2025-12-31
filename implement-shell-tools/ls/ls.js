@@ -56,7 +56,7 @@ function sortEntries(entries) {
 }
 
 
-// print entries either one per line (-1 flag)
+// print each entry on its own line (used for -1 flag)
 function printEntries(entries) {
     entries.forEach(entry => console.log(entry));
 }
@@ -76,14 +76,18 @@ async function newLs(directory, oneFlag, allFlag) {
         // reads directory contents 
         const entries = await fs.readdir(directory);
 
-        // Filter out hidden files if no -a flag
+        // filter out hidden files if no -a flag
         const filteredEntries = filterFiles(entries, allFlag);
 
-        // Sort the entries using the sortEntries helper
+        // sort the entries using the sortEntries helper
         const sortedEntries = sortEntries(filteredEntries);
         
-        // print entries for -1 flag (one per line)
-        printEntries(sortedEntries);
+        // print entries based on -1 flag
+        if (oneFlag) {
+            printEntries(sortedEntries); // one per line
+        } else {
+            console.log(sortedEntries.join("  ")); // all on one line, separated by spaces
+        }
     } catch (err) {
         console.error(`ls: cannot access '${directory}': ${err.message}`);
     }
