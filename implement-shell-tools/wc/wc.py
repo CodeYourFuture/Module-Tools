@@ -24,7 +24,7 @@ totals = {"lines": 0, "words": 0, "bytes": 0}
 def calculate_counts(content):
     # returns a count object
     return {
-        "lines": content.count('\n') + (1 if content and not content.endswith('\n') else 0),
+        "lines": content.count('\n') + (1 if content and not content.endswith('\n') else 0), # count lines by '\n'; add 1 if last line has no newline to match real wc command behavior"
         "words": len(content.split()),
         "bytes": len(content.encode('utf-8')),
     }
