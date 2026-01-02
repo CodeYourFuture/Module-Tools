@@ -1,3 +1,4 @@
+import re
 import sys
 from dataclasses import dataclass
 from enum import Enum
@@ -59,13 +60,14 @@ laptops = [
 def user_prompt() -> Person:
     try:
         name = (input("Please enter your first name: ")).strip()
-        if not name.isalpha():
-            raise ValueError("Name must contain only alphabetic characters.")
+        # use 're' import (regular expression) for regex validation for allowed name characters
+        if not re.fullmatch(r"[A-Za-z\- ]+", name):
+            raise ValueError("Name must contain only alphabetic characters, hyphens, or spaces.")
         
         age = int(input("Please enter your age: "))
         minimum_age = 18
         if age < minimum_age: 
-            raise ValueError("Age must be 18 or over.")
+            raise ValueError(f"Age must be {minimum_age} or over.")
 
         
         # define valid OS options
