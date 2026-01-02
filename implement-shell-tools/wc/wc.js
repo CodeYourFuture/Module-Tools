@@ -7,9 +7,9 @@ program
   .name("wc")
   .description("An alternative to the 'wc' command")
   .argument("<files...>", "The file(s) to count lines/words/bytes")
-  .option("-l", "--lines", "Print the newline counts")
-  .option("-w", "--words", "Print the word counts")
-  .option("-c", "--bytes", "Print the byte counts")
+  .option("-l, --lines", "Print the newline counts")
+  .option("-w, --words", "Print the word counts")
+  .option("-c, --bytes", "Print the byte counts")
   .action(async (files, options) => {
         try {
             // call newWc for all files
@@ -32,10 +32,10 @@ function formatCount(count) {
 function printWcOutput(lineCount, wordCount, byteCount, file, options, noFlags) {
     const parts = [];
 
-    if (noFlags || options.l) parts.push(formatCount(lineCount));
-    if (noFlags || options.w) parts.push(formatCount(wordCount));
-    if (noFlags || options.c) parts.push(formatCount(byteCount));
-
+    if (noFlags || options.lines) parts.push(formatCount(lineCount));
+    if (noFlags || options.words) parts.push(formatCount(wordCount));
+    if (noFlags || options.bytes) parts.push(formatCount(byteCount));
+    
     parts.push(file);
     console.log(parts.join(" "));
 }
@@ -43,9 +43,9 @@ function printWcOutput(lineCount, wordCount, byteCount, file, options, noFlags) 
 async function newWc(files, options) {
 
     const noFlags =
-    !options.l &&
-    !options.w &&
-    !options.c;
+    !options.lines &&
+    !options.words &&
+    !options.bytes;
 
     // set the counts variables
     let totalLines = 0;
