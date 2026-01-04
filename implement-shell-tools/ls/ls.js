@@ -24,6 +24,7 @@ const files = await fs.readdir(directory);
 
 //check for flags
 const hasAflag = program.opts().all;
+const hasOneFlag = program.opts().one;
 
 // Filter the files array BEFORE looping
 // If hasAflag is true, keep all files
@@ -34,10 +35,13 @@ const fileToShow = hasAflag
 : files.filter(file => !file.startsWith("."))
 
 
-//print each file on its own line
-// Note: console.log(files) would print the entire array like: ['file1', 'file2']
-// Loop prints each individually on separate lines
-
-for (const file of fileToShow) {
-    console.log(file)
+if (hasOneFlag) {
+  
+  for (const file of fileToShow) {
+    console.log(file);
+  }
+} else {
+  // print horizontally 
+  console.log(fileToShow.join("  "));
 }
+

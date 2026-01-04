@@ -22,29 +22,24 @@ let lineNumber = 0;
 // Process each file
 for (const path of program.args) {
   const hasNumberFlag = program.opts().number; // True if user used -n flag
-  const hasBFlag = program.opts().numberNonBlank;
+  const shouldNumberNonBlank = program.opts().numberNonBlank;
 
   //read the file for each argument
   const content = await fs.readFile(path, "utf-8");
+  const lines = content.split("\n"); // Split into array of lines
+
   // Output with or without line numbers
   if (hasNumberFlag) {
     // Add line numbers to each line
-    const lines = content.split("\n"); // Split into array of lines
     const numberedLines = lines.map((line) => {
       lineNumber = lineNumber + 1;
       return `${lineNumber} ${line}`; // Format: "     1  Hello"
     });
     console.log(numberedLines.join("\n")); // Join back with newlines
-  } else if (hasBFlag) {
-    const lines = content.split("\n");
+  } else if (shouldNumberNonBlank) {
 
     const numberedLines = lines.map((line) => {
-      if (line.trim() === "") {
-        return line;
-      } else {
-        lineNumber = lineNumber + 1;
-        return ` ${lineNumber} ${line}`;
-      }
+      return line.trim() === "" ? line : `${++lineNumber} ${line}`;
     });
     console.log(numberedLines.join("\n"));
   } else {
@@ -52,3 +47,4 @@ for (const path of program.args) {
     console.log(content);
   }
 }
+

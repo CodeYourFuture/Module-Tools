@@ -1,3 +1,4 @@
+
+prep
 node_modules
-prep/
-node_modules/
+.venv
