@@ -15,8 +15,8 @@
 
 # Here is the corrected code:
 
-# def double(number): 
-#     return number * 2 
+def double(number): 
+    return number * 2 
 
 # OR
 
