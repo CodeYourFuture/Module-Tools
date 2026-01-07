@@ -29,7 +29,7 @@ def main():
 
     # Dynamically call the function for the chosen animal
     animal_func = getattr(cowsay, args.animal)
-    print(animal_func(message))
+    animal_func(message)
 
 
 if __name__ == "__main__":
