@@ -49,7 +49,7 @@ people = [
 # NOTE: laptops list is modified on purpose.
 # After allocation, it shows the laptops that are still left.
 
-def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]: 
+def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[str, Laptop]: 
     sorted_people_OS_count=sorted(people,key=lambda p:len(p.preferred_operating_system))
     sadness=0  # local variable sadness counter
     allocated_history : Dict[Person,Laptop] ={}
@@ -74,7 +74,7 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
               
     return allocated_history  , sadness        
 
-def print_final_allocation(allocated_history :dict[Person,Laptop], sadness:int ) :
+def print_final_allocation(allocated_history :dict[str,Laptop], sadness:int ) :
     for name , laptop in allocated_history.items() :
         print(f"{name:<10} : Laptop Id {laptop.id:<3} - OS({laptop.operating_system.name}) ")
     print(f"Total sadness is : {sadness}")
