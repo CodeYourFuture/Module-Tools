@@ -44,14 +44,13 @@ people = [
     Person(name="Sara", age=28, preferred_operating_system=[OperatingSystem.MACOS])
 ]
 
-# Global sadness counter
-sadness=0
 
 # Allocate laptops to people to minimize total sadness
 def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]: 
     sorted_people_OS_count=sorted(people,key=lambda p:len(p.preferred_operating_system))
+    sadness=0  # local variable sadness counter
     allocated_history : Dict[Person,Laptop] ={}
-    global sadness
+    
     for person in sorted_people_OS_count :
      allocated_flag=False
      for i in range(len(person.preferred_operating_system)) :
@@ -70,11 +69,13 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
         laptops.remove(laptops[0])
         sadness +=100   # high sadness for non-preferred OS
               
-    return allocated_history          
+    return allocated_history  , sadness        
 
-def print_final_allocation(allocated_history:dict[Person,Laptop]) :
+def print_final_allocation(allocated_history :dict[Person,Laptop], sadness:int ) :
     for name , laptop in allocated_history.items() :
         print(f"{name:<10} : Laptop Id {laptop.id:<3} - OS({laptop.operating_system.name}) ")
     print(f"Total sadness is : {sadness}")
 
-print_final_allocation(allocate_laptops(people,laptops))
+allocated_history, sadness = allocate_laptops(people, laptops)
+
+print_final_allocation(allocated_history, sadness)
