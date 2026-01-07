@@ -46,6 +46,9 @@ people = [
 
 
 # Allocate laptops to people to minimize total sadness
+# NOTE: laptops list is modified on purpose.
+# After allocation, it shows the laptops that are still left.
+
 def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]: 
     sorted_people_OS_count=sorted(people,key=lambda p:len(p.preferred_operating_system))
     sadness=0  # local variable sadness counter
