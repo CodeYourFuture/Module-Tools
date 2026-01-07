@@ -1,2 +1,4 @@
 node_modules
-implement-cowsay/.venv
+# Old cowsay virtual environment, intentionally kept
+implement-cowsay/.venv  
+
