@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 
+
 @dataclass(frozen=True)
 class Person:
     name: str
@@ -31,10 +32,34 @@ people = [
 ]
 
 laptops = [
-    Laptop(id=1, manufacturer="Dell", model="XPS", screen_size_in_inches=13, operating_system="Arch Linux"),
-    Laptop(id=2, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system="Ubuntu"),
-    Laptop(id=3, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system="ubuntu"),
-    Laptop(id=4, manufacturer="Apple", model="macBook", screen_size_in_inches=13, operating_system="macOS"),
+    Laptop(
+        id=1,
+        manufacturer="Dell",
+        model="XPS",
+        screen_size_in_inches=13,
+        operating_system="Arch Linux",
+    ),
+    Laptop(
+        id=2,
+        manufacturer="Dell",
+        model="XPS",
+        screen_size_in_inches=15,
+        operating_system="Ubuntu",
+    ),
+    Laptop(
+        id=3,
+        manufacturer="Dell",
+        model="XPS",
+        screen_size_in_inches=15,
+        operating_system="ubuntu",
+    ),
+    Laptop(
+        id=4,
+        manufacturer="Apple",
+        model="macBook",
+        screen_size_in_inches=13,
+        operating_system="macOS",
+    ),
 ]
 
 for person in people:

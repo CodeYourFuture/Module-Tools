@@ -22,6 +22,7 @@ class Child(Parent):
             suffix = f" (née {self.previous_last_names[0]})"
         return f"{self.first_name} {self.last_name}{suffix}"
 
+
 person1 = Child("Elizaveta", "Alekseeva")
 print(person1.get_name())
 print(person1.get_full_name())

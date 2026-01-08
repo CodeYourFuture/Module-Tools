@@ -4,6 +4,7 @@ class Person:
         self.age = age
         self.preferred_operating_system = preferred_operating_system
 
+
 imran = Person("Imran", 22, "Ubuntu")
 print(imran.name)
 
@@ -11,11 +12,16 @@ print(imran.name)
 eliza = Person("Eliza", 34, "Arch Linux")
 print(eliza.name)
 
+
 def is_adult(person: Person) -> bool:
     return person.age >= 18
 
+
 print(is_adult(imran))
 
-def is_from_UK(person:Person) -> bool :
-    return person.country=="UK"
+
+def is_from_UK(person: Person) -> bool:
+    return person.country == "UK"
+
+
 print(is_from_UK(eliza))
