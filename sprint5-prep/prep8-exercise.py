@@ -101,17 +101,24 @@ laptops = [
 
 os_count = Counter(laptop.operating_system for laptop in laptops)
 max_count = max(os_count.values())
-print(max_count)
+
+print(f"\nHello {person.name}, here is the laptop availability info:")
+print(f"You have requested: {person.preferred_operating_system.value}")
+
+# print(max_count)
 most_available_os = []
 for os in os_count:
     count = os_count[os]
     if count == max_count:
         most_available_os.append(os.value)
-print(most_available_os)
+# print(most_available_os)
 possible_laptops = find_possible_laptops(laptops, person)
 print(
-    f"Count of available  {person.preferred_operating_system.value} laptops for {person.name} is : {len(possible_laptops)}"
+    f"Count of available  {person.preferred_operating_system.value} laptops for you is : {len(possible_laptops)}"
 )
+
+formatted_os = [f"{os.value} {os_count[os]}" for os in os_count if os_count[os] == max_count]
+print(f"Most available operating systems: {', '.join(formatted_os)}")
 
 if len(possible_laptops) < max_count:
     print(
