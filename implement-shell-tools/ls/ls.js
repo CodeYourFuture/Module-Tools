@@ -20,7 +20,14 @@ if (!path) {
     process.exit(1);
 }
 
-const directoryContent = await fs.readdir(path);
+const directoryContent;
+
+try {
+    directoryContent = await fs.readdir(path);   
+} catch (err) {
+    console.error(`Error reading directory: ${err.message}`);
+    process.exit(1);
+}
 
 let allContent = directoryContent;
 
