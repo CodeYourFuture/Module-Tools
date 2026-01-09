@@ -20,7 +20,7 @@ if (!path) {
     process.exit(1);
 }
 
-const directoryContent;
+let directoryContent;
 
 try {
     directoryContent = await fs.readdir(path);   
