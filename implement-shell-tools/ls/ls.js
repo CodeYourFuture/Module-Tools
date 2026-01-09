@@ -15,6 +15,11 @@ const path = program.args[0];
 
 const options = program.opts();
 
+if (!path) {
+    console.error("Error: No directory path was provided.");
+    process.exit(1);
+}
+
 const directoryContent = await fs.readdir(path);
 
 let allContent = directoryContent;
