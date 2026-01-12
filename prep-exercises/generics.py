@@ -31,10 +31,10 @@ class Person:
     age:int
     children: List['Person']
 
-fatma = Person(name="Fatma",age=12, children=[])
-aisha = Person(name="Aisha",age=10, children=[])
+fatma = Person(name="Fatma",age=13, children=[])
+aisha = Person(name="Aisha",age=6, children=[])
 
-imran = Person(name="Imran",age=40, children=[fatma, aisha])
+imran = Person(name="Imran",age=42, children=[fatma, aisha])
 
 
 def print_family_tree(person: Person) -> None:
