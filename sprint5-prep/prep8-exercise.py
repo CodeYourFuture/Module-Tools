@@ -36,7 +36,7 @@ elif len(name) > 50:
     exit(1)
 try:
     age = int(input("Insert your age :"))
-    if age < 18 or age > 100:
+    if age < 18 or age > 150:
         raise ValueError("Age out of range")
 except ValueError as e:
     print(f"Invalid age: {e}", file=sys.stderr)
