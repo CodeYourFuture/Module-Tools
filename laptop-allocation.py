@@ -11,7 +11,7 @@ class OperatingSystem(Enum):
 class Person:
     name: str
     age: int
-    preferred_operating_system: Tuple[OperatingSystem, ...]
+    preferred_operating_systems: Tuple[OperatingSystem, ...]
 
 @dataclass(frozen=True)
 class Laptop:
@@ -28,8 +28,8 @@ class Laptop:
 
 def sadness(person: Person, laptop: Laptop) -> int:
     # Return sadness score for assigning this laptop to this person
-    if laptop.operating_system in person.preferred_operating_system:
-        return person.preferred_operating_system.index(laptop.operating_system)
+    if laptop.operating_system in person.preferred_operating_systems:
+        return person.preferred_operating_systems.index(laptop.operating_system)
     return 100
 
 
@@ -59,9 +59,9 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
     return allocation
 
 people = [
-    Person(name="Imran", age=22, preferred_operating_system=(OperatingSystem.UBUNTU, OperatingSystem.ARCH)),
-    Person(name="Eliza", age=34, preferred_operating_system=(OperatingSystem.ARCH, OperatingSystem.UBUNTU)),
-    Person(name="Fatma", age=18, preferred_operating_system=(OperatingSystem.MACOS,)),
+    Person(name="Imran", age=22, preferred_operating_systems=(OperatingSystem.UBUNTU, OperatingSystem.ARCH)),
+    Person(name="Eliza", age=34, preferred_operating_systems=(OperatingSystem.ARCH, OperatingSystem.UBUNTU)),
+    Person(name="Fatma", age=18, preferred_operating_systems=(OperatingSystem.MACOS,)),
 ]
 
 laptops = [
