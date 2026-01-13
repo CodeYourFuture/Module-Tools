@@ -2,7 +2,7 @@ import cowsay
 import sys
 import argparse
 
-listed_animals = [listed_animal for listed_animal in dir(cowsay) if callable(getattr(cowsay, listed_animal)) and not listed_animal.startswith("__") and listed_animal not in ["draw", "func", "get_output_string", "CowsayError"]]
+listed_animals = cowsay.char_names;
 
 parser = argparse.ArgumentParser(
     prog="cow",
