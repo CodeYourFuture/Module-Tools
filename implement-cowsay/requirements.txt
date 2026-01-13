@@ -1,1 +1,1 @@
-cowsay
+cowsay==6.1
