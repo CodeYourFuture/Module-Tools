@@ -1,8 +1,7 @@
 import cowsay
-import sys
 import argparse
 
-listed_animals = cowsay.char_names;
+listed_animals = cowsay.char_names
 
 parser = argparse.ArgumentParser(
     prog="cow",
@@ -17,10 +16,6 @@ args = parser.parse_args()
 message = " ".join(args.message)
 animal = args.animal
 
-
-if animal not in listed_animals:
-    print(f"Error: argument --animal: invalid choice: '{animal}'. Choose from: {', '.join(listed_animals)}")
-    exit(1)
 
 animal_says = getattr(cowsay, animal)
 
