@@ -13,3 +13,11 @@ set -euo pipefail
 # 3 It looked delicious.
 # 4 I was tempted to take a bite of it.
 # 5 But this seemed like a bad idea...
+
+echo hello world
+
+cat ../helper-files/*.txt | cat -n
+
+# cat ../helper-files/*.txt first combines all files into a single stream.
+# This removes the distinction between separate files.
+# cat -n then reads this single stream and applies continuous numbering.

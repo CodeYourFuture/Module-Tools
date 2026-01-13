@@ -11,3 +11,7 @@ set -euo pipefail
 # It looked delicious.
 # I was tempted to take a bite of it.
 # But this seemed like a bad idea...
+
+echo hello world
+
+cat ../helper-files/*.txt
