@@ -51,7 +51,7 @@ people = [
 
 def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[str, Laptop]: 
     sorted_people_OS_count=sorted(people,key=lambda p:len(p.preferred_operating_system))
-    sadness=0  # local variable sadness counter
+    total_sadness=0  # local variable sadness summer
     allocated_history : Dict[Person,Laptop] ={}
     
     for person in sorted_people_OS_count :
@@ -60,7 +60,7 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[str, L
           for laptop in laptops :
               if person.preferred_operating_system[i] == laptop.operating_system :
                   allocated_history[person.name]=laptop # assign laptop
-                  sadness += i  # increment sadness by preference index
+                  total_sadness += i  # increment sadness by preference index
                   laptops.remove(laptop)
                   allocated_flag=True
                   break
@@ -70,9 +70,9 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[str, L
      if not allocated_flag :   # assign any remaining laptop if preferred OS not found
         allocated_history[person.name]=laptops[0]
         laptops.remove(laptops[0])
-        sadness +=100   # high sadness for non-preferred OS
+        total_sadness +=100   # high sadness for non-preferred OS
               
-    return allocated_history  , sadness        
+    return allocated_history  , total_sadness        
 
 def print_final_allocation(allocated_history :dict[str,Laptop], sadness:int ) :
     for name , laptop in allocated_history.items() :
