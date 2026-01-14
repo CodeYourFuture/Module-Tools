@@ -12,18 +12,13 @@ parser.add_argument("path", help="The file path to read from")
 
 args = parser.parse_args()
 
-content = os.listdir(args.path)
+if os.path.isdir(path):
+    items = os.listdir(path)
 
-all_content = content
+    if args.a:
+        items = ['.', '..'] + items
 
-if not args.a:
-    all_content = list(filter(lambda name: not name.startswith("."), content))
-
-for item in all_content:
-    if args.one:
-        print(item)
-    else:
-        print(item + " ")
+    
 
 
 
