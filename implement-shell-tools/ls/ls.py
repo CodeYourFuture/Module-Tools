@@ -18,6 +18,9 @@ if os.path.isdir(path):
     if args.a:
         items = ['.', '..'] + items
 
+    if not args.a:
+        items = [item for item in items if not item.startswith(".")]
+
     
 
 
