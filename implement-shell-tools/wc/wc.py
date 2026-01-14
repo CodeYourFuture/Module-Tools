@@ -37,11 +37,11 @@ def process_file(file_path):
     stats = counter(content)
 
     if args.line:
-        print(f"{stats['lines']} {file_path}}")
+        print(f"{stats['lines']} {file_path}")
     elif args.word:
-        print(f"{stats['words']} {file_path}}")
+        print(f"{stats['words']} {file_path}")
     elif args.char:
-        print(f"{stats['characters']} {file_path}}")
+        print(f"{stats['characters']} {file_path}")
     else:
         print(f"{stats['lines']} {stats['words']} {stats['characters']} {file_path}")
 
