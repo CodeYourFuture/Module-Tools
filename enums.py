@@ -56,7 +56,11 @@ def chose_alternative_laptops(laptops: List[Laptop], person: Person) -> Dict[Ope
         if count > number_possible_laptops:
             alternative_laptops[eachOS] = count
     if len(alternative_laptops) != 0:
-        print(f"There is an operating system that has more laptops available.If you’re willing to accept them, there is a list: {alternative_laptops}.")
+        print("There is an operating system that has more laptops available.If you’re willing to accept them, there is a list:")
+        list_os = []
+        for os, count in alternative_laptops.items():
+            list_os.append(f"{os.value}: {count}")
+        print(" ,".join(list_os))
         return alternative_laptops
     else:
         print("There is not an operating system that has more laptops available.")
@@ -81,9 +85,14 @@ while True:
 
 available_os = [os.value for os in OperatingSystem]
 print("Available OSs are: ", ",".join(available_os))
-user_operating_system = input("Type operating system: ").strip()
-if user_operating_system not in available_os:
-    print(f"Error, {user_operating_system} is not in available list\n"
+while True:
+    user_operating_system = input("Type operating system: ").strip()
+    try:
+        if user_operating_system not in available_os:
+            raise ValueError
+        break
+    except ValueError:
+        print(f"Error, {user_operating_system} is not in available list\n"
     f"Available OSs are: {','.join(available_os)}", file=sys.stderr)
     sys.exit(1)
 
@@ -99,7 +108,7 @@ laptops = [
     Laptop(id=4, manufacturer="Apple", model="macBook", screen_size_in_inches=13, operating_system=OperatingSystem.MACOS),
 ]
 
-
 possible_laptops = count_possible_laptops(laptops, user)
 print(f"Possible laptops for {user_name}: {possible_laptops}")
 alternative_laptops = chose_alternative_laptops(laptops, user)
+
