@@ -36,7 +36,13 @@ def process_file(file_path):
     elif args.char:
         print(f"{stats['characters']} {file_path}}")
     else:
-        print(f"{stats['lines']} {stats['words']} {stats['characters']} {file_path}}")
+        print(f"{stats['lines']} {stats['words']} {stats['characters']} {file_path}")
+
+    
+    total_lines += stats['lines']
+    total_words += stats['words']
+    total_characters += stats['characters']
+    file_count += 1
 
 
 total_lines = 0
@@ -50,11 +56,6 @@ for path in args.paths:
   
        
 
-
-        total_lines += stats['lines']
-        total_words += stats['words']
-        total_characters += stats['characters']
-        file_count += 1
 
     elif os.path.isdir(path):
         for file in os.listdir(path):
