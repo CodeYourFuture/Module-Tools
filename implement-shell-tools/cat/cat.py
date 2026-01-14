@@ -15,13 +15,8 @@ line_number = 1
 
 for path in args.paths:
     with open(path, "r") as f:
-        content = f.read()
-
-        lines = content.split("\n")
-        if lines[len(lines) - 1] == "":
-            lines.pop()
-
-        for line in lines:
+        for line in f:
+            line = line.rstrip("\n")
             if args.n:
                 print(f"{line_number} {line}")
                 line_number += 1
