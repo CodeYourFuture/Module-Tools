@@ -18,7 +18,7 @@ for path in args.paths:
         for line in f:
             line = line.rstrip("\n")
             if args.n:
-                print(f"{line_number} {line}")
+                print(f"{line_number:>6} {line}")
                 line_number += 1
             elif args.b:
                 if line != "":
