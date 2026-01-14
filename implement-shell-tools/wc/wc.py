@@ -14,6 +14,13 @@ parser.add_argument("paths", help="The file(s)/path(s) to read from", nargs="+")
 
 args = parser.parse_args()
 
+
+total_lines = 0
+total_words = 0
+total_characters = 0
+file_count = 0
+
+
 def counter(item):
     lines = len(item.strip().split("\n"))
     words = len(item.split())
@@ -38,46 +45,25 @@ def process_file(file_path):
     else:
         print(f"{stats['lines']} {stats['words']} {stats['characters']} {file_path}")
 
-    
     total_lines += stats['lines']
     total_words += stats['words']
     total_characters += stats['characters']
     file_count += 1
 
 
-total_lines = 0
-total_words = 0
-total_characters = 0
-file_count = 0
 
 
 for path in args.paths:
     if os.path.isfile(path):
-  
-       
-
-
+        process_file(path)
     elif os.path.isdir(path):
         for file in os.listdir(path):
             file_path = os.path.join(path, file)
-
             if os.path.isfile(file_path):
                 with open(file_path, "r") as f:
                      content = f.read()
                 
-                if args.line:
-                    print(f"{stats['lines']} {file_path}")
-                elif args.word:
-                    print(f"{stats['words']} {file_path}")
-                elif args.char:
-                    print(f"{stats['characters']} {file_path}")
-                else:
-                    print(f"{stats['lines']} {stats['words']} {stats['characters']} {file_path}")
-
-                total_lines += stats['lines']
-                total_words += stats['words']
-                total_characters += stats['characters']
-                file_count += 1
+    
 
         
 
