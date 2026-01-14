@@ -30,13 +30,13 @@ def process_file(file_path):
     stats = counter(content)
 
     if args.line:
-        print(f"{stats['lines']} {path}")
+        print(f"{stats['lines']} {file_path}}")
     elif args.word:
-        print(f"{stats['words']} {path}")
+        print(f"{stats['words']} {file_path}}")
     elif args.char:
-        print(f"{stats['characters']} {path}")
+        print(f"{stats['characters']} {file_path}}")
     else:
-        print(f"{stats['lines']} {stats['words']} {stats['characters']} {path}")
+        print(f"{stats['lines']} {stats['words']} {stats['characters']} {file_path}}")
 
 
 total_lines = 0
