@@ -21,14 +21,13 @@ for path in args.paths:
         else:
             items = [item for item in items if not item.startswith(".")]
         
-        for i, item in enumerate(items):
+        for item in items:
             if args.one:
                 print(item)
             else:
                 print(item, end=" ")
         if not args.one:
             print()
-    
     else:
         print(path)
    
