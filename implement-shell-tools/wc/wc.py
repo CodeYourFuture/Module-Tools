@@ -31,7 +31,7 @@ def counter(item):
 def process_file(file_path):
     global total_lines, total_words, total_characters, file_count
 
-    with open(path, "r") as f:
+    with open(file_path, "r") as f:
         content = f.read()
 
     stats = counter(content)
