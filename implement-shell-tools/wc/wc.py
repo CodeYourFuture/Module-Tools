@@ -21,6 +21,10 @@ def counter(item):
     return {"lines": lines, "words": words, "characters": characters}
 
 
+def process_file(file_path):
+    global total_lines, total_words, total_characters, file_count
+
+
 total_lines = 0
 total_words = 0
 total_characters = 0
