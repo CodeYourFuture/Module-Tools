@@ -6,3 +6,10 @@ set -euo pipefail
 # TODO: Write a command to output just the names of each player along with the total scores from all of their games added together.
 # Your output should contain 6 lines, each with one word and one number on it.
 # The first line should be "Ahmed 15" with no quotes.
+jq -r '.[] | "\(.name) \(.scores | add)"' scores.json
+Ahmed 15
+Basia 37
+Mehmet 32
+Leila 1
+Piotr 61
+Chandra 18
