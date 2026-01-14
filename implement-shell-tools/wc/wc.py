@@ -24,6 +24,20 @@ def counter(item):
 def process_file(file_path):
     global total_lines, total_words, total_characters, file_count
 
+    with open(path, "r") as f:
+        content = f.read()
+
+    stats = counter(content)
+
+    if args.line:
+        print(f"{stats['lines']} {path}")
+    elif args.word:
+        print(f"{stats['words']} {path}")
+    elif args.char:
+        print(f"{stats['characters']} {path}")
+    else:
+        print(f"{stats['lines']} {stats['words']} {stats['characters']} {path}")
+
 
 total_lines = 0
 total_words = 0
@@ -33,17 +47,9 @@ file_count = 0
 
 for path in args.paths:
     if os.path.isfile(path):
-        with open(path, "r") as f:
-            content = f.read()
-        stats = counter(content)
-        if args.line:
-            print(f"{stats['lines']} {path}")
-        elif args.word:
-            print(f"{stats['words']} {path}")
-        elif args.char:
-            print(f"{stats['characters']} {path}")
-        else:
-            print(f"{stats['lines']} {stats['words']} {stats['characters']} {path}")
+  
+       
+
 
         total_lines += stats['lines']
         total_words += stats['words']
@@ -57,7 +63,7 @@ for path in args.paths:
             if os.path.isfile(file_path):
                 with open(file_path, "r") as f:
                      content = f.read()
-                stats = counter(content)
+                
                 if args.line:
                     print(f"{stats['lines']} {file_path}")
                 elif args.word:
