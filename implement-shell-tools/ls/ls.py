@@ -29,9 +29,7 @@ if os.path.isdir(path):
             print(item, end=" ")
     if not args.one:
         print()
-    else:
-        print(path)
-
+   
     
 
 
