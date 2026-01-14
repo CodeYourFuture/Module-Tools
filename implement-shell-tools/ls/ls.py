@@ -12,23 +12,25 @@ parser.add_argument("paths", nargs="*", default=["."], help="The file path to re
 
 args = parser.parse_args()
 
-if os.path.isdir(path):
-    items = os.listdir(path)
+for path in args.paths:
+    if os.path.isdir(path):
+        items = os.listdir(path)
 
-    if args.a:
-        items = ['.', '..'] + items
-
-    if not args.a:
-        items = [item for item in items if not item.startswith(".")]
-    
-
-    for i, item in enumerate(items):
-        if args.one:
-            print(item)
+        if args.a:
+            items = ['.', '..'] + items
         else:
-            print(item, end=" ")
-    if not args.one:
-        print()
+            items = [item for item in items if not item.startswith(".")]
+        
+        for i, item in enumerate(items):
+            if args.one:
+                print(item)
+            else:
+                print(item, end=" ")
+        if not args.one:
+            print()
+    
+    else:
+        print(path)
    
     
 
