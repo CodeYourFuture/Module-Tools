@@ -11,3 +11,8 @@ set -euo pipefail
 # It looked delicious.
 # I was tempted to take a bite of it.
 # But this seemed like a bad idea...
+
+
+helper_dir="../helper-files"
+
+cat "$helper_dir"/*
