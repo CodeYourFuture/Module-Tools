@@ -17,4 +17,11 @@ def print_family_tree(person: Person) -> None:
     for child in person.children:
         print(f"- {child.name} ({child.age})")
 
-print_family_tree(imran)
+# recursion
+
+def print_family_tree_recursion(person: Person, level:str = "¬") -> None:
+    print(f"{level} {person.name} ({person.age})")
+    for child in person.children:
+        print_family_tree_recursion(child, level + "|-")
+
+print_family_tree_recursion(fatma)
