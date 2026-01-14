@@ -27,7 +27,7 @@ for path in args.paths:
             if args.one:
                 print(item)
             else:
-                print(item, end="  ")
+                print(item, end="\t")
         if not args.one:
             print()
     else:
