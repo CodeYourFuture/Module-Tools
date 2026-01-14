@@ -8,7 +8,7 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument("-1", "--one", dest="one", help="Output one entry per line", action="store_true")
 parser.add_argument("-a", help="List all files & directories, including hidden ones", action="store_true")
-parser.add_argument("path", help="The file path to read from")
+parser.add_argument("paths", nargs="*", default=["."], help="The file path to read from")
 
 args = parser.parse_args()
 
