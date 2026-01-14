@@ -20,6 +20,8 @@ for path in args.paths:
             items = ['.', '..'] + items
         else:
             items = [item for item in items if not item.startswith(".")]
+
+        items.sort()
         
         for item in items:
             if args.one:
