@@ -60,8 +60,8 @@ for path in args.paths:
         for file in os.listdir(path):
             file_path = os.path.join(path, file)
             if os.path.isfile(file_path):
-                with open(file_path, "r") as f:
-                     content = f.read()
+                process_file(file_path)
+                   
                 
     
 
