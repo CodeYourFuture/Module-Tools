@@ -14,12 +14,7 @@ parser.add_argument("paths", help="The file(s)/path(s) to read from", nargs="+")
 
 args = parser.parse_args()
 
-
-total_lines = 0
-total_words = 0
-total_characters = 0
-file_count = 0
-
+total = {'lines': 0, 'words': 0, 'characters': 0, 'files': 0}
 
 def counter(item):
     lines = len(item.strip().split("\n"))
@@ -28,7 +23,7 @@ def counter(item):
     return {"lines": lines, "words": words, "characters": characters}
 
 
-def process_file(file_path):
+def process_file(file_path, total):
     with open(file_path, "r") as f:
         content = f.read()
 
@@ -48,17 +43,16 @@ def process_file(file_path):
     total['characters'] += stats['characters']
     total['files'] += 1
 
-total = {'lines': 0, 'words': 0, 'characters': 0, 'files': 0}
 
 
 for path in args.paths:
     if os.path.isfile(path):
-        process_file(path)
+        process_file(path, total)
     elif os.path.isdir(path):
         for file in os.listdir(path):
             file_path = os.path.join(path, file)
             if os.path.isfile(file_path):
-                process_file(file_path)
+                process_file(file_path, total)
                    
                 
     
