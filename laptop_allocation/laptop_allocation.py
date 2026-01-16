@@ -119,12 +119,16 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
                 smallest_sadness = sadness 
                 best_laptop = laptop
 
+
+            if smallest_sadness == 0:
+                break
+
         result[person]= best_laptop  
         available_laptops.remove(best_laptop)      
 
     return result
 
-allocate_laptops(people, laptops)
+
 allocation = allocate_laptops(people, laptops)
 
 print("\n" + "="*50)
