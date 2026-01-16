@@ -27,9 +27,8 @@ class Laptop:
 
 
 def sadness(person: Person, laptop: Laptop) ->int:
-    try:
-        return person.preferred_operating_systems.index(laptop.operating_system)
-    except ValueError:
+        if laptop.operating_system in person.preferred_operating_systems:
+             return person.preferred_operating_systems.index(laptop.operating_system)
         return 100
 
 
