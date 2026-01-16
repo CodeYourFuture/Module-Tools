@@ -14,7 +14,7 @@ class Person:
     name: str
     age: int
     # Sorted in order of preference, most preferred is first.
-    preferred_operating_system: List[OperatingSystem]
+    preferred_operating_systems: List[OperatingSystem]
 
 
 @dataclass(frozen=True)
@@ -28,7 +28,7 @@ class Laptop:
 
 def sadness(person: Person, laptop: Laptop) ->int:
     try:
-        return person.preferred_operating_system.index(laptop.operating_system)
+        return person.preferred_operating_systems.index(laptop.operating_system)
     except ValueError:
         return 100
 
