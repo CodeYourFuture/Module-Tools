@@ -44,11 +44,16 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
         for person, laptop in zip(people, scenario):
             total_sadness += sadness(person, laptop)
 
-        #Check if this is the best scenario so far
-        if total_sadness < best_total_sadness:
-            best_total_sadness = total_sadness
-            best_scenario_assignment = scenario
+            #Implement early break if total is already worse than best
+            if total_sadness >= best_total_sadness:
+                break
 
+        # Check if this scenario is better
+        if total_sadness < best_total_sadness:
+             best_total_sadness = total_sadness
+             best_scenario_assignment = scenario
+
+       
     # Convert best_scenario_assignment into Dict[Person, Laptop]
     return {person: laptop for person, laptop in zip(people, best_scenario_assignment)}
 
