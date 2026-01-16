@@ -50,32 +50,34 @@ def count_laptops_by_os(laptops: List[Laptop]) -> dict:
 
 def main():
     # --- Input name ---
-    name = input("Enter your name: ").strip()
-    if not name:
+    while True:
+        name = input("Enter your name: ").strip()
+        if name:
+            break
         print("Error: Name cannot be empty.", file=sys.stderr)
-        sys.exit(1)
 
     # --- Input age ---
-    age_input = input("Enter your age: ").strip()
-    try:
-        age = int(age_input)
-        if age <= 0:
-            raise ValueError()
-    except ValueError:
-        print("Error: Age must be a positive integer.", file=sys.stderr)
-        sys.exit(1)
+    while True:
+        age_input = input("Enter your age: ").strip()
+        try:
+            age = int(age_input)
+            if age <= 0:
+                raise ValueError()
+            break
+        except ValueError:
+            print("Error: Age must be a positive integer.", file=sys.stderr)
 
     # --- Input preferred OS ---
-    print("Choose preferred operating system:")
-    for os in OperatingSystem:
-        print(f"- {os.value}")
-    os_input = input("Enter OS: ").strip()
-
-    try:
-        preferred_os = OperatingSystem(os_input)
-    except ValueError:
+    os_values = [os.value for os in OperatingSystem]
+    while True:
+        print("Choose preferred operating system:")
+        for os in OperatingSystem:
+            print(f"- {os.value}")
+        os_input = input("Enter OS: ").strip()
+        if os_input in os_values:
+            preferred_os = OperatingSystem(os_input)
+            break
         print("Error: Invalid operating system.", file=sys.stderr)
-        sys.exit(1)
 
     # --- Create Person ---
     new_person = Person(name=name, age=age, preferred_operating_system=preferred_os)
