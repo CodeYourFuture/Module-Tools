@@ -22,6 +22,7 @@ class Person:
     name: str
     age: int
     preferred_operating_systems: List[str]  
+
 @dataclass(frozen=True)
 class Laptop:
     id: int
@@ -29,12 +30,16 @@ class Laptop:
     model: str
     screen_size_in_inches: float
     operating_system: str
+    
+
 def find_possible_laptops(laptops: List[Laptop], person: Person) -> List[Laptop]:
     possible_laptops = []
     for laptop in laptops:
         if laptop.operating_system in person.preferred_operating_systems:
             possible_laptops.append(laptop)
     return possible_laptops
+
+
 people = [
     Person(name="Imran", age=22, preferred_operating_systems=["Ubuntu"]),
     Person(name="Eliza", age=34, preferred_operating_systems=["Arch Linux"]),
