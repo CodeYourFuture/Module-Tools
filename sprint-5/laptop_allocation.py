@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
 from typing import List, Dict
-from itertools import permutations
+import numpy as np
+from scipy.optimize import linear_sum_assignment
 
 unpreferred_OS_penalty = 100
 
@@ -14,7 +15,7 @@ class OperatingSystem(Enum):
 class Person:
     name: str
     age: int
-    preferred_operating_system: tuple  
+    preferred_operating_system: tuple
 
 @dataclass(frozen=True)
 class Laptop:
@@ -27,25 +28,22 @@ class Laptop:
 def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]:
     if len(people) != len(laptops):
         raise ValueError("Number of people must match number of laptops")
+    
+    n = len(people)
+    cost_matrix = np.zeros((n, n), dtype=int)
 
-    best_assignment = None
-    lowest_sadness = float("inf")
-
-    for perm in permutations(laptops):
-        total_sadness = 0
-        for person, laptop in zip(people, perm):
+    for i, person in enumerate(people):
+        for j, laptop in enumerate(laptops):
             if laptop.operating_system in person.preferred_operating_system:
-                sadness = person.preferred_operating_system.index(laptop.operating_system)
+                cost_matrix[i, j] = person.preferred_operating_system.index(laptop.operating_system)
             else:
-                sadness = unpreferred_OS_penalty
-            total_sadness += sadness
+                cost_matrix[i, j] = unpreferred_OS_penalty
 
-        if total_sadness < lowest_sadness:
-            lowest_sadness = total_sadness
-            best_assignment = perm
+    person_indices, laptop_indices = linear_sum_assignment(cost_matrix)
 
-    return {person: laptop for person, laptop in zip(people, best_assignment)}
-
+    return {
+        people[i]: laptops[j] for i, j in zip(person_indices, laptop_indices)
+    }
 laptops = [
     Laptop(1, "Dell", "XPS 13", 13, OperatingSystem.ARCH),
     Laptop(2, "HP", "Spectre 15", 15, OperatingSystem.UBUNTU),
@@ -53,7 +51,7 @@ laptops = [
     Laptop(4, "Apple", "MacBook Air", 13, OperatingSystem.MACOS),
     Laptop(5, "Apple", "MacBook Pro", 16, OperatingSystem.MACOS),
     Laptop(6, "Dell", "Latitude", 15, OperatingSystem.ARCH),
-    Laptop(7, "HP", "EliteBook", 13, OperatingSystem.MACOS),
+    Laptop(7, "HP", "EliteBook", 13, OperatingSystem.MACOS),  # Reviewer joke: HP running macOS 😄
     Laptop(8, "Lenovo", "Yoga", 14, OperatingSystem.UBUNTU)
 ]
 
@@ -70,19 +68,20 @@ people = [
 
 assignment = allocate_laptops(people, laptops)
 
-
+print("Laptop Assignments:\n")
 for person, laptop in assignment.items():
-    person_sadness_score = (
+    sadness = (
         person.preferred_operating_system.index(laptop.operating_system)
         if laptop.operating_system in person.preferred_operating_system
         else unpreferred_OS_penalty
     )
-    print(f"{person.name} was allocated {laptop.manufacturer} {laptop.model} "
-          f"with {laptop.operating_system.value} (Score: {person_sadness_score})")
+    print(f"{person.name} → {laptop.manufacturer} {laptop.model} "
+          f"({laptop.operating_system.value}) | Score: {sadness}")
 
 total_sadness = sum(
     person.preferred_operating_system.index(laptop.operating_system)
     if laptop.operating_system in person.preferred_operating_system else unpreferred_OS_penalty
     for person, laptop in assignment.items()
 )
+
 print("\nTotal sadness:", total_sadness)
