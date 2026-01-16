@@ -49,29 +49,43 @@
 #Here is the corrected code with type annotations and fixed function calls:         
 
 from typing import Dict
+
 def open_account(balances: Dict[str, int], name: str, amount: int) -> None:
     balances[name] = amount
+
 def sum_balances(accounts: Dict[str, int]) -> int:
     total = 0
     for name, pence in accounts.items():
         print(f"{name} had balance {pence}")
         total += pence
     return total
+
 def format_pence_as_string(total_pence: int) -> str:
+    negative = total_pence < 0
+    total_pence = abs(total_pence)
+
     if total_pence < 100:
-        return f"{total_pence}p"
-    pounds = int(total_pence / 100)
-    pence = total_pence % 100
-    return f"£{pounds}.{pence:02d}"
+        result = f"{total_pence}p"
+    else:
+        pounds = total_pence // 100
+        pence = total_pence % 100
+        result = f"£{pounds}.{pence:02d}"
+
+    return f"-{result}" if negative else result
+
 balances: Dict[str, int] = {
     "Sima": 700,
     "Linn": 545,
     "Georg": 831,
 }
+
 open_account(balances, "Tobi", 913)  
-open_account(balances, "Olya", 713)  
+open_account(balances, "Olya", 713)
+open_account(balances, "Alex", -250)
+
 total_pence = sum_balances(balances)
 total_string = format_pence_as_string(total_pence) 
+
 print(f"The bank accounts total {total_string}")
 
 # Now, when I run mypy on the corrected code, I get no type errors, indicating that all type annotations are correct and the bugs have been fixed.with the result:"# Success: no issues found in 1 source file"
