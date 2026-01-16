@@ -34,8 +34,10 @@ def sadness(person: Person, laptop: Laptop) -> int:
 
 
 def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]:
-    if len(people) != len(laptops):
-        raise ValueError("Number of people must equal number of laptops.")
+    # Every person must get a laptop; spare laptops are allowed
+    if len(people) > len(laptops):
+         raise ValueError("Not enough laptops for all people.")
+
 
     # Clone list so we can remove laptops as they are assigned
     available_laptops = laptops.copy()
