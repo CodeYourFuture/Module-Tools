@@ -4,12 +4,12 @@ const fs = require("fs");
 const path = require("path");
 
 function listDirectory(dir, options) {
+  let stats;
   try {
-    const stats = fs.statSync(dir);
-
+    stats = fs.statSync(dir);
     if (stats.isFile()) {
       console.log(dir);
-      return; 
+      return;
     }
   } catch (e) {
     console.error(`ls: cannot access '${dir}': No such file or directory`);
@@ -17,7 +17,6 @@ function listDirectory(dir, options) {
   }
 
   let entries;
-
   try {
     entries = fs.readdirSync(dir, { withFileTypes: true });
   } catch (e) {
@@ -34,15 +33,18 @@ function listDirectory(dir, options) {
   }
 
   names.sort();
-  names.forEach(name => console.log(name));
+  if (options.one) {
+    names.forEach(name => console.log(name));
+  } else {
+    console.log(names.join("  "));
+  }
 }
 
 program
   .name("myls")
   .description("Custom implementation of ls")
-  .option("-1", "list one file per line (required)")
-
-  .option("-a, --all", "include hidden files")
+  .option("-1, --one", "list one file per line ")
+  .option("-a, --all", "include hidden files and . and ..")
   .argument("[dir]", "directory to list", ".")
   .action((dir, options) => {
     listDirectory(dir, options);
