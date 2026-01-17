@@ -1,39 +1,38 @@
-#!/usr/bin/env python3
 import argparse
 import cowsay
 import sys
 
-def main():
-    parser = argparse.ArgumentParser(
-        description="Make animals say things"
-    )
-    parser.add_argument(
-        "message", nargs="+", help="The message to say."
-    )
-    parser.add_argument(
-        "--animal",
-        default="cow",
-        help="The animal to be saying things."
-    )
+parser = argparse.ArgumentParser(
+    prog="cowsay",
+    description="Make animals say things"
+)
 
-    args = parser.parse_args()
+parser.add_argument(
+    "--animal",
+    choices=cowsay.char_names,
+    default="cow",
+    help="The animal to be saying things."
+)
 
-    text = " ".join(args.message)
-    animal = args.animal  
+parser.add_argument(
+    "--list-animals",
+    action="store_true",
+    help="List available animals and exit."
+)
 
-    supported_animals = [
-        "beavis", "cheese", "cow", "daemon", "dragon", "fox",
-        "ghostbusters", "kitty", "meow", "miki", "milk", "octopus",
-        "pig", "stegosaurus", "stimpy", "trex", "turkey", "turtle", "tux"
-    ]
+parser.add_argument(
+    "message",
+    nargs="*",
+    help="The message for the animal to say."
+)
 
-    if animal not in supported_animals:
-        print(f"usage: cowsay [-h] [--animal {{{','.join(supported_animals)}}}] message [message ...]")
-        print(f"cowsay: error: argument --animal: invalid choice: '{animal}' (choose from {','.join(supported_animals)})")
-        sys.exit(1)
+args = parser.parse_args()
 
-    output = cowsay.get_output_string(animal, text)
-    print(output)
+if args.list_animals:
+    print("\n".join(cowsay.char_names))
+    sys.exit(0)
 
-if __name__ == "__main__":
-    main()
+if not args.message:
+    parser.error("the following arguments are required: message")
+
+getattr(cowsay, args.animal)(" ".join(args.message))
