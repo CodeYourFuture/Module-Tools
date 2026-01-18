@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 from enum import Enum
 from typing import List, Dict
-from itertools import permutations
+
+from scipy.optimize import linear_sum_assignment 
+
 
 
 class OperatingSystem(Enum):
@@ -33,28 +35,79 @@ def sadness(person: Person, laptop: Laptop) ->int:
 
 
 def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]:
+     
+     if len(people) != len(laptops):
+          raise ValueError("Number of individuals and laptops must be equal")
+     
+     cost_matrix = [
+          [sadness(person, laptop) for laptop in laptops]
+          for person in people
+     ]
 
-    best_scenario_assignment = None
-    best_total_sadness = float("inf")
+     person_indices, laptop_indices = linear_sum_assignment(cost_matrix)
 
-    for scenario in permutations(laptops):
-        total_sadness = 0
-
-        #find the sadness level for each scenario
-        for person, laptop in zip(people, scenario):
-            total_sadness += sadness(person, laptop)
-
-            #Implement early break if total is already worse than best
-            if total_sadness >= best_total_sadness:
-                break
-
-        # Check if this scenario is better
-        if total_sadness < best_total_sadness:
-             best_total_sadness = total_sadness
-             best_scenario_assignment = scenario
-
-       
-    # Convert best_scenario_assignment into Dict[Person, Laptop]
-    return {person: laptop for person, laptop in zip(people, best_scenario_assignment)}
+     return {people[p_idx]: laptops[l_idx]
+             for p_idx, l_idx in zip(person_indices, laptop_indices)
+             
+             }
 
 
+
+
+
+if __name__ == "__main__":
+    people = [
+        Person(
+            name="Alice",
+            age=30,
+            preferred_operating_systems=[
+                OperatingSystem.MACOS,
+                OperatingSystem.UBUNTU,
+            ],
+        ),
+        Person(
+            name="Bob",
+            age=25,
+            preferred_operating_systems=[
+                OperatingSystem.UBUNTU,
+                OperatingSystem.MACOS,
+            ],
+        ),
+        Person(
+            name="Carol",
+            age=28,
+            preferred_operating_systems=[
+                OperatingSystem.ARCH,
+                OperatingSystem.MACOS,
+            ],
+        ),
+    ]
+
+    laptops = [
+        Laptop(
+            id=1,
+            manufacturer="Apple",
+            model="MacBook Air",
+            screen_size_in_inches=13.3,
+            operating_system=OperatingSystem.MACOS,
+        ),
+        Laptop(
+            id=2,
+            manufacturer="Dell",
+            model="XPS",
+            screen_size_in_inches=13.0,
+            operating_system=OperatingSystem.UBUNTU,
+        ),
+        Laptop(
+            id=3,
+            manufacturer="Lenovo",
+            model="ThinkPad",
+            screen_size_in_inches=14.0,
+            operating_system=OperatingSystem.ARCH,
+        ),
+    ]
+
+    allocation = allocate_laptops(people, laptops)
+
+    for person, laptop in allocation.items():
+        print(f"{person.name} → {laptop.model} ({laptop.operating_system.value})")
