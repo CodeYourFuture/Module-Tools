@@ -93,8 +93,8 @@ while True:
         break
     except ValueError:
         print(f"Error, {user_operating_system} is not in available list\n"
-    f"Available OSs are: {','.join(available_os)}", file=sys.stderr)
-    sys.exit(1)
+    f"Available OSs are: {','.join(available_os)}. Try again!.", file=sys.stderr)
+
 
 preferred_operating_system = OperatingSystem(user_operating_system)
 
@@ -111,4 +111,3 @@ laptops = [
 possible_laptops = count_possible_laptops(laptops, user)
 print(f"Possible laptops for {user_name}: {possible_laptops}")
 alternative_laptops = chose_alternative_laptops(laptops, user)
-
