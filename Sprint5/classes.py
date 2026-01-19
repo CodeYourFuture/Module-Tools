@@ -16,5 +16,3 @@ def is_adult(person: Person) -> bool:
 
 print(is_adult(imran))
 
-def works_at(person: Person) -> str:
-    return person.jobcompany

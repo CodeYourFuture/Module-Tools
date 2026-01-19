@@ -13,11 +13,14 @@ def sum_balances(accounts:Dict[str,int])-> int: #takes type dic[str, int}returns
 
 def format_pence_as_string(total_pence: int)-> str: #type int returns type str
     #formatting pence as a string 
+    sign = "-" if total_pence < 0 else ""
+    total_pence = abs(total_pence)
+
     if total_pence < 100:
-        return f"{total_pence}p"
+        return f"{sign}{total_pence}p"
     pounds =(total_pence // 100)  #floordivision always returns an int
     pence = total_pence % 100
-    return f"£{pounds}.{pence:02d}"
+    return f"{sign}£{pounds}.{pence:02d}"
 
 balances:Dict[str,int]  = {             #dic type {str:int}
     "Sima": 700,
