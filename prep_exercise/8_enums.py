@@ -97,7 +97,7 @@ def main() -> None:
     if best_os != person.preferred_operating_system and best_count > preferred_count:
         print(
             f"If you are willing to accept {best_os.value} instead,"
-            f"You're more likely to get a laptop. {best_count} available)."
+            f"You're more likely to get a laptop. {best_count} available."
         )
 
 if __name__ == "__main__":
