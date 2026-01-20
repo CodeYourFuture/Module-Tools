@@ -1,4 +1,3 @@
-
 import { program } from "commander";
 import { promises as fs } from "node:fs";
 
@@ -28,7 +27,9 @@ function formatOutput(counts, filename, opts) {
   if (opts.w) return `${counts.words} ${filename}`;
   if (opts.c) return `${counts.bytes} ${filename}`;
 
-  return `${counts.lines} ${counts.words} ${counts.bytes} ${filename}`;
+  return `${String(counts.lines).padStart(8)} ${String(counts.words).padStart(
+    8
+  )} ${String(counts.bytes).padStart(8)} ${filename}`;
 }
 
 async function main() {
