@@ -44,6 +44,7 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
     return {
         people[i]: laptops[j] for i, j in zip(person_indices, laptop_indices)
     }
+    
 laptops = [
     Laptop(1, "Dell", "XPS 13", 13, OperatingSystem.ARCH),
     Laptop(2, "HP", "Spectre 15", 15, OperatingSystem.UBUNTU),
@@ -51,7 +52,7 @@ laptops = [
     Laptop(4, "Apple", "MacBook Air", 13, OperatingSystem.MACOS),
     Laptop(5, "Apple", "MacBook Pro", 16, OperatingSystem.MACOS),
     Laptop(6, "Dell", "Latitude", 15, OperatingSystem.ARCH),
-    Laptop(7, "HP", "EliteBook", 13, OperatingSystem.MACOS),  # Reviewer joke: HP running macOS 😄
+    Laptop(7, "HP", "EliteBook", 13, OperatingSystem.MACOS),  
     Laptop(8, "Lenovo", "Yoga", 14, OperatingSystem.UBUNTU)
 ]
 
@@ -69,6 +70,7 @@ people = [
 assignment = allocate_laptops(people, laptops)
 
 print("Laptop Assignments:\n")
+
 for person, laptop in assignment.items():
     sadness = (
         person.preferred_operating_system.index(laptop.operating_system)
