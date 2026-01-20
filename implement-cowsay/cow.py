@@ -24,7 +24,7 @@ parser.add_argument(
 
 args = parser.parse_args()
 
-# get the correct anima function by name
+# get the correct animal function by name
 animal_func = getattr(cowsay, args.animal)
 
-print(animal_func(" ".join(args.message)))
+animal_func(" ".join(args.message))
