@@ -30,21 +30,17 @@ line_number = 1
 
 for filepath in args.paths:
     with open(filepath, "r", encoding="utf-8") as f:
-        content = f.read()
-
-        lines = content.split("\n")
-
-        for line in lines:
-            if args.number_all_lines:
-                print(f"{line_number} {line}")
-                line_number += 1
-
-            elif args.number_non_empty_lines:
+        for line in f:
+            if args.number_non_empty_lines:
                 if line.strip() == "":
-                    print(line)
+                    print(line, end="")
                 else:
-                    print(f"{line_number} {line}")
+                    print(f"{line_number} {line}", end="")
+                    line_number += 1
+
+            elif args.number_all_lines:
+                    print(f"{line_number} {line}", end="")
                     line_number +=1
 
             else:
-                print(line)
+                print(line, end="")
