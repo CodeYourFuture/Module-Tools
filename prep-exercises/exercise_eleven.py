@@ -118,6 +118,6 @@ def more_available_os(user_os: operatingSystem):
         print(f"If you’re open to using {most_available_os.value} operating system, you’ll have a better chance of getting a laptop.”")
 
 
-print(more_available_os(preferred_operating_system_input))
+more_available_os(preferred_operating_system_input)
 
 
