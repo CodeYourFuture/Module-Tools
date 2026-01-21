@@ -55,13 +55,13 @@ laptops = [
 ]
 
 
-name_input = input("What's your name? ")
+name_input = input("Enter your name: ")
 if not name_input.isalpha():
     print("Name must contain letters only!")
     sys.exit(1)
 
 try:
-    age_input = int(input("What's your age? "))
+    age_input = int(input("Enter your age: "))
 except ValueError:
     print("Enter a numeric value for the age!")
     sys.exit(1)
@@ -76,7 +76,8 @@ def parse_os_input(user_input: str) -> operatingSystem:
     print("Invalid operating system!", file=sys.stderr)
     sys.exit(1)
 
-preferred_operating_system_input = parse_os_input(input("What's your preferred operating system? "))
+options = ", ".join(os.value for os in operatingSystem)
+preferred_operating_system_input = parse_os_input(input(f"Enter your preferred operating system (Select from: {options}) "))
 
 
 
