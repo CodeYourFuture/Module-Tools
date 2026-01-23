@@ -1,11 +1,32 @@
 import argparse
 
-parser=argparse.ArgumentParser(prog="cat",
-                               usage="implement a simple cat")
-parser.add_argument("-n",action="store_true",help="number the output lines")
-parser.add_argument("-b",action="store_true",help="number the output lines without blank ones")
-parser.add_argument("path",nargs="*",help="files to read")
-args=parser.parse_args()
+parser = argparse.ArgumentParser(
+    prog="cat",
+    usage="implement a simple cat"
+)
+
+# Flag to number all lines
+parser.add_argument(
+    "-n",
+    action="store_true",
+    help="Number all output lines"
+)
+
+# Flag to number only non-blank lines
+parser.add_argument(
+    "-b",
+    action="store_true",
+    help="Number non-blank output lines"
+)
+
+# Positional argument for files to read
+parser.add_argument(
+    "path",
+    nargs="*",
+    help="Files to read"
+)
+
+args = parser.parse_args()
 # print(args)
 line_number=1
 for per_file in args.path :
