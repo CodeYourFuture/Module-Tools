@@ -73,7 +73,8 @@ def find_possible_laptops(laptops: List[Laptop], person: Person) -> List[Laptop]
 # Get user input as strings first (raw input)
 name = input("Enter your name: ")
 age_str = input("Enter your age: ")
-os_str = input("Enter preferred OS: ")
+print("Available operating systems: Ubuntu, macOS, Arch Linux")
+os_str = input("Enter your preferred OS (Ubuntu, macOS, or Arch Linux): ")
 
 # --------------------------------------------------------------------
 # INPUT VALIDATION AND CONVERSION
@@ -81,18 +82,19 @@ os_str = input("Enter preferred OS: ")
 
 # Convert age from string to integer with error handling
 # Output to stderr as per requirements, exit with non-zero code
-try:
-    age = int(age_str)
-except ValueError:
-         
-        print(f"Error: {age_str} is not a valid age", file=sys.stderr)
-        sys.exit(1)
+while True:
+    age_str = input("Enter your age: ")
+    try:
+        age = int(age_str)
+        break
+    except ValueError:
+        print(f"Error: {age_str} is not a valid age. Please enter a number.")
 
 # Convert OS string to enum with error handling
 try:
     os = OperatingSystem(os_str) 
 except ValueError:
-    print(f"Error: '{os_str}' is not a valid OS. Choose: Ubuntu, macOS, Arch Linux", file=sys.stderr)
+    print(f"Error: '{os_str}' is not a valid OS. Valid options are: Ubuntu, macOS, Arch Linux", file=sys.stderr)
     sys.exit(1)
 
 

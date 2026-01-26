@@ -10,8 +10,7 @@ class Person:
     name: str
     date_of_birth: date 
     preferred_operating_system: str
-
-
+    
     def is_adult(self) -> bool:
         today_date = date.today().year
         birth_year = self.date_of_birth.year
