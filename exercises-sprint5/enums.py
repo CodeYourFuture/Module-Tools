@@ -91,11 +91,14 @@ while True:
         print(f"Error: {age_str} is not a valid age. Please enter a number.")
 
 # Convert OS string to enum with error handling
-try:
-    os = OperatingSystem(os_str) 
-except ValueError:
-    print(f"Error: '{os_str}' is not a valid OS. Valid options are: Ubuntu, macOS, Arch Linux", file=sys.stderr)
-    sys.exit(1)
+# Convert OS string to enum with error handling
+os = None
+while os is None:
+    try:
+        os = OperatingSystem(os_str) 
+    except ValueError:
+        print(f"Error: '{os_str}' is not a valid OS. Valid options are: Ubuntu, macOS, Arch Linux", file=sys.stderr)
+        os_str = input("Enter preferred OS: ")
 
 
 # Create Person object from validated input
