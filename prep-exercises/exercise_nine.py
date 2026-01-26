@@ -8,21 +8,25 @@ class Person:
     age: int
     children: List["Person"]
 
-#Add a grandchild to the main object imran 
-khaled = Person(name="Khaled", age=6, children=[])
+#Add great grandchildren to the main object imran to demonsrate that function works recursively
+jameeela = Person(name="Jameeela", age=10, children=[])
+sameera = Person(name="Sameera", age=8, children=[])
+
+#Add a grandchild to the main object imran to demonsrate that function works recursively
+khaled = Person(name="Khaled", age=32, children=[jameeela, sameera])
 
 #Add "age" field and thier respective values to "fatma" and "aisha" - instances of class "Person"
-fatma = Person(name="Fatma", age=14, children=[])
-aisha = Person(name="Aisha",age=22, children=[khaled])
+fatima = Person(name="Fatma", age=46, children=[])
+aisha = Person(name="Aisha",age=53, children=[khaled])
 
 ##Add "age" field and its values to "imran" -  instance of class "Person"
-imran = Person(name="Imran", age=44, children=[fatma, aisha])
+imran = Person(name="Imran", age=79, children=[fatima, aisha])
 
-def print_family_tree(person: Person) -> None:
-    print(person.name)
+def print_family_tree(person: Person, level: int = 0) -> None:
+    indent = " " * level
+    print(f"{indent}{person.name} ({person.age})")
     for child in person.children:
-        print(f"- {child.name} ({child.age})")
-        print_family_tree(child)
+        print_family_tree(child, level + 1)
 
 print_family_tree(imran)
 
