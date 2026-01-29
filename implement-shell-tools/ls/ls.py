@@ -1,7 +1,7 @@
 import os
 import argparse
 
-parser=argparse.ArgumentParser(prog="cat",usage="implement a simple ls python")
+parser=argparse.ArgumentParser(prog="ls",usage="implement a simple ls python")
 parser.add_argument("-1",dest="one",action="store_true")
 parser.add_argument("-a",action="store_true")
 parser.add_argument("path",nargs="*",help="path to list files")
@@ -27,10 +27,11 @@ for path in paths :
         files_list = ['.', '..'] + non_hidden + hidden
     else:
         files_list = non_hidden
-           
-for item in files_list :
-  if args.one and args.a :
-     print(item)
-  elif args.one :
-      if not item.startswith(".") : 
+
+if args.one :           
+    for item in files_list :
         print(item)
+else:
+    print("  ".join(files_list))        
+
+
