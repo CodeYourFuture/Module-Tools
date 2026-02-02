@@ -29,22 +29,36 @@ laptops = [
     Laptop(4, "Apple", "macBook", 13, OperatingSystem.MACOS),
 ]
 
+def get_name() -> str:
+    while True:
+        name = input("Name: ").strip()
+        if name:
+            return name
+        print("Name cannot be empty.")
 
-name = input("Name: ").strip()
-age_input = input("Age: ").strip()
-os_input = input("Preferred OS (macOS, Arch Linux, Ubuntu): ").strip()
-
-try:
-    age = int(age_input)
-except ValueError:
-    print("Error: Age must be a number.", file=sys.stderr)
-    sys.exit(1)
-
-try:
-    preferred_os = OperatingSystem(os_input)
-except ValueError:
-    print(f"Error: '{os_input}' is not a valid operating system.", file=sys.stderr)
-    sys.exit(1)
+def get_age() -> int:
+    while True:
+        age_input = input("Age: ").strip()
+        try:
+            age=int(age_input)
+            if age>0:
+                return age
+            else:
+                print("Age must be a positive number.")
+        except ValueError:
+            print("Age must be a number.")                
+def get_os() -> OperatingSystem:
+    os_values = [os.value for os in OperatingSystem]
+    while True:
+        os_input = input(f"Preferred OS ({', '.join(os_values)}): ").strip()
+        try:
+            return OperatingSystem(os_input)
+        except ValueError:
+            print(f"'{os_input}' is not a valid operating system. Please try again.")
+            
+name=get_name()
+age=get_age()
+preferred_os=get_os()
 
 person = Person(name=name, age=age, preferred_operating_system=preferred_os)
 
