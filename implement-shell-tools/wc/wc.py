@@ -8,59 +8,35 @@ parser.add_argument("-w", dest="words", action="store_true", help="count the num
 parser.add_argument("-c", dest="chars", action="store_true", help="count the number of characters")
 args = parser.parse_args()
 
+def output(line_count ,word_count ,char_count,filename,args):
+    if not(args.lines or args.words or args.chars):
+        return f"{line_count}\t{word_count}\t{char_count}\t{filename}"
+    output=[]
+    if args.lines:
+        output.append(str(line_count))
+    if args.words:
+        output.append(str(word_count))    
+    if args.chars:
+        output.append(str(char_count))
+    output.append(filename)  
+    return "\t".join(output)    
+
+def count_file(path):
+    with open(path) as f:
+        text = f.read()
+    return (
+        len(text.splitlines()),
+        len(text.split()),
+        len(text),
+    )
+
 if os.path.isdir(args.file):
     files = os.listdir(args.file)
     for f in files:
         path = os.path.join(args.file, f)
         if os.path.isfile(path):
-            with open(path, "r") as file_obj:
-                text = file_obj.read()
-            line_count = len(text.splitlines())
-            word_count = len(text.split())
-            char_count = len(text)
-           
-            if not (args.lines or args.words or args.chars):
-                print(f"{line_count}\t{word_count}\t{char_count}\t{path}")
-                continue
-            output = []
-            if args.lines:
-                output.append(str(line_count))
-            if args.words:
-                output.append(str(word_count))
-            if args.chars:
-                output.append(str(char_count))
-            output.append(path)
-            print("\t".join(output))
+            line_count, word_count, char_count = count_file(path)
+            print(output(line_count, word_count, char_count, path, args))
 else:
-   
-    with open(args.file, "r") as f:
-        text = f.read()
-    line_count = len(text.splitlines())
-    word_count = len(text.split())
-    char_count = len(text)
-    if not (args.lines or args.words or args.chars):
-        print(f"{line_count}\t{word_count}\t{char_count}\t{args.file}")
-    else:
-        output = []
-        if args.lines:
-            output.append(str(line_count))
-        if args.words:
-            output.append(str(word_count))
-        if args.chars:
-            output.append(str(char_count))
-        output.append(args.file)
-        print("\t".join(output))
-
-
-
-
-
-
-
-            
-            
-
-
-
-
-
+    line_count, word_count, char_count = count_file(args.file)
+    print(output(line_count, word_count, char_count, args.file, args))

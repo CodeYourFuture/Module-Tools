@@ -13,7 +13,6 @@ files = []
 for pattern in args.files:
     files.extend(glob.glob(pattern))
 
-
 line_number = 1  
 
 for file in files:
@@ -21,13 +20,8 @@ for file in files:
         for line in f:
             line_content = line.rstrip("\n")
             
-            if args.b and line_content != "":  
-                print(f"{line_number}\t{line_content}")
-                line_number += 1
-            elif args.n:  
+            if (args.b and line_content != "") or args.n:  
                 print(f"{line_number}\t{line_content}")
                 line_number += 1
             else:  
                 print(line_content)
-
-
