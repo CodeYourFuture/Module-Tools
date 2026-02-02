@@ -23,15 +23,15 @@ class Child(Parent):
         return f"{self.first_name} {self.last_name}{suffix}"
 
 person1 = Child("Elizaveta", "Alekseeva")
-print(person1.get_name())
-print(person1.get_full_name())
+print(person1.get_name()) # it works because get_name inherited from Parent 
+print(person1.get_full_name()) # works because Child has get_full_name method 
 person1.change_last_name("Tyurina")
 print(person1.get_name())
 print(person1.get_full_name())
 
 person2 = Parent("Elizaveta", "Alekseeva")
+print(person2.get_name()) # it works because get_name is Parent method 
+# print(person2.get_full_name())   it doesn't work because Parent doesn't have this method 
+# person2.change_last_name("Tyurina")  it doesn't work because Parent doesn't have this method
 print(person2.get_name())
-print(person2.get_full_name())
-person2.change_last_name("Tyurina")
-print(person2.get_name())
-print(person2.get_full_name())
+# print(person2.get_full_name()) 
