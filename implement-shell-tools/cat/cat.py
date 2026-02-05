@@ -1,6 +1,17 @@
 import argparse
 import sys
 
+def read_files(paths):
+    lines = []
+    for path in paths:
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                lines.extend(f.read().splitlines())
+        except OSError as e:
+            print(f"Error reading {path}: {e}", file=sys.stderr)
+            sys.exit(1)
+    return lines
+ 
 def main():
     parser = argparse.ArgumentParser(
         prog="display-content-of-a-file",
