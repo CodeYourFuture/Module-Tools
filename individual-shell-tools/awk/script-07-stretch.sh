@@ -7,3 +7,9 @@ set -euo pipefail
 # TODO: Write a command to output just the names of each player along with the total of adding all of that player's scores.
 # Your output should contain 6 lines, each with one word and one number on it.
 # The first line should be "Ahmed 15". The second line should be "Basia 37"
+path="/Users/cyf/Documents/SDC/Module-Tools/individual-shell-tools/awk/scores-table.txt"
+awk '{
+  sum = 0
+  for (i = 3; i <= NF; i++) sum += $i} {
+  print $1, sum
+}' $path
