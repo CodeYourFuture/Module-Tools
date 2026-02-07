@@ -8,3 +8,5 @@ set -euo pipefail
 # Basia London 22 9 6
 # Piotr Glasgow 15 2 25 11 8
 # Chandra Birmingham 12 6
+path="/Users/cyf/Documents/SDC/Module-Tools/shell-pipelines/sort-uniq-head-tail/scores-table.txt"
+sort -t ' ' -k3 -n -r $path | head -n 3
