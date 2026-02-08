@@ -13,38 +13,25 @@ parser.add_argument("paths", nargs='+', help="Files to read")
 
 args = parser.parse_args()
 
-line_number = 0  # Shared counter across all files
+line_number = 1  # Shared counter across all files
 
-# Process each file
-for path in args.paths:  # LEVEL 1: for loop starts
-    with open(path, "r") as f:  # LEVEL 2: inside for loop
-        content = f.read()  # LEVEL 3: inside with block
+for path in args.paths:
+    with open(path, "r") as f:
     
-    # Check if numbering is needed
-    if args.number:  # LEVEL 2: inside for loop
-        lines = content.split("\n")  # LEVEL 3: inside if
-        numbered_lines = []
-        
-        for index, line in enumerate(lines):  # LEVEL 3: inside if
-            line_number = line_number + 1  # LEVEL 4: inside inner for
-            numbered_line = f"{line_number:6}\t{line}"
-            numbered_lines.append(numbered_line)
-        
-        print("\n".join(numbered_lines))  # LEVEL 3: inside if
-    
-    elif args.number_nonblank:  # LEVEL 2: inside for loop
-        lines = content.split("\n")  # LEVEL 3: inside elif
-        numbered_lines = []
-        
-        for line in lines:  # LEVEL 3: inside elif
-            if line.strip() == "":  # LEVEL 4: inside inner for
-                numbered_lines.append(line)
+        lines = f.read().splitlines()
+
+    output = []
+    for line in lines:
+        if args.number_nonblank:
+            if line.strip():
+                output.append(f"{line_number:6}\t{line}")
+                line_number += 1
             else:
-                line_number = line_number + 1
-                numbered_line = f"{line_number:6}\t{line}"
-                numbered_lines.append(numbered_line)
-        
-        print("\n".join(numbered_lines))
-    
-    else:  # LEVEL 2: inside for loop
-        print(content)  # LEVEL 3: inside else
+                output.append(line)
+        elif args.number:
+            output.append(f"{line_number:6}\t{line}")
+            line_number += 1
+        else:
+            output.append(line)
+
+    print("\n".join(output))
