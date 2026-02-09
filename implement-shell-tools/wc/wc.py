@@ -2,7 +2,7 @@ import argparse
 import os
 
 parser = argparse.ArgumentParser(description="wc command")
-parser.add_argument("file", help="File or directory to read")
+parser.add_argument("files",nargs="+",help="File(s) or directory to read")
 parser.add_argument("-l", dest="lines", action="store_true", help="count the number of lines")
 parser.add_argument("-w", dest="words", action="store_true", help="count the number of words")
 parser.add_argument("-c", dest="chars", action="store_true", help="count the number of characters")
@@ -29,14 +29,14 @@ def count_file(path):
         len(text.split()),
         len(text),
     )
+for file in args.files:
+    if os.path.isdir(file):
+        for f in os.listdir(file):
+            path=os.path.join(file,f)
+            if os.path.isfile(path):
+                line_count, word_count, char_count = count_file(path)
+                print(output(line_count, word_count, char_count, path, args))
 
-if os.path.isdir(args.file):
-    files = os.listdir(args.file)
-    for f in files:
-        path = os.path.join(args.file, f)
-        if os.path.isfile(path):
-            line_count, word_count, char_count = count_file(path)
-            print(output(line_count, word_count, char_count, path, args))
-else:
-    line_count, word_count, char_count = count_file(args.file)
-    print(output(line_count, word_count, char_count, args.file, args))
+    else:
+        line_count, word_count, char_count = count_file(file)
+        print(output(line_count, word_count, char_count, file, args))
