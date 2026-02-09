@@ -10,7 +10,6 @@ class Parent:
     def get_name(self) -> str:
         return f"{self.first_name} {self.last_name}"
 
-
 class Child(Parent):
     def __init__(self, first_name: str, last_name: str):
         super().__init__(first_name, last_name)
@@ -27,15 +26,15 @@ class Child(Parent):
         return f"{self.first_name} {self.last_name}{suffix}"
 
 person1 = Child("Elizaveta", "Alekseeva")
-print(person1.get_name())
-print(person1.get_full_name())
-person1.change_last_name("Tyurina")
-print(person1.get_name())
-print(person1.get_full_name())
+print(person1.get_name()) # prints Elizaveta Alekseeva
+print(person1.get_full_name()) # prints Elizaveta Alekseeva
+person1.change_last_name("Tyurina") # no print
+print(person1.get_name()) # prints Elizaveta Tyurina
+print(person1.get_full_name()) # prints Elizaveta Tyurina (née Alekseeva)
 
 person2 = Parent("Elizaveta", "Alekseeva")
-print(person2.get_name())
-print(person2.get_full_name())
-person2.change_last_name("Tyurina")
-print(person2.get_name())
-print(person2.get_full_name())
+print(person2.get_name()) #print Elizaveta Alekseeva
+print(person2.get_full_name()) #no full name method
+person2.change_last_name("Tyurina") #no change last name method
+print(person2.get_name()) # print Elizaveta Alekseeva
+print(person2.get_full_name()) #no full name method so err
