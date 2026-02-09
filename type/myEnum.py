@@ -44,19 +44,26 @@ laptops = [
 
 
 
+
 namePerson = input("enter your personal name: ")
-try:
-    agePerson = input("enter your age: ")
-except ValueError:
-    print("Invalid age. Age must be a number.")
-    exit()
-try:
-    preferredOS = input("enter your preferred operating system: ")
-except KeyError:
-    print("Invalid operating system entered. Please choose from: MACOS, ARCH, UBUNTU.")
-    exit()
+while True:
+    agePerson = input("Enter your age: ")
+    if agePerson.isdigit():
+        agePerson = int(agePerson)
+        break
+    print("Invalid age, please try again.")
+
+
+print("Available operating systems: MACOS, ARCH, UBUNTU")
+while True:
+    preferredOS = input("Enter your preferred operating system: ").strip().upper()
+    try:
+        preferredOS = OperatingSystem[preferredOS]
+        break
+    except KeyError:
+     print("Invalid operating system, please try again.")
     
-person=Person(name=namePerson, age=int(agePerson), preferred_operating_system=OperatingSystem[preferredOS])
+person=Person(name=namePerson, age=int(agePerson), preferred_operating_system=preferredOS)
 possible_laptops = find_possible_laptops(laptops, person)
 print(f"Possible laptops for {person.name}: {possible_laptops}")
 
