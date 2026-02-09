@@ -22,7 +22,7 @@ class Laptop:
     screen_size_in_inches: float
     operating_system: OperatingSystem
 
-def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> dict[Person, Laptop]:
+def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> dict[str, tuple[str, int]]:
     allocateLp = {}
     lpNewList = laptops.copy()
 
