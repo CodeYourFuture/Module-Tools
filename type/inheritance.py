@@ -54,7 +54,6 @@ print(values.max_gap_between_values())
 
 unsorted_values = ImmutableNumberList([1, 19, 7, 13, 4])
 print(unsorted_values.largest())
-# print(unsorted_values.max_gap_between_values()). 'ImmutableNumberList' object has no attribute 'max_gap_between_values'
 
 
 
@@ -91,7 +90,4 @@ print(person1.get_full_name())
 
 person2 = Parent("Elizaveta", "Alekseeva")
 print(person2.get_name())
-# print(person2.get_full_name()) 'Parent' object has no attribute 'get_full_name'
-# person2.change_last_name("Tyurina") 'Parent' object has no attribute 'change_last_name'
 print(person2.get_name())
-# print(person2.get_full_name()) 'Parent' object has no attribute 'get_full_name'
