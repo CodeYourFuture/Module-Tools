@@ -28,8 +28,8 @@ def allocate_laptops(
     laptops: List[Laptop]
 ) -> dict[str, tuple[str, int]]:
 
-    allocateLp = {}
-    lpNewList = laptops.copy()
+    allocation_map = {}
+    available_laptops = laptops.copy()
 
     if len(laptops) < len(people):
         print("Not enough laptops for all people")
@@ -37,16 +37,16 @@ def allocate_laptops(
     for person in people:
         sadnessNumber = 100 
 
-        for lp in lpNewList:
-            if lp.operating_system in person.preferred_operating_system:
-                sadnessNumber = person.preferred_operating_system.index(lp.operating_system)
-                allocateLp[person.name] = (lp.operating_system.value, sadnessNumber)
-                lpNewList.remove(lp)
+        for laptop in available_laptops:
+            if laptop.operating_system in person.preferred_operating_system:
+                sadnessNumber = person.preferred_operating_system.index(laptop.operating_system)
+                allocation_map[person.name] = (laptop.operating_system.value, sadnessNumber)
+                available_laptops.remove(laptop)
                 break
         if sadnessNumber == 100:
-            allocateLp[person.name] = ("No Laptop Assigned", sadnessNumber)
+            allocation_map[person.name] = ("No Laptop Assigned", sadnessNumber)
 
-    return allocateLp
+    return allocation_map
 
 
 personList = [
