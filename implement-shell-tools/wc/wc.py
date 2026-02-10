@@ -8,6 +8,18 @@ parser.add_argument("-w", dest="words", action="store_true", help="count the num
 parser.add_argument("-c", dest="chars", action="store_true", help="count the number of characters")
 args = parser.parse_args()
 
+total_lines = 0
+total_words = 0
+total_chars = 0
+file_counter=0
+
+
+def totals(line_count,word_count,char_count):
+    global total_lines,total_words,total_chars
+    total_lines += line_count
+    total_words += word_count
+    total_chars += char_count
+
 def output(line_count ,word_count ,char_count,filename,args):
     if not(args.lines or args.words or args.chars):
         return f"{line_count}\t{word_count}\t{char_count}\t{filename}"
@@ -34,9 +46,19 @@ for file in args.files:
         for f in os.listdir(file):
             path=os.path.join(file,f)
             if os.path.isfile(path):
+                file_counter +=1
                 line_count, word_count, char_count = count_file(path)
                 print(output(line_count, word_count, char_count, path, args))
+                totals(line_count, word_count, char_count)
+                
+
 
     else:
+        file_counter +=1
         line_count, word_count, char_count = count_file(file)
         print(output(line_count, word_count, char_count, file, args))
+        totals(line_count, word_count, char_count)
+
+if file_counter > 1:
+    print(output(total_lines, total_words, total_chars, "total", args))
+
