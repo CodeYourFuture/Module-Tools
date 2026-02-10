@@ -10,33 +10,30 @@ program
 
 program.parse(process.argv);
 
-// options and path from commander.
-const opts = program.opts();
+const options = program.opts();
 
-let paths = program.args; // array of paths user typed
-if (paths.length === 0) {
-  paths = ["."];
-}
+let paths = program.args;
+if (paths.length === 0) paths = ["."];
 
 for (const directoryPath of paths) {
-  let entries;
+  let fileNames;
+
   try {
-    entries = await fs.readdir(directoryPath);
+    fileNames = await fs.readdir(directoryPath);
   } catch (err) {
     console.error(`ls: cannot access '${directoryPath}': ${err.message}`);
-    continue; // move to next path if this one fails
+    continue;
   }
 
-  if (!opts.allFiles) {
-    entries = entries.filter((name) => !name.startsWith("."));
-  }
+  fileNames = fileNames.filter(
+    (file) => options.allFiles || !file.startsWith("."),
+  );
 
-  if (opts.onePerLine) {
-    entries.forEach((name) => {
-      console.log(name);
-    });
+  if (options.onePerLine) {
+    for (const file of fileNames) {
+      console.log(file);
+    }
   } else {
-    //print files in one line if -1 is not used
-    console.log(entries.join(" "));
+    console.log(fileNames.join(" "));
   }
 }
