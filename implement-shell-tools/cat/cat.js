@@ -11,34 +11,32 @@ program
 
 program.parse(process.argv);
 
-const args = program.args; //Array all file paths
+const filepaths = program.args;
 
-//read flags user typed and return them as object.
-const opts = program.opts();
+const options = program.opts();
 
 let lineNumber = 1;
 
-// Loop over every filepath in args
-args.forEach(async (filepath) => {
-  const content = await fs.readFile(filepath, "utf8");
-  const lines = content.split("\n");
+for (const filepath of filepaths) {
+  const fileContent = await fs.readFile(filepath, "utf8");
+  const lines = fileContent.split("\n");
 
-  lines.forEach((line) => {
-    if (opts.numberAllLines) {
-      // -n: number every line
+  for (const line of lines) {
+    if (options.numberAllLines) {
       console.log(`${lineNumber} ${line}`);
       lineNumber++;
-    } else if (opts.numberNonEmptyLines) {
-      // -b: number non-empty lines only
+      continue;
+    }
+
+    if (options.numberNonEmptyLines) {
       if (line.trim() === "") {
         console.log(line);
       } else {
         console.log(`${lineNumber} ${line}`);
         lineNumber++;
       }
-    } else {
-      // No flag: just print
-      console.log(line);
+      continue;
     }
-  });
-});
+    console.log(line);
+  }
+}
