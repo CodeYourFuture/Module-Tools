@@ -1,13 +1,14 @@
 import argparse
 import os
 
-def show_unhidden_files(listDir):
-    for file in listDir:
-        if not file.startswith('.'):
+
+def show_files(files, show_hidden):
+    for file in files:
+        if show_hidden:
             print(file)
-def show_all_files(listDir):
-    for file in listDir:
-        print(file)
+        else:
+            if not file.startswith("."):
+                print(file)
 
 
 parser = argparse.ArgumentParser(
@@ -16,24 +17,15 @@ parser = argparse.ArgumentParser(
 )
 
 parser.add_argument("-a", action="store_true", help="include hidden files")
-parser.add_argument("-1", dest="one" ,action="store_true", help="use a long listing format")
+parser.add_argument(
+    "-1", dest="one", action="store_true", help="list one entry per line"
+)
 parser.add_argument("path", nargs="?", default=".", help="The directory to list")
 args = parser.parse_args()
 
 
-
-
-
 fn = args.path
 listDir = os.listdir(fn)
-if  fn!="":
-    if args.a and args.one:
-        show_all_files(listDir)
-    elif args.a:
-        show_all_files(listDir)
-    elif args.one:
-        show_unhidden_files(listDir)
-   
-    else:
-        show_unhidden_files(listDir)
 
+if fn != "":
+    show_files(listDir, args.a)
