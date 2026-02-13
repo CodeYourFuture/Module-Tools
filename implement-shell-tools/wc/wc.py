@@ -4,9 +4,6 @@ import re
 
 
 def main():
-    # --------------------------------------------------------
-    #  Set up argparse
-    # --------------------------------------------------------
     parser= argparse.ArgumentParser(
         prog="wc",
         description ="wc command implementation in python"
@@ -20,74 +17,62 @@ def main():
 
     args = parser.parse_args()
 
-    # --------------------------------------------------------
-    #  Ensures at least one path exists
-    # --------------------------------------------------------
     if len(args.paths) == 0:
         print("wc: no file specified", file=sys.stderr)
         sys.exit(1)
 
     totals= {"lines": 0, "words": 0, "chars": 0}
 
-    # --------------------------------------------------------
-    #  Loop over each file path and process it
-    # --------------------------------------------------------
+    no_flags = not args.l and not args.w and not args.c
+    width = 7
+
+    def format_output(counts, label):
+        if no_flags:
+            return f"{counts['lines']:> {width}}{counts['words']:>{width}}{counts['chars']:>{width}} {label}"
+
+        parts = []
+        if args.l:
+            parts.append(f"{counts['lines']:>{width}}")
+        if args.w:
+            parts.append(f"{counts['words']:>{width}}")
+        if args.c:
+            parts.append(f"{counts['chars']:>{width}}")
+
+        return f"{''.join(parts)} {label}"
+    had_error = False
+
     for file_path in args.paths:
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                content = f.read()
+            with open(file_path, "rb") as f:
+                data = f.read()
         except OSError as err:
             print(f"wc: cannot read file'{file_path}': {err}", file=sys.stderr)
+            had_error = True
             continue
 
-        # --------------------------------------------------------
-        #  Count values
-        # --------------------------------------------------------
-        line_count = len(content.split("\n"))
+        content = data.decode("utf-8", errors="replace")
+
+        line_count = content.count("\n")
 
         words = [w for w in re.split(r"\s+", content) if w]
         word_count = len(words)
+        char_count = len(data)
 
-        char_count = len(content)
+        counts = {"lines": line_count, "words": word_count, "chars":char_count}
 
         totals["lines"] += line_count
         totals["words"] += word_count
         totals["chars"] +=char_count
 
-        # --------------------------------------------------------
-        #  Decide what to print based on flags
-        # --------------------------------------------------------
-        no_flags = not args.l and not args.w and not args.c
+        print(format_output(counts, file_path))
 
-        if no_flags:
-            print(f"{line_count} {word_count} {char_count} {file_path}")
-            continue
-
-        if args.l:
-            print(f"{line_count} {file_path}" )
-
-        if args.w:
-            print(f"{word_count} {file_path}")
-
-        if args.c:
-            print(f"{char_count} {file_path}")
-
-
-    # --------------------------------------------------------
-    #  Print totals if there are multiple files
-    # --------------------------------------------------------
     if len(args.paths) > 1:
         no_flags = not args.l and not args.w and not args.c
 
         if no_flags:
-            print(f"{totals['lines']} {totals['words']} {totals['chars']} total")
+            print(format_output(totals, "total"))
 
-        if args.l:
-            print(f"{totals['lines']} total")
-        if args.w:
-            print(f"{totals['words']} total")
-        if args.c:
-            print(f"{totals['chars']} total")
+        sys.exit(1 if had_error else 0)
 
 if __name__ == "__main__":
     main()
