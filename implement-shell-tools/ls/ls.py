@@ -28,15 +28,15 @@ def parse_args():
     return parser.parse_args()
 
 
-def filter_hidden(files):
+def filter_hidden(files: list[str]) -> list[str]:
     return [name for name in files if not name.startswith(".")]
 
 
-def get_visible_entries(files, include_hidden):
+def get_visible_entries(files: list[str], include_hidden: bool):
     return files if include_hidden else filter_hidden(files)
 
 
-def format_entries(files, one_per_line):
+def format_entries(files: list[str], one_per_line: bool):
     if len(files) == 0:
         return
     print(("\n" if one_per_line else "\t").join(files))
@@ -50,8 +50,8 @@ def main():
         include_hidden = bool(args.include_hidden)
         one_per_line = bool(args.one_per_line)
 
-        result_files = []
-        result_dirs = {}
+        result_files: list[str] = []
+        result_dirs: dict[str, list[str]] = {}
 
         for file_path in file_paths:
             st = os.stat(file_path)

@@ -37,8 +37,8 @@ def main():
     args = parse_args()
 
     try:
-        file_paths = args.paths
-        results = {}
+        file_paths: list[str] = args.paths
+        results: dict[str, dict[str, int]] = {}
 
         for file_path in file_paths:
             stats = os.stat(file_path)
@@ -62,7 +62,7 @@ def main():
             results["total"] = total
 
         no_options_provided = not (args.lines or args.words or args.bytes)
-        selected_option_keys = []
+        selected_option_keys: list[str] = []
 
         if args.lines:
             selected_option_keys.append("lines")
@@ -73,7 +73,7 @@ def main():
 
         output_columns = [
             "lines", "words", "bytes"] if no_options_provided else selected_option_keys
-        rows = []
+        rows: list[list[str | int]] = []
         for name, values in results.items():
             rows.append([name] + [values[column] for column in output_columns])
 
