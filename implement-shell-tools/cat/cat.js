@@ -8,6 +8,10 @@ function printFile(filePath, options) {
     const content = fs.readFileSync(filePath, "utf-8");
     const lines = content.split("\n");
 
+    if (lines.length && lines[lines.length - 1] === "") {
+        lines.pop();
+    }
+
     lines.forEach((line) => {
       let prefix = "";
 
@@ -24,6 +28,7 @@ function printFile(filePath, options) {
     });
   } catch (error) {
     console.error(`cat: ${filePath}: ${error.message}`);
+    process.exitCode = 1;
   }
 }
 
@@ -51,6 +56,9 @@ function main() {
   }
 
   files.forEach((file) => {
+    if(options.numberMode) {
+      globalLineCounter = 1; //reset line counter for each file if numbering is enabled
+    }
     printFile(file, options);
   });
 }

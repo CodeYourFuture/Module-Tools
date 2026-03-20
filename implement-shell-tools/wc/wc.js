@@ -2,7 +2,8 @@
 const fs = require("node:fs");
 // Function to count lines, words, and bytes in a file
 function countFileContent(content) {
-  const lines = content.split("\n").length; // Count lines by splitting on newline characters
+  const rawLines = content.split("\n");
+  const lines = rawLines[rawLines.length - 1] === "" ? rawLines.length - 1 : rawLines.length;
   const words = content.trim().split(/\s+/).filter(Boolean).length; // Split by whitespace and filter out empty strings
   const bytes = Buffer.byteLength(content, "utf8");
   return { lines, words, bytes };

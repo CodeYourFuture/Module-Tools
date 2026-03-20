@@ -20,13 +20,11 @@ function listDirectory(dirPath, showAll, onePerLine) {
 }
 function main() {
   const args = process.argv.slice(2);
-  // Check for options
   const showAll = args.includes("-a");
   const onePerLine = args.includes("-1");
   //remove options from args
   let directories = args.filter((arg) => arg !== "-a" && arg !== "-1");
 
-  // Default to current directory if no directories are specified
   if (directories.length === 0) {
     directories = [process.cwd()];
   }
@@ -35,7 +33,6 @@ function main() {
       const stats = fs.statSync(arg);
 
       if (stats.isDirectory()) {
-        //Print header if multiple directories are listed
         if (directories.length > 1) {
           console.log(`${arg}:`)
         };
