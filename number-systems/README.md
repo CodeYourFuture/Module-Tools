@@ -41,7 +41,7 @@ Convert the decimal number 14 to hex.
 Answer: E
 
 Convert the decimal number 386 to hex.
-Answer: 11E
+Answer: 182
 
 Convert the hex number 386 to decimal.
 Answer: 902
