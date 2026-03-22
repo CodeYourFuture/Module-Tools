@@ -16,19 +16,19 @@ program.parse();
 
 const options = program.opts();
 
-const argv = program.args;
-if (argv.length < 1) {
+const argumentArray = program.args;
+if (argumentArray.length < 1) {
   console.log(
-    `We need at least 1 path of file to process but we got ${argv.length}`,
+    `We need at least 1 path of file to process but we got ${argumentArray.length}`,
   );
   process.exit(1);
 }
 
-const paths = argv;
+const pathsArray = argumentArray;
 
 let count = 1;
 
-for (let path of paths) {
+for (let path of pathsArray) {
   const context = await fs.readFile(path, "utf-8");
   const lines = context.trimEnd().split("\n");
   if (options.nonBlank) {
