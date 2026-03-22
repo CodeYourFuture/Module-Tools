@@ -30,18 +30,21 @@ let count = 1;
 
 for (let path of paths) {
   const context = await fs.readFile(path, "utf-8");
-  if (options.line && options.nonBlank) {
-    context
-      .trimEnd()
-      .split("\n")
-      .forEach((string) => {
-        if (string != null || string != "") {
-          console.log(`     ${count}  ${string}`);
-          count++;
-        } else {
-          console.log(string);
-        }
-      });
+  const lines = context.trimEnd().split("\n");
+  if (options.nonBlank) {
+    lines.forEach((line) => {
+      if (line.length != 0) {
+        console.log(`     ${count}  ${line}`);
+        count++;
+      } else {
+        console.log(line);
+      }
+    });
+  } else if (options.line) {
+    lines.forEach((line) => {
+      console.log(`     ${count}  ${line}`);
+      count++;
+    });
   } else {
     console.log(context.trimEnd());
   }
