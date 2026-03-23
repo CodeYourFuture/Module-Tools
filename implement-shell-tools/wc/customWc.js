@@ -5,6 +5,9 @@ import process from "node:process";
 program
   .name("Custom-wc")
   .description("Custom-wc-that-works-like-wc")
+  .option("-l, --lines", "Counting lines in the file")
+  .option("-w, --words", "Counting words in the file")
+  .option("-c, --characters", "Counting characters in the file")
   .argument("<path...>", "Path of file to process");
 
 program.parse();
@@ -16,14 +19,9 @@ if (argumentArray.length === 0) {
 }
 
 const pathArray = argumentArray;
-const path = pathArray[0];
+const options = program.opts();
 
 function padStartNumbers(...args) {
-  if (args.length != 3) {
-    throw new Error(
-      "It takes 3 arguments in order as numberOfLines, numberOfWords, numberOfCharacters",
-    );
-  }
   const space = [3, 4, 4];
   const numberStringArray = [];
   for (let index = 0; index < args.length; index++) {
@@ -46,16 +44,43 @@ for (let path of pathArray) {
   numberOfLines = file.split("\n").length - 1;
   const words = file.match(/\S+/g);
   numberOfWords = words ? words.length : 0;
-  console.log(
-    `${padStartNumbers(numberOfLines, numberOfWords, numberOfCharacters)} ${path}`,
-  );
+
+  if (pathArray.length > 1) {
+    if (options.lines) {
+      console.log(`${padStartNumbers(numberOfLines)} ${path}`);
+    }
+    if (options.words) {
+      console.log(`${padStartNumbers(numberOfWords)} ${path}`);
+    }
+    if (options.characters) {
+      console.log(`${padStartNumbers(numberOfCharacters)} ${path}`);
+    }
+  } else if (options.lines) {
+    console.log(`${numberOfLines} ${path}`);
+  } else if (options.words) {
+    console.log(`${numberOfWords} ${path}`);
+  } else if (options.characters) {
+    console.log(`${numberOfCharacters} ${path}`);
+  } else {
+    console.log(
+      `${padStartNumbers(numberOfLines, numberOfWords, numberOfCharacters)} ${path}`,
+    );
+  }
   totalOfLines += numberOfLines;
   totalOfWords += numberOfWords;
   totalOfCharacters += numberOfCharacters;
 }
 
 if (pathArray.length > 1) {
-  console.log(
-    `${padStartNumbers(totalOfLines, totalOfWords, totalOfCharacters)} total`,
-  );
+  if (options.lines) {
+    console.log(`${padStartNumbers(totalOfLines)} total`);
+  } else if (options.words) {
+    console.log(`${padStartNumbers(totalOfWords)} total`);
+  } else if (options.characters) {
+    console.log(`${padStartNumbers(totalOfCharacters)} total`);
+  } else {
+    console.log(
+      `${padStartNumbers(totalOfLines, totalOfWords, totalOfCharacters)} total`,
+    );
+  }
 }
