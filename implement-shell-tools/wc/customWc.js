@@ -30,6 +30,8 @@ function padStartNumbers(...args) {
   return numberStringArray.join("");
 }
 
+const totalRowNumbers = [];
+
 let totalOfLines = 0;
 let totalOfWords = 0;
 let totalOfCharacters = 0;
@@ -40,31 +42,27 @@ for (let path of pathArray) {
   let numberOfCharacters = 0;
 
   const file = await fs.readFile(path, "utf-8");
-  numberOfCharacters = file.length;
   numberOfLines = file.split("\n").length - 1;
   const words = file.match(/\S+/g);
   numberOfWords = words ? words.length : 0;
+  numberOfCharacters = file.length;
 
-  if (pathArray.length > 1) {
-    if (options.lines) {
-      console.log(`${padStartNumbers(numberOfLines)} ${path}`);
-    }
-    if (options.words) {
-      console.log(`${padStartNumbers(numberOfWords)} ${path}`);
-    }
-    if (options.characters) {
-      console.log(`${padStartNumbers(numberOfCharacters)} ${path}`);
-    }
-  } else if (options.lines) {
-    console.log(`${numberOfLines} ${path}`);
-  } else if (options.words) {
-    console.log(`${numberOfWords} ${path}`);
-  } else if (options.characters) {
-    console.log(`${numberOfCharacters} ${path}`);
-  } else {
+  const rowNumbers = [];
+
+  if (options.lines) rowNumbers.push(numberOfLines);
+  if (options.words) rowNumbers.push(numberOfWords);
+  if (options.characters) rowNumbers.push(numberOfCharacters);
+
+  if (rowNumbers.length === 0) {
     console.log(
       `${padStartNumbers(numberOfLines, numberOfWords, numberOfCharacters)} ${path}`,
     );
+  } else {
+    if (pathArray.length === 1 && rowNumbers.length === 1) {
+      console.log(`${rowNumbers[0]} ${path}`);
+    } else {
+      console.log(`${padStartNumbers(...rowNumbers)} ${path}`);
+    }
   }
   totalOfLines += numberOfLines;
   totalOfWords += numberOfWords;
@@ -72,12 +70,11 @@ for (let path of pathArray) {
 }
 
 if (pathArray.length > 1) {
-  if (options.lines) {
-    console.log(`${padStartNumbers(totalOfLines)} total`);
-  } else if (options.words) {
-    console.log(`${padStartNumbers(totalOfWords)} total`);
-  } else if (options.characters) {
-    console.log(`${padStartNumbers(totalOfCharacters)} total`);
+  if (options.lines) totalRowNumbers.push(totalOfLines);
+  if (options.words) totalRowNumbers.push(totalOfWords);
+  if (options.characters) totalRowNumbers.push(totalOfCharacters);
+  if (totalRowNumbers.length > 0) {
+    console.log(`${padStartNumbers(...totalRowNumbers)} total`);
   } else {
     console.log(
       `${padStartNumbers(totalOfLines, totalOfWords, totalOfCharacters)} total`,
