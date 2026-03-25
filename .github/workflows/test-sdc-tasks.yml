@@ -1,10 +1,11 @@
 name: Test SDC Tasks
 
-on: pull_request
-  paths:
-    - 'individual-shell-tools/**.sh'
-    - 'shell-pipelines/**.sh'
-    - 'jq/*.sh'
+on:
+  pull_request:
+    paths:
+      - 'individual-shell-tools/**.sh'
+      - 'shell-pipelines/**.sh'
+      - 'jq/*.sh'
   pull_request_target:
     types:
       - labeled
