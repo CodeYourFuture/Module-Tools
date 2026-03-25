@@ -1,18 +1,23 @@
 name: Test SDC Tasks
 
 on:
-  push:
+  # push:
+  #   paths:
+  #     - 'individual-shell-tools/**.sh'
+  #     - 'shell-pipelines/**.sh'
+  #     - 'jq/*.sh'
+  pull_request:
     paths:
       - 'individual-shell-tools/**.sh'
       - 'shell-pipelines/**.sh'
       - 'jq/*.sh'
-  pull_request_target:
-    types:
-      - labeled
-      - unlabeled
-      - opened
-      - edited
-      - reopened
+  # pull_request_target:
+  #   types:
+  #     - labeled
+  #     - unlabeled
+  #     - opened
+  #     - edited
+  #     - reopened
 
 jobs:
   test_sdc_tasks:
@@ -60,20 +65,36 @@ jobs:
           echo 'testoutput<<EOF' >> $GITHUB_OUTPUT
           cat testoutput.txt >> $GITHUB_OUTPUT
           echo EOF >> $GITHUB_OUTPUT
-      - uses: actions/github-script@v7
-        id: get_pr_data
-        with:
-          script: |
-              return (
-                await github.rest.repos.listPullRequestsAssociatedWithCommit({
-                  commit_sha: context.sha,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                })
-              ).data[0];
+      # - uses: actions/github-script@v7
+      #   id: get_pr_data
+      #   with: # this isn't going to work with a fork pr
+      #     script: |
+      #         return (
+      #           await github.rest.repos.listPullRequestsAssociatedWithCommit({
+      #             commit_sha: context.sha,
+      #             owner: context.repo.owner,
+      #             repo: context.repo.repo,
+      #           })
+      #         ).data[0];
       - name: make output comment
         uses: peter-evans/create-or-update-comment@v5.0.0
         with:
-          issue-number: ${{ fromJson(steps.get_pr_data.outputs.result).number }} # ${{ github.event.number }}
+          issue-number: ${{ github.event.number }} # ${{ fromJson(steps.get_pr_data.outputs.result).number }}
           body: ${{ steps.read-test-output.outputs.testoutput }}
-
+      - uses: actions/github-script@v7
+        id: update-labels
+        if: contains(steps.read-test-output.outputs.testoutput, 'complete!')
+        with:
+          script: |
+            await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ github.event.number }},
+                labels: ["Complete"]
+            });
+            await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ github.event.number }},
+                name: "Needs Review"
+            });
