@@ -4,7 +4,7 @@ import { promises as fs } from "node:fs";
 const args = process.argv.slice(2);
 
 const showOnePerLine = args.includes("-1"); 
-const showAllFilesWithoutHidden = args.includes("-a");
+const showAllFilesWithHidden = args.includes("-a");
 
 //current path
 const path = args.find(arg => !arg.startsWith("-")) || ".";
@@ -13,17 +13,16 @@ const path = args.find(arg => !arg.startsWith("-")) || ".";
 const direc = await fs.readdir(path)
 // if the path is <sample-files> console.log(direc) gives us =>: [ '.hidden.txt', '1.txt', '2.txt', '3.txt', 'dir' ]
 
-if(showOnePerLine && showAllFilesWithoutHidden){
+if(showOnePerLine && showAllFilesWithHidden){ 
+    direc.forEach(element => {
+        console.log(element)
+    })
+}
+else if(showOnePerLine){
     const visibleFiles = direc.filter(element => !element.startsWith(".")); // filtering hidden files which starts with "."
     visibleFiles.forEach(element => {
         console.log(element)
     });
 }
-else if(showOnePerLine ){  // shows all file including .hidden files
-    direc.forEach(element => {
-        console.log(element)
-    })
-}
-
 
 
