@@ -17,15 +17,25 @@ for (const path of argv) {
     stringArr.push(await fs.readFile(path, "utf-8"));
 }
 
+let lines = 0;
+let words = 0;
+let bytes = 0;
+
 const infoArr = [];
 for (let i = 0; i < stringArr.length; i++) {
     const arr = [];
-    const line = stringArr[i].split("\n")//.filter(e => e.includes("\n"))
-    arr.push(line.length - 1)
-    arr.push(stringArr[i].split(" ").flatMap(l => l.split("\n").map((l, i, a) => i < a.length - 1 ? l + "\n" : l).filter(l => l.trim() !== "")).length)
-    arr.push(new Blob([stringArr[i]]).size)
+    const line = stringArr[i].split("\n").length
+    const wc = stringArr[i].split(" ").flatMap(l => l.split("\n").map((l, i, a) => i < a.length - 1 ? l + "\n" : l).filter(l => l.trim() !== "")).length
+    const lineByte = new Blob([stringArr[i]]).size
+    arr.push(line - 1)
+    lines += line - 1;
+    arr.push(wc);
+    words += wc;
+    arr.push(lineByte)
+    bytes += lineByte
     arr.push(argv[i])
     infoArr.push(arr.join(" "))
 }
 
+if (infoArr.length > 1) infoArr.push([lines, words, bytes, "total"].join(" "))
 console.log(infoArr)
