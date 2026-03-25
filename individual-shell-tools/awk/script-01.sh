@@ -4,4 +4,4 @@ set -euo pipefail
 
 # TODO: Write a command to output just the names of each player in `scores-table.txt`.
 # Your output should contain 6 lines, each with just one word on it.
-awk '{print ' scores-table.txt # deliberately break this implementation
+awk '{print qqqq' scores-table.txt # deliberately break this implementation

@@ -57,10 +57,9 @@ jobs:
       - name: read test output
         id: read-test-output
         run: |
-          # Read output.txt and write to GITHUB_OUTPUT
           echo 'testoutput<<EOF' >> $GITHUB_OUTPUT
           cat testoutput.txt >> $GITHUB_OUTPUT
-          echo EOF
+          echo EOF >> $GITHUB_OUTPUT
       - name: make output comment
         uses: peter-evans/create-or-update-comment@v5.0.0
         with:
