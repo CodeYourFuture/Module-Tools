@@ -13,6 +13,8 @@ if (argv.length < 1) {
     process.exit(1);
 }
 
+if (program.opts().number) showNumber = true;
+
 const stringArr = [];
 for (const path of argv) {
     stringArr.push(await fs.readFile(path, "utf-8"));
