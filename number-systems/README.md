@@ -5,34 +5,34 @@ Do not convert any binary numbers to decimal when solving a question unless the 
 The goal of these exercises is for you to gain an intuition for binary numbers. Using tools to solve the problems defeats the point.
 
 Convert the decimal number 14 to binary.
-Answer: 110
+Answer:
 
 Convert the binary number 101101 to decimal:
-Answer: 45
+Answer:
 
 Which is larger: 1000 or 0111?
-Answer: 1000
+Answer:
 
 Which is larger: 00100 or 01011?
-Answer: 01011
+Answer:
 
 What is 10101 + 01010?
-Answer: 11111
+Answer:
 
 What is 10001 + 10001?
-Answer: 100010
+Answer:
 
 What's the largest number you can store with 4 bits, if you want to be able to represent the number 0?
-Answer: 1111
+Answer:
 
 How many bits would you need in order to store the numbers between 0 and 255 inclusive?
 Answer:
 
 How many bits would you need in order to store the numbers between 0 and 3 inclusive?
-Answer: 2
+Answer:
 
 How many bits would you need in order to store the numbers between 0 and 1000 inclusive?
-Answer: 10
+Answer:
 
 How can you test if a binary number is a power of two (e.g. 1, 2, 4, 8, 16, ...)?
 Answer:
