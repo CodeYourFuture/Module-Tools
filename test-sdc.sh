@@ -24,6 +24,7 @@ if [[ "$1" == "individual-shell-tools" ]]; then
 				if [[ "$exercise" == *"stretch"* ]]; then
 					# echo "Stretch task $directory$exercise failing, you can ignore this if you did not attempt. If you didnt, please have the volunteer check this."
 					echo "" >> ../../testoutput.txt
+					total=$(($total-1))
 				else
 					echo "Failed $directory$exercise, please either attempt again or have the volunteer check this." >> ../../testoutput.txt
 				fi
@@ -34,7 +35,7 @@ if [[ "$1" == "individual-shell-tools" ]]; then
 	cd ..
 	rm test.tmp
 	echo "You passed $pass/$total tasks." >> testoutput.txt
-	if [ $pass -eq $total ]; then
+	if [ $pass -ge $total ]; then
 		echo "This task is complete!" >> testoutput.txt
 	fi
 	cat testoutput.txt
@@ -51,12 +52,7 @@ elif [[ "$1" == "shell-pipelines" ]]; then
 			if [ $? -eq 0 ]; then
 				pass=$(($pass+1))
 			else
-				if [[ "$exercise" == *"stretch"* ]]; then
-					# echo "Stretch task $directory$exercise failing, you can ignore this if you did not attempt. If you didnt, please have the volunteer check this."
-					echo "" >> ../../testoutput.txt
-				else
-					echo "Failed $directory$exercise, please either attempt again or have the volunteer check this." >> ../../testoutput.txt
-				fi
+				echo "Failed $directory$exercise, please either attempt again or have the volunteer check this." >> ../../testoutput.txt
 			fi
 		done
 		cd ..
