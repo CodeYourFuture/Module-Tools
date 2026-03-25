@@ -1,0 +1,68 @@
+name: Test SDC Tasks
+
+on: pull_request
+  paths:
+    - 'individual-shell-tools/**.sh'
+    - 'shell-pipelines/**.sh'
+    - 'jq/*.sh'
+  pull_request_target:
+    types:
+      - labeled
+      - unlabeled
+      - opened
+      - edited
+      - reopened
+
+jobs:
+  test_sdc_tasks:
+
+    name: Test SDC Tasks
+    runs-on: ubuntu-slim
+    permissions:
+      pull-requests: read
+
+    steps:
+      - name: checkout pushed PR
+        uses: actions/checkout@v5
+        # with:
+        #   fetch-depth: 2
+      - name: checkout expected output
+        uses: actions/checkout@v5
+        with:
+          ref: origin/expected-solutions
+          path: expect
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v47.0.5
+      - name: List all changed files
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          for file in ${ALL_CHANGED_FILES}; do
+            echo "$file was changed"
+          done
+      - name: test individual shell tools
+        if: contains(steps.changed-files.outputs.all_changed_files, 'individual-shell-tools/awk/script-01.sh')
+        run: ./test-sdc.sh individual-shell-tools
+        shell: bash
+      - name: test jq
+        if: contains(steps.changed-files.outputs.all_changed_files, 'jq/script-01.sh')
+        run: ./test-sdc.sh jq
+        shell: bash
+      - name: test shell-pipelines
+        if: contains(steps.changed-files.outputs.all_changed_files, 'shell-pipelines/ls-grep/script-01.sh')
+        run: ./test-sdc.sh shell-pipelines
+        shell: bash
+      - name: read test output
+        id: read-test-output
+        run: |
+          # Read output.txt and write to GITHUB_OUTPUT
+          echo 'testoutput<<EOF' >> $GITHUB_OUTPUT
+          cat testoutput.txt >> $GITHUB_OUTPUT
+          echo EOF
+      - name: make output comment
+        uses: peter-evans/create-or-update-comment@v5.0.0
+        with:
+          issue-number: ${{ github.event.number }}
+          body: ${{ steps.read-test-output.outputs.testoutput }}
+
