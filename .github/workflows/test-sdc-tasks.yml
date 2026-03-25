@@ -6,22 +6,22 @@ on:
   #     - 'individual-shell-tools/**.sh'
   #     - 'shell-pipelines/**.sh'
   #     - 'jq/*.sh'
-  pull_request:
-    paths:
-      - 'individual-shell-tools/**.sh'
-      - 'shell-pipelines/**.sh'
-      - 'jq/*.sh'
-    types:
-      - labeled
-      - unlabeled
-      - opened
-      - edited
-      - reopened
+  # pull_request:
+  #   # paths: # i think its not working because paths are never updated if the type is updated
+  #   #   - 'individual-shell-tools/**.sh'
+  #   #   - 'shell-pipelines/**.sh'
+  #   #   - 'jq/*.sh'
+  #   types:
+  #     - labeled
+  #     - unlabeled
+  #     - opened
+  #     - edited
+  #     - reopened
   pull_request_target:
-    paths:
-      - 'individual-shell-tools/**.sh'
-      - 'shell-pipelines/**.sh'
-      - 'jq/*.sh'
+    # paths:
+    #   - 'individual-shell-tools/**.sh'
+    #   - 'shell-pipelines/**.sh'
+    #   - 'jq/*.sh'
     types:
       - labeled
       - unlabeled
@@ -63,6 +63,7 @@ jobs:
         run: ./test-sdc.sh shell-pipelines
         shell: bash
       - name: read test output
+        if: contains(steps.changed-files.outputs.all_changed_files, 'individual-shell-tools/awk/script-01.sh') || contains(steps.changed-files.outputs.all_changed_files, 'jq/script-01.sh') || contains(steps.changed-files.outputs.all_changed_files, 'shell-pipelines/ls-grep/script-01.sh')
         id: read-test-output
         run: |
           echo 'testoutput<<EOF' >> $GITHUB_OUTPUT
