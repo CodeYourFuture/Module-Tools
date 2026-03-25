@@ -20,7 +20,7 @@ jobs:
     name: Test SDC Tasks
     runs-on: ubuntu-slim
     permissions:
-      pull-requests: read
+      pull-requests: write
 
     steps:
       - name: checkout pushed PR
