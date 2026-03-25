@@ -60,9 +60,20 @@ jobs:
           echo 'testoutput<<EOF' >> $GITHUB_OUTPUT
           cat testoutput.txt >> $GITHUB_OUTPUT
           echo EOF >> $GITHUB_OUTPUT
+      - uses: actions/github-script@v7
+        id: get_pr_data
+        with:
+          script: |
+              return (
+                await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                  commit_sha: context.sha,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                })
+              ).data[0];
       - name: make output comment
         uses: peter-evans/create-or-update-comment@v5.0.0
         with:
-          issue-number: ${{ github.event.number }}
+          issue-number: ${{ fromJson(steps.get_pr_data.outputs.result).number }} # ${{ github.event.number }}
           body: ${{ steps.read-test-output.outputs.testoutput }}
 
