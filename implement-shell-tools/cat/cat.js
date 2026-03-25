@@ -21,6 +21,4 @@ for (const path of argv) {
 const flatArr = stringArr.flatMap(l => l.split("\n").map((l, i, a) => i < a.length - 1 ? l + "\n" : l).filter(l => l !== ""));
 
 if (!showNumber) console.log(flatArr.join(""))
-else {
-console.log(flatArr.map((l, i) => `${i + 1} ${l}`).join(""))
-}
+else console.log(flatArr.map((l, i) => `${i + 1} ${l}`).join(""))
