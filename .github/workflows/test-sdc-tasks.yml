@@ -6,18 +6,17 @@ on:
   #     - 'individual-shell-tools/**.sh'
   #     - 'shell-pipelines/**.sh'
   #     - 'jq/*.sh'
-  pull_request:
+  pull_request_target:
     paths:
       - 'individual-shell-tools/**.sh'
       - 'shell-pipelines/**.sh'
       - 'jq/*.sh'
-  # pull_request_target:
-  #   types:
-  #     - labeled
-  #     - unlabeled
-  #     - opened
-  #     - edited
-  #     - reopened
+    types:
+      - labeled
+      - unlabeled
+      - opened
+      - edited
+      - reopened
 
 jobs:
   test_sdc_tasks:
@@ -30,13 +29,6 @@ jobs:
     steps:
       - name: checkout pushed PR
         uses: actions/checkout@v5
-        # with:
-        #   fetch-depth: 2
-      # - name: checkout expected output
-      #   uses: actions/checkout@v5
-      #   with:
-      #     ref: origin/expected-solutions
-      #     path: expect
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v47.0.5
