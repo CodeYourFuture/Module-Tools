@@ -13,7 +13,7 @@ if (argv.length < 1) {
     process.exit(1);
 }
 
-if (program.opts().number) showNumber = true;
+showNumber = program.opts().number
 
 const stringArr = [];
 for (const path of argv) {
