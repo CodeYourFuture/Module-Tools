@@ -7,3 +7,4 @@ set -euo pipefail
 # The first line should be "Ahmed 4".
 
 awk '$2=="London" {print $1, $NF}' scores-table.txt
+
