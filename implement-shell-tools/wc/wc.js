@@ -52,5 +52,11 @@ for (let i = 0; i < stringArr.length; i++) {
     infoArr.push(arr.join(" "))
 }
 
-if (infoArr.length > 1) infoArr.push([lines, words, bytes, "total"].join(" "))
+if (infoArr.length > 1) {
+    const totalArr = ["total"];
+    if (showByteCount) totalArr.unshift(bytes);
+    if (showWordCount) totalArr.unshift(words);
+    if (showLineCount) totalArr.unshift(lines);
+    infoArr.push(totalArr.join(" "))
+}
 console.log(infoArr.join("\n"))
