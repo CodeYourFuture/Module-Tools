@@ -38,4 +38,4 @@ for (let i = 0; i < stringArr.length; i++) {
 }
 
 if (infoArr.length > 1) infoArr.push([lines, words, bytes, "total"].join(" "))
-console.log(infoArr)
+console.log(infoArr.join("\n"))
