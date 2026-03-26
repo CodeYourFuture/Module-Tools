@@ -6,6 +6,9 @@ program
     .name('wc')
     .description('Counts the number of lines, words, and characters in a file.')
     .argument('<path>', 'The path to the file to analyze')
+    .option('-l, --lines', 'Only count lines')
+    .option('-w, --words', 'Only count words')
+    .option('-c, --characters', 'Only count characters');
 
 program.parse();
 
@@ -17,9 +20,15 @@ if (argv.length != 1) {
     process.exit(1);
 }
 const path = argv[0];
+const options = program.opts();
+
+let showLines = options.lines || (!options.words && !options.characters);
+let showWords = options.words || (!options.lines && !options.characters);
+let showCharacters = options.characters || (!options.lines && !options.words);
 
 const content = await fs.readFile(path, 'utf-8');
+
 const lineCount = content.split('\n').filter(Boolean).length;
 const wordCount = content.split(' ').filter(Boolean).length;
 const characterCount = content.length;
-console.log(` ${lineCount}  ${wordCount} ${characterCount} ${path}`);
+console.log(` ${showLines ? lineCount : ''}  ${showWords ? wordCount : ''} ${showCharacters ? characterCount : ''} ${path}`);
