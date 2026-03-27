@@ -32,10 +32,10 @@ How many bits would you need in order to store the numbers between 0 and 3 inclu
 Answer: 2 bits
 
 How many bits would you need in order to store the numbers between 0 and 1000 inclusive?
-Answer: 10 bits
+Answer: 10 bits with 23 spare values that can store 1001 to 1023
 
 How can you test if a binary number is a power of two (e.g. 1, 2, 4, 8, 16, ...)?
-Answer: It can be tested if one of the bits in the value is one e.g 0100, 10, 100
+Answer: A power of two has exactly one '1' in its binary representation (e.g., 1, 10, 100).
 
 Convert the decimal number 14 to hex.
 Answer: E
@@ -56,7 +56,7 @@ If reading the byte 0x21 as an ASCII character, what character would it mean?
 Answer: !
 
 If reading the byte 0x21 as a greyscale colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
-Answer: very dark gray
+Answer: Dark grey
 
 If reading the bytes 0xAA00FF as an RGB colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
 Answer: purple
