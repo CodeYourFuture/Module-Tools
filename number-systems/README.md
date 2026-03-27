@@ -44,7 +44,7 @@ Convert the decimal number 386 to hex.
 Answer: 182
 
 Convert the hex number 386 to decimal.
-Answer: 910
+Answer: 3 * 16^2 + 8 * 16^1 + 6 * 16^0 = 768 + 128 + 6 = 902
 
 Convert the hex number B to decimal.
 Answer: 11
