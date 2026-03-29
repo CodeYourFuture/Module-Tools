@@ -1,10 +1,10 @@
 import { program } from "commander";
-import { error } from "node:console";
 import { promises as fs } from "node:fs";
 
 program
   .name("cat")
   .description("cat sample-files/1.txt ")
+  .option("-n", "number all lines")
   .argument("<path>", "The file path to process");
 program.parse();
 
@@ -18,7 +18,19 @@ if (argv.length != 1) {
 const path = argv[0];
 try {
   const content = await fs.readFile(path, "utf-8");
-  process.stdout.write(content);
+
+  const addLineNumber = program.opts();
+  if (addLineNumber.n) {
+    const lines = content.split("\n");
+
+    if (lines[lines.length - 1] === "") {
+      lines.pop();
+    }
+    
+    lines.forEach((line, index) => {
+      process.stdout.write(`${index + 1} ${line}\n`);
+    });
+  } else process.stdout.write(content);
 } catch (error) {
   console.error(error.message);
   process.exit(1);
