@@ -1,37 +1,60 @@
-import { program } from "commander";
 import { promises as fs } from "node:fs";
+import { program } from "commander";
 
 program
   .name("cat")
-  .description("cat sample-files/1.txt ")
+  .description("my own cat program")
   .option("-n", "number all lines")
-  .argument("<path>", "The file path to process");
+  .option("-b" , "number non-empty lines")
+  .argument("<paths...>", "The file path to process");
 program.parse();
 
-const argv = program.args;
-if (argv.length != 1) {
-  console.error(
-    `Expected exactly 1 argument (a path) to  be passed but got ${argv.length}`,
-  );
+const paths = program.args;
+const options = program.opts();
+
+if (paths.length === 0) {
+  console.error("Expected at least one argument (a path)");
   process.exit(1);
 }
-const path = argv[0];
-try {
-  const content = await fs.readFile(path, "utf-8");
 
-  const addLineNumber = program.opts();
-  if (addLineNumber.n) {
-    const lines = content.split("\n");
+let lineNumber = 1;
 
-    if (lines[lines.length - 1] === "") {
-      lines.pop();
+for (const path of paths) {
+  try {
+    const content = await fs.readFile(path, "utf-8");
+    if(options.b)
+    {
+       const lines = content.split("\n");
+
+      if (lines[lines.length - 1] === "") {
+        lines.pop();
+      }
+      for(const line of lines)
+      {
+        if(line.trim()!=="")
+        {
+          process.stdout.write(`     ${lineNumber} ${line}\n`);
+          lineNumber++;
+        }
+        else {process.stdout.write("\n");}
+      }
+
     }
-    
-    lines.forEach((line, index) => {
-      process.stdout.write(`${index + 1} ${line}\n`);
-    });
-  } else process.stdout.write(content);
-} catch (error) {
-  console.error(error.message);
-  process.exit(1);
+     else if (options.n) {
+      const lines = content.split("\n");
+
+      if (lines[lines.length - 1] === "") {
+        lines.pop();
+      }
+
+      for (const line of lines) {
+        process.stdout.write(`     ${lineNumber} ${line}\n`);
+        lineNumber++;
+      }
+    } else {
+      process.stdout.write(content);
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
 }
