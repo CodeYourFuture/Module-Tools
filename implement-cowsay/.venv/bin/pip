@@ -1,4 +1,4 @@
-#!/home/tzemingho/GitHub/CYF/SDC/Module-Tools/implement-cowsay/.venv/bin/python3
+#!/Users/cyf/GitHub/SDC/Module-Tools/implement-cowsay/.venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

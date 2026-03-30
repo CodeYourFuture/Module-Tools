@@ -8,7 +8,14 @@ parser = argparse.ArgumentParser(
     description="A custom cowsay can parse in animal in command line"
 )
 
-parser.add_argument("--animal", "Parsing animal name after the flag")
-parser.add_argument("message", "Message for the animal to say")
+parser.add_argument("--animal", choices=cowsay.char_names, help="Parsing animal name after the flag")
+parser.add_argument("message", nargs="+", help="Message for the animal to say")
 
-print(cowsay.char_names)
+args = parser.parse_args()
+
+message = " ".join(args.message)
+
+if (args.animal):
+    print(cowsay.get_output_string(args.animal, message))
+else:
+    print(cowsay.get_output_string('cow', message))
