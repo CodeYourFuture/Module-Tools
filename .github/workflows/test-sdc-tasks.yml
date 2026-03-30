@@ -8,7 +8,6 @@ on:
       - 'jq/*.sh'
     types:
       - labeled
-      - unlabeled
       - opened
       - edited
       - reopened
@@ -39,6 +38,13 @@ jobs:
         if: contains(steps.changed-files.outputs.all_changed_files, 'shell-pipelines/ls-grep/script-01.sh')
         run: ./test-sdc.sh shell-pipelines
         shell: bash
+      - name: make output comment
+        if: contains(steps.changed-files.outputs.all_changed_files, 'individual-shell-tools/awk/script-01.sh') || contains(steps.changed-files.outputs.all_changed_files, 'jq/script-01.sh') || contains(steps.changed-files.outputs.all_changed_files, 'shell-pipelines/ls-grep/script-01.sh')
+        env:
+          GH_TOKEN: ${{ secrets.MY_TOKEN }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: |
+          gh issue comment $ISSUE_URL --body-FILE testoutput.TXT
       - name: read test output
         if: contains(steps.changed-files.outputs.all_changed_files, 'individual-shell-tools/awk/script-01.sh') || contains(steps.changed-files.outputs.all_changed_files, 'jq/script-01.sh') || contains(steps.changed-files.outputs.all_changed_files, 'shell-pipelines/ls-grep/script-01.sh')
         id: read-test-output
@@ -46,26 +52,11 @@ jobs:
           echo 'testoutput<<EOF' >> $GITHUB_OUTPUT
           cat testoutput.txt >> $GITHUB_OUTPUT
           echo EOF >> $GITHUB_OUTPUT
-
-      - name: make output comment
-        uses: peter-evans/create-or-update-comment@v5.0.0
-        with:
-          issue-number: ${{ github.event.number }}
-          body: ${{ steps.read-test-output.outputs.testoutput }}
-      - uses: actions/github-script@v7
-        id: update-labels
+      - name: add appropriate labels
         if: contains(steps.read-test-output.outputs.testoutput, 'complete!')
-        with:
-          script: |
-            await github.rest.issues.addLabels({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: ${{ github.event.number }},
-                labels: ["Complete"]
-            });
-            await github.rest.issues.removeLabel({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: ${{ github.event.number }},
-                name: "Needs Review"
-            });
+        env:
+          GH_TOKEN: ${{ secrets.MY_TOKEN }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: |
+          gh issue edit $ISSUE_URL --add-label "Complete"
+          gh issue edit $ISSUE_URL --remove-label "Needs Review"
