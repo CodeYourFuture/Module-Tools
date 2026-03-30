@@ -12,10 +12,12 @@ const path = program.args[0] || ".";
 const options = program.opts();
 try {
   const files = await fs.readdir(path);
-  console.log(files);
+  
   if (options.onePerLine) {
     for (const file of files) {
-      console.log(file);
+      if (!file.startsWith(".")) {
+        console.log(file);
+      }
     }
   }
 } catch (error) {
