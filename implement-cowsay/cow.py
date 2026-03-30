@@ -4,12 +4,12 @@ import argparse
 # cowsay.cow(" ".join(sys.argv[1:]))
 
 parser = argparse.ArgumentParser(
-    prog="custom-cowsay",
-    description="A custom cowsay can parse in animal in command line"
+    prog="cowsay",
+    description="Make animals say things"
 )
 
-parser.add_argument("--animal", choices=cowsay.char_names, help="Parsing animal name after the flag")
-parser.add_argument("message", nargs="+", help="Message for the animal to say")
+parser.add_argument("--animal", choices=cowsay.char_names, help="The animal to be saying things.")
+parser.add_argument("message", nargs="+", help="The message to say.")
 
 args = parser.parse_args()
 
