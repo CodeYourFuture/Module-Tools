@@ -14,26 +14,12 @@ const path = program.args[0] || ".";
 const options = program.opts();
 try {
   const files = await fs.readdir(path);
-  if (options.onePerLine && options.a) {
-    for (const file of files) {
-      console.log(file);
-    }
-  } else if (options.onePerLine) {
-    for (const file of files) {
-      if (!file.startsWith(".")) {
-        console.log(file);
-      }
-    }
-  } else if (options.a) {
-    for (const file of files) {
-      process.stdout.write(file + " ");
-    }
-  } else {
-    for (const file of files) {
-      if (!file.startsWith(".")) {
-        process.stdout.write(file + " ");
-      }
-    }
+         
+  for(const file of files)
+  {
+    if(!options.a && file.startsWith("."))continue;
+
+    console.log(file);
   }
 } catch (error) {
   console.error(error.message);
