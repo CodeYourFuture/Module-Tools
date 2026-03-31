@@ -1,8 +1,6 @@
 import cowsay
 import argparse
 
-# cowsay.cow(" ".join(sys.argv[1:]))
-
 parser = argparse.ArgumentParser(
     prog="cowsay",
     description="Make animals say things"
