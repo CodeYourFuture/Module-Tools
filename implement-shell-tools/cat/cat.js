@@ -1,12 +1,19 @@
 import process from "node:process";
-import { promises as fs } from "node:fs";
+import { promises as fs, readFile } from "node:fs";
 
-const argv = process.argv.slice(2);
-console.log(argv);
+const filesToRead = process.argv.slice(2);
+console.log(filesToRead);
 
-const path = argv[0];
+async function readMultipleFiles() {
+  try {
+    const results = await Promise.all(
+      filesToRead.map((file) => fs.readFile(file, "utf-8")),
+    );
+    process.stdout.write(results.join(""));
+  } catch (err) {
+    console.error("Error reading multiple files:", err);
+    process.exitCode = 1;
+  }
+}
 
-console.log(path);
-
-const content = await fs.readFile(path, "utf-8");
-console.log(content.trim());
+readMultipleFiles();
