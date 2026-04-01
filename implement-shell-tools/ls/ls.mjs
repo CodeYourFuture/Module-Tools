@@ -1,6 +1,5 @@
 import { promises as fs } from "node:fs";
 import { program } from "commander";
-import { dirxml } from "node:console";
 
 program
   .name("ls ")
