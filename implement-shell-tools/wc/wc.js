@@ -11,32 +11,31 @@ program
   .option("-l, --lines", "print the newline counts")
   .option("-w, --words", "print the word counts")
   .option("-c, --bytes", "print the byte counts")
-  .action(async (files, options) => {
-    // If no specific flags are provided, default to showing all
+  .action(async (filePaths, options) => {
     const noFlagsProvided = !options.lines && !options.words && !options.bytes;
-    const showAll = noFlagsProvided;
+    const shouldShowAllStats = noFlagsProvided;
 
-    const results = [];
+    const allFileStats = [];
 
-    for (const filePath of files) {
+    for (const filePath of filePaths) {
       try {
-        const stats = await calculateFileStats(filePath);
-        results.push(stats);
-        printReport(stats, options, showAll);
+        const fileStats = await calculateFileStats(filePath);
+        allFileStats.push(fileStats);
+        printFormattedReport(fileStats, options, shouldShowAllStats);
       } catch (error) {
         console.error(`wc: ${filePath}: No such file or directory`);
         process.exitCode = 1;
       }
     }
 
-    if (results.length > 1) {
-      const totals = {
-        lineCount: results.reduce((sum, s) => sum + s.lineCount, 0),
-        wordCount: results.reduce((sum, s) => sum + s.wordCount, 0),
-        byteCount: results.reduce((sum, s) => sum + s.byteCount, 0),
-        label: "total"
+    if (allFileStats.length > 1) {
+      const grandTotals = {
+        lineCount: allFileStats.reduce((sum, stat) => sum + stat.lineCount, 0),
+        wordCount: allFileStats.reduce((sum, stat) => sum + stat.wordCount, 0),
+        byteCount: allFileStats.reduce((sum, stat) => sum + stat.byteCount, 0),
+        displayName: "total"
       };
-      printReport(totals, options, showAll);
+      printFormattedReport(grandTotals, options, shouldShowAllStats);
     }
   });
 
@@ -44,23 +43,27 @@ async function calculateFileStats(filePath) {
   const fileBuffer = await fs.readFile(filePath);
   const fileContent = fileBuffer.toString();
 
+  const lines = fileContent.split("\n").length - 1;
+  const words = fileContent.split(/\s+/).filter(word => word.length > 0).length;
+  const bytes = fileBuffer.length;
+
   return {
-    lineCount: fileContent.split("\n").length - 1,
-    wordCount: fileContent.split(/\s+/).filter(w => w.length > 0).length,
-    byteCount: fileBuffer.length,
-    label: filePath
+    lineCount: lines,
+    wordCount: words,
+    byteCount: bytes,
+    displayName: filePath
   };
 }
 
-function printReport(stats, options, showAll) {
-  const output = [];
-  const format = (num) => String(num).padStart(4);
+function printFormattedReport(stats, options, shouldShowAllStats) {
+  const outputColumns = [];
+  const formatColumn = (count) => String(count).padStart(4);
 
-  if (showAll || options.lines) output.push(format(stats.lineCount));
-  if (showAll || options.words) output.push(format(stats.wordCount));
-  if (showAll || options.bytes) output.push(format(stats.byteCount));
+  if (shouldShowAllStats || options.lines) outputColumns.push(formatColumn(stats.lineCount));
+  if (shouldShowAllStats || options.words) outputColumns.push(formatColumn(stats.wordCount));
+  if (shouldShowAllStats || options.bytes) outputColumns.push(formatColumn(stats.byteCount));
 
-  console.log(`${output.join("")} ${stats.label}`);
+  console.log(`${outputColumns.join("")} ${stats.displayName}`);
 }
 
 program.parse(process.argv);
