@@ -1,67 +1,66 @@
 import process from "node:process";
 import { promises as fs } from "node:fs";
+import { Command } from "commander";
 
-/**
- * Calculates the lines, words, and bytes for a given file.
- */
+const program = new Command();
+
+program
+  .name("wc")
+  .description("A simple node implementation of the word count utility")
+  .argument("[files...]", "Files to process")
+  .option("-l, --lines", "print the newline counts")
+  .option("-w, --words", "print the word counts")
+  .option("-c, --bytes", "print the byte counts")
+  .action(async (files, options) => {
+    // If no specific flags are provided, default to showing all
+    const noFlagsProvided = !options.lines && !options.words && !options.bytes;
+    const showAll = noFlagsProvided;
+
+    const results = [];
+
+    for (const filePath of files) {
+      try {
+        const stats = await calculateFileStats(filePath);
+        results.push(stats);
+        printReport(stats, options, showAll);
+      } catch (error) {
+        console.error(`wc: ${filePath}: No such file or directory`);
+        process.exitCode = 1;
+      }
+    }
+
+    if (results.length > 1) {
+      const totals = {
+        lineCount: results.reduce((sum, s) => sum + s.lineCount, 0),
+        wordCount: results.reduce((sum, s) => sum + s.wordCount, 0),
+        byteCount: results.reduce((sum, s) => sum + s.byteCount, 0),
+        label: "total"
+      };
+      printReport(totals, options, showAll);
+    }
+  });
+
 async function calculateFileStats(filePath) {
   const fileBuffer = await fs.readFile(filePath);
   const fileContent = fileBuffer.toString();
 
-  // Standard 'wc' counts newline characters (\n)
-  const lineCount = fileContent.split("\n").length - 1;
-
-  // Split by any whitespace and filter out empty strings to get actual words
-  const wordCount = fileContent
-    .split(/\s+/)
-    .filter((word) => word.length > 0).length;
-
-  // Buffer.length provides the exact byte count on disk
-  const byteCount = fileBuffer.length;
-
-  return { lineCount, wordCount, byteCount, filePath };
+  return {
+    lineCount: fileContent.split("\n").length - 1,
+    wordCount: fileContent.split(/\s+/).filter(w => w.length > 0).length,
+    byteCount: fileBuffer.length,
+    label: filePath
+  };
 }
 
-/**
- * Main execution function
- */
-async function runWordCount() {
-  const filePaths = process.argv.slice(2);
-  const results = [];
+function printReport(stats, options, showAll) {
+  const output = [];
+  const format = (num) => String(num).padStart(4);
 
-  for (const filePath of filePaths) {
-    try {
-      const stats = await calculateFileStats(filePath);
-      results.push(stats);
+  if (showAll || options.lines) output.push(format(stats.lineCount));
+  if (showAll || options.words) output.push(format(stats.wordCount));
+  if (showAll || options.bytes) output.push(format(stats.byteCount));
 
-      printFormattedLine(
-        stats.lineCount,
-        stats.wordCount,
-        stats.byteCount,
-        stats.filePath,
-      );
-    } catch (error) {
-      console.error(`wc: ${filePath}: No such file or directory`);
-      process.exitCode = 1;
-    }
-  }
-
-  // If multiple files were processed, show the total
-  if (results.length > 1) {
-    const totalLines = results.reduce((sum, item) => sum + item.lineCount, 0);
-    const totalWords = results.reduce((sum, item) => sum + item.wordCount, 0);
-    const totalBytes = results.reduce((sum, item) => sum + item.byteCount, 0);
-
-    printFormattedLine(totalLines, totalWords, totalBytes, "total");
-  }
+  console.log(`${output.join("")} ${stats.label}`);
 }
 
-/**
- * Formats the output into columns to match the standard 'wc' utility
- */
-function printFormattedLine(lines, words, bytes, label) {
-  const format = (number) => String(number).padStart(8);
-  console.log(`${format(lines)}${format(words)}${format(bytes)} ${label}`);
-}
-
-runWordCount();
+program.parse(process.argv);
