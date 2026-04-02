@@ -3,6 +3,8 @@
 set -euo pipefail
 
 # The input for this script is the scores.json file.
-# TODO: Write a command to output just the names of each player, one per line.
-# Your output should contain 6 lines, each with just one word on it.
-# Your output should not contain any quote characters.
+# Command to output just the names of each player, one per line.
+#  output contains 6 lines, each with just one word on it.
+#  output does not contain any quote characters.
+
+jq -r '.[].name' scores.json
