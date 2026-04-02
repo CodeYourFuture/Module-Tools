@@ -23,19 +23,10 @@ files_array = os.listdir(args.path)
 
 sorted_files_array = sort_list(files_array)
 
-if (not args.show_hidden):
-    filtered_list = [file for file in sorted_files_array if re.match(r"^(?!\.)", file)]
-    formatted_list = format_list(filtered_list)
-    if (args.one_item):
-        for item in formatted_list:
-            print(item)
-    else:
-        print("  ".join(formatted_list))
-else: 
-    sorted_hidden_list = [".", "..", *sorted_files_array]
-    formatted_hidden_list = format_list(sorted_hidden_list)
-    if (args.one_item):
-        for item in formatted_hidden_list:
-            print(item)
-    else:
-        print("  ".join(formatted_hidden_list))
+hidden_switched_list = [".", "..", *sorted_files_array] if args.show_hidden else [file for file in sorted_files_array if re.match(r"^(?!\.)", file)]
+
+formatted_list = format_list(hidden_switched_list)
+
+separator = "\n" if args.one_item else " "
+
+print(separator.join(formatted_list))
