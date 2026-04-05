@@ -3,4 +3,6 @@
 set -euo pipefail
 
 # TODO: Write a command to output every line in dialogue.txt that does not contain the word "Hello" (regardless of case).
+grep -icv Hello dialogue.txt
+
 # The output should contain 10 lines.
