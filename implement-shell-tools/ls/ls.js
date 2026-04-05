@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
-const path = require('path');
 
 function listFiles(directory, options) {
   try {
@@ -11,10 +10,11 @@ function listFiles(directory, options) {
       if (!options.all && file.name.startsWith('.')) {
         return; // Skip hidden files unless -a is specified
       }
-      console.log(file.name);
+      console.log(`${directory}/${file.name}`);
     });
   } catch (err) {
-    console.error(`ls: cannot access '${directory}': No such file or directory`);
+    console.error(`ls: cannot access '${directory}': ${err.code === 'ENOENT' ? 'No such file or directory' : 'An error occurred'}`);
+    process.exit(1);
   }
 }
 
@@ -24,7 +24,7 @@ function main() {
     all: false,
   };
 
-  let directories = ['.'];
+  const directories = [];
 
   args.forEach((arg) => {
     if (arg === '-1') {
@@ -32,9 +32,13 @@ function main() {
     } else if (arg === '-a') {
       options.all = true;
     } else {
-      directories = [arg];
+      directories.push(arg);
     }
   });
+
+  if (directories.length === 0) {
+    directories.push('.');
+  }
 
   directories.forEach((directory) => {
     listFiles(directory, options);

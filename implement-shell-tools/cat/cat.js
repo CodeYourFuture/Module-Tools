@@ -7,25 +7,24 @@ function cat(files, options) {
   let lineNumber = 1;
 
   files.forEach((file) => {
-    const filePath = path.resolve(file);
-
     try {
-      const data = fs.readFileSync(filePath, 'utf8');
+      const data = fs.readFileSync(file, 'utf8');
       const lines = data.split('\n');
 
       lines.forEach((line) => {
-        if (options.numberNonEmpty && line.trim()) {
-          console.log(`${lineNumber}\t${line}`);
-          lineNumber++;
-        } else if (options.numberLines) {
-          console.log(`${lineNumber}\t${line}`);
-          lineNumber++;
-        } else {
-          console.log(line);
-        }
+        const prefix = options.numberNonEmpty && line.trim() ? `${lineNumber}\t` : options.numberLines ? `${lineNumber}\t` : '';
+        console.log(`${prefix}${line}`);
+        if (prefix) lineNumber++;
       });
     } catch (err) {
-      console.error(`cat: ${file}: No such file or directory`);
+      if (err.code === 'ENOENT') {
+        console.error(`cat: ${file}: No such file or directory`);
+      } else if (err.code === 'EACCES') {
+        console.error(`cat: ${file}: Permission denied`);
+      } else {
+        console.error(`cat: ${file}: An error occurred`);
+      }
+      process.exit(1);
     }
   });
 }

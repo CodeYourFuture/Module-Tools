@@ -1,27 +1,24 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
-const path = require('path');
 
-function countFile(filePath, options) {
+function countFile(file, options) {
   try {
-    const data = fs.readFileSync(filePath, 'utf8');
+    const data = fs.readFileSync(file, 'utf8');
 
     const lines = data.split('\n').length;
     const words = data.split(/\s+/).filter(Boolean).length;
     const bytes = Buffer.byteLength(data, 'utf8');
 
-    if (options.lines) {
-      console.log(`${lines}\t${filePath}`);
-    } else if (options.words) {
-      console.log(`${words}\t${filePath}`);
-    } else if (options.bytes) {
-      console.log(`${bytes}\t${filePath}`);
-    } else {
-      console.log(`${lines}\t${words}\t${bytes}\t${filePath}`);
-    }
+    const results = [];
+    if (options.lines) results.push(lines);
+    if (options.words) results.push(words);
+    if (options.bytes) results.push(bytes);
+
+    console.log(`${results.join('\t')}\t${file}`);
   } catch (err) {
-    console.error(`wc: ${filePath}: No such file or directory`);
+    console.error(`wc: ${file}: ${err.code === 'ENOENT' ? 'No such file or directory' : 'An error occurred'}`);
+    process.exit(1);
   }
 }
 
@@ -53,8 +50,7 @@ function main() {
   }
 
   files.forEach((file) => {
-    const filePath = path.resolve(file);
-    countFile(filePath, options);
+    countFile(file, options);
   });
 }
 
