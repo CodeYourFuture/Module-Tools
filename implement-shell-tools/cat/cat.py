@@ -1,15 +1,27 @@
 import argparse
 
 parser = argparse.ArgumentParser(prog="cat", description="Prints the output of a file to the console")
-parser.add_argument("-n", "--number", help="Displays the lines along with their number")
+parser.add_argument("-n", "--number", help="Displays the lines along with their number", action="store_true")
 parser.add_argument("path", help="The file path", nargs="+")
 
 args = parser.parse_args()
 
+show_lines = args.number
+
 text = ""
+i = 1
 
 for file in args.path:
     f = open(file)
     text += f.read()
 
-print(text)
+text_list = text.split("\n")
+text_list.pop(len(text_list) - 1)
+
+if (show_lines == False):
+    print("\n".join(text_list))
+    exit()
+
+for line in text_list:
+    print("     " + str(i) + " " + line)
+    i += 1
