@@ -20,4 +20,4 @@ for f in listdir(path):
     if show_hidden == True:
         contents.append(f)
     
-print(contents)
+print(" ".join(contents))
