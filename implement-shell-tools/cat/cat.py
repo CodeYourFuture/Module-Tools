@@ -6,6 +6,10 @@ parser.add_argument("path", help="The file path", nargs="+")
 
 args = parser.parse_args()
 
-f = open(args.path[0])
+text = ""
 
-print(f.read())
+for file in args.path:
+    f = open(file)
+    text += f.read()
+
+print(text)
