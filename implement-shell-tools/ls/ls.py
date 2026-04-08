@@ -1,4 +1,5 @@
 import argparse
+from os import listdir
 
 parser = argparse.ArgumentParser(prog="ls", description="List directory contents.  Ignore files and directories starting with a '.' by default")
 parser.add_argument("-1", help="List one file per line.", action="store_true")
@@ -7,3 +8,16 @@ parser.add_argument("path", help="The directory path (optional).", default=".", 
 
 args = parser.parse_args()
 
+path = args.path
+
+show_hidden = args.a
+
+contents = []
+
+for f in listdir(path):
+    if show_hidden == False and f[0] != ".":
+        contents.append(f)
+    if show_hidden == True:
+        contents.append(f)
+    
+print(contents)
