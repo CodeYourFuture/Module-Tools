@@ -10,6 +10,10 @@ args = parser.parse_args()
 show_lines = args.number
 non_blank = args.nonblank
 
+if show_lines == True and non_blank == True:
+    print("Error: Cannot use -n and -b together. Please use only one flag at a time.")
+    exit()
+
 text = ""
 i = 1
 
