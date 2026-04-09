@@ -8,15 +8,25 @@ parser.add_argument("path", help="The file path", nargs="+")
 
 args = parser.parse_args()
 
+lines = 0
+words = 0
+bytes = 0
+
 dict = {}
 
 for file in args.path:
     f = open(file)
-    text = []
-    text.append(f.read())
-    dict[file] = text
-
-for f in dict:
-    print(dict[f])
-
+    # text = []
+    # text.append(f.read().split("\n"))
+    # print(f.read().split("\n"))
+    dict[file] = f.read().split("\n")
 # print(dict)
+for f in dict:
+    word_per_line = 0
+    byte_per_line = 0
+    for l in dict[f]:
+        word_per_line += len(l.split())
+        byte_per_line += len(l.encode("utf-8"))
+    # print(byte_per_line)
+    print(str(len(dict[f]) - 1) + " " + str(word_per_line) + " " + f)
+
