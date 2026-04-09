@@ -12,6 +12,10 @@ lines = 0
 words = 0
 bytes = 0
 
+l = True
+w = True
+c = True
+
 dict = {}
 adict = {}
 
@@ -24,10 +28,31 @@ for file in args.path:
     f = open(file)
     adict[file] = f.read()
 
+def print_helper(line, word, byte, file_name):
+    text = [" "]
+    if l == True:
+        text.append(str(line))
+        text.append(" ")
+    if w == True:
+        text.append(str(word))
+        text.append(" ")
+    if c == True:
+        text.append(str(byte))
+        text.append(" ")
+    text.append(file_name)
+    print("".join(text))
+    
 for f in dict:
     word_per_line = 0
     byte_per_line = 0
-    for l in adict[f]:
-        word_per_line += len(l.split())
-        byte_per_line += len(l.encode("utf-8"))
-    print(" " + str(len(dict[f]) - 1) + "  " + str(word_per_line) + "  " + str(byte_per_line) + "  " + f)
+    for line in dict[f]:
+        word_per_line += len(line.split())
+    for line in adict[f]:
+        byte_per_line += len(line.encode("utf-8"))
+    lines += len(dict[f]) - 1
+    words += word_per_line
+    bytes += byte_per_line
+    print_helper(len(dict[f]) - 1, word_per_line, byte_per_line, f)
+
+if len(args.path) > 1:
+    print_helper(lines, words, bytes, "total")
