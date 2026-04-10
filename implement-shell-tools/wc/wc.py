@@ -16,6 +16,11 @@ l = True
 w = True
 c = True
 
+if args.words == True or args.line == True or args.bytes == True:
+    l = args.line
+    w = args.words
+    c = args.bytes
+
 dict = {}
 adict = {}
 
