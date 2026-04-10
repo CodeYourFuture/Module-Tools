@@ -21,17 +21,16 @@ if args.words == True or args.line == True or args.bytes == True:
     w = args.words
     c = args.bytes
 
-dict = {}
-adict = {}
+file_data = {}
+file_data_with_newline = {}
 
 for file in args.path:
     f = open(file)
-    dict[file] = f.read().split("\n")
-    adict[file] = f.read()
+    file_data[file] = f.read().split("\n")
 
 for file in args.path:
     f = open(file)
-    adict[file] = f.read()
+    file_data_with_newline[file] = f.read()
 
 def print_helper(line, word, byte, file_name):
     text = [" "]
@@ -47,17 +46,17 @@ def print_helper(line, word, byte, file_name):
     text.append(file_name)
     print("".join(text))
     
-for f in dict:
+for f in file_data:
     word_per_line = 0
     byte_per_line = 0
-    for line in dict[f]:
+    for line in file_data[f]:
         word_per_line += len(line.split())
-    for line in adict[f]:
+    for line in file_data_with_newline[f]:
         byte_per_line += len(line.encode("utf-8"))
-    lines += len(dict[f]) - 1
+    lines += len(file_data[f]) - 1
     words += word_per_line
     bytes += byte_per_line
-    print_helper(len(dict[f]) - 1, word_per_line, byte_per_line, f)
+    print_helper(len(file_data[f]) - 1, word_per_line, byte_per_line, f)
 
 if len(args.path) > 1:
     print_helper(lines, words, bytes, "total")
