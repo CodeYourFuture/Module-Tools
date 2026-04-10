@@ -11,11 +11,13 @@ function countFile(file, options) {
     const bytes = Buffer.byteLength(data, 'utf8');
 
     const results = [];
-    if (options.lines) results.push(lines);
-    if (options.words) results.push(words);
-    if (options.bytes) results.push(bytes);
+    if (options.lines || (!options.lines && !options.words && !options.bytes)) results.push(lines);
+    if (options.words || (!options.lines && !options.words && !options.bytes)) results.push(words);
+    if (options.bytes || (!options.lines && !options.words && !options.bytes)) results.push(bytes);
 
     console.log(`${results.join('\t')}\t${file}`);
+
+    return { lines, words, bytes };
   } catch (err) {
     console.error(`wc: ${file}: ${err.code === 'ENOENT' ? 'No such file or directory' : 'An error occurred'}`);
     process.exit(1);
@@ -49,9 +51,25 @@ function main() {
     process.exit(1);
   }
 
+  let totalLines = 0;
+  let totalWords = 0;
+  let totalBytes = 0;
+
   files.forEach((file) => {
-    countFile(file, options);
+    const { lines, words, bytes } = countFile(file, options);
+    totalLines += lines;
+    totalWords += words;
+    totalBytes += bytes;
   });
+
+  if (files.length > 1) {
+    const totalResults = [];
+    if (options.lines || (!options.lines && !options.words && !options.bytes)) totalResults.push(totalLines);
+    if (options.words || (!options.lines && !options.words && !options.bytes)) totalResults.push(totalWords);
+    if (options.bytes || (!options.lines && !options.words && !options.bytes)) totalResults.push(totalBytes);
+
+    console.log(`${totalResults.join('\t')}\ttotal`);
+  }
 }
 
 main();

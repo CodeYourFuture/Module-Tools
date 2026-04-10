@@ -12,7 +12,12 @@ function cat(files, options) {
       const lines = data.split('\n');
 
       lines.forEach((line) => {
-        const prefix = options.numberNonEmpty && line.trim() ? `${lineNumber}\t` : options.numberLines ? `${lineNumber}\t` : '';
+        let prefix = '';
+        if (options.numberNonEmpty && line.trim()) {
+          prefix = `${lineNumber}\t`;
+        } else if (options.numberLines) {
+          prefix = `${lineNumber}\t`;
+        }
         console.log(`${prefix}${line}`);
         if (prefix) lineNumber++;
       });
