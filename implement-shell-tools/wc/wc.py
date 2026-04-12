@@ -1,31 +1,65 @@
 #!/usr/bin/env python3
 
 import sys
-import os
 
-def count_file(file, options):
+
+def count_file(file):
     try:
         with open(file, 'r', encoding='utf-8') as f:
             data = f.read()
 
-        lines = data.count('\n') + 1
+        lines = data.count('\n')
         words = len(data.split())
         bytes_count = len(data.encode('utf-8'))
-
-        results = []
-        if options['lines'] or not any(options.values()):
-            results.append(lines)
-        if options['words'] or not any(options.values()):
-            results.append(words)
-        if options['bytes'] or not any(options.values()):
-            results.append(bytes_count)
-
-        print(f"{'\t'.join(map(str, results))}\t{file}")
 
         return lines, words, bytes_count
     except FileNotFoundError:
         print(f"wc: {file}: No such file or directory", file=sys.stderr)
         sys.exit(1)
+
+
+def selected_keys(options):
+    if not any(options.values()):
+        return ['lines', 'words', 'bytes']
+
+    keys = []
+    if options['lines']:
+        keys.append('lines')
+    if options['words']:
+        keys.append('words')
+    if options['bytes']:
+        keys.append('bytes')
+    return keys
+
+
+def values_for_keys(counts, keys):
+    lines, words, bytes_count = counts
+    mapping = {
+        'lines': lines,
+        'words': words,
+        'bytes': bytes_count,
+    }
+    return [mapping[key] for key in keys]
+
+
+def print_rows(rows, keys):
+    align_columns = len(keys) > 1 or len(rows) > 1
+
+    if not align_columns:
+        values, name = rows[0]
+        print(f"{values[0]} {name}")
+        return
+
+    widths = []
+    for index in range(len(keys)):
+        max_len = max(len(str(values[index])) for values, _ in rows)
+        widths.append(max(3, max_len))
+
+    for values, name in rows:
+        formatted_values = " ".join(
+            f"{value:>{width}}" for value, width in zip(values, widths)
+        )
+        print(f"{formatted_values} {name}")
 
 def main():
     args = sys.argv[1:]
@@ -54,23 +88,20 @@ def main():
     total_lines = 0
     total_words = 0
     total_bytes = 0
+    keys = selected_keys(options)
+    rows = []
 
     for file in files:
-        lines, words, bytes_count = count_file(file, options)
+        lines, words, bytes_count = count_file(file)
         total_lines += lines
         total_words += words
         total_bytes += bytes_count
+        rows.append((values_for_keys((lines, words, bytes_count), keys), file))
 
     if len(files) > 1:
-        total_results = []
-        if options['lines'] or not any(options.values()):
-            total_results.append(total_lines)
-        if options['words'] or not any(options.values()):
-            total_results.append(total_words)
-        if options['bytes'] or not any(options.values()):
-            total_results.append(total_bytes)
+        rows.append((values_for_keys((total_lines, total_words, total_bytes), keys), 'total'))
 
-        print(f"{'\t'.join(map(str, total_results))}\ttotal")
+    print_rows(rows, keys)
 
 if __name__ == "__main__":
     main()
