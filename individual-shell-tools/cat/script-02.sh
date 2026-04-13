@@ -11,3 +11,10 @@ set -euo pipefail
 # It looked delicious.
 # I was tempted to take a bite of it.
 # But this seemed like a bad idea...
+
+hammadhaider@Hammads-MacBook-Pro individual-shell-tools % cat helper-files/*
+Once upon a time...
+There was a house made of gingerbread.
+It looked delicious.
+I was tempted to take a bite of it.
+But this seemed like a bad idea...
