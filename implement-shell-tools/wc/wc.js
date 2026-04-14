@@ -12,8 +12,7 @@ program
   .option("-w, --words", "print the word counts")
   .option("-c, --bytes", "print the byte counts")
   .action(async (filePaths, options) => {
-    const noFlagsProvided = !options.lines && !options.words && !options.bytes;
-    const shouldShowAllStats = noFlagsProvided;
+    const shouldShowAllStats = !options.lines && !options.words && !options.bytes;
 
     const allFileStats = [];
 
@@ -59,9 +58,15 @@ function printFormattedReport(stats, options, shouldShowAllStats) {
   const outputColumns = [];
   const formatColumn = (count) => String(count).padStart(4);
 
-  if (shouldShowAllStats || options.lines) outputColumns.push(formatColumn(stats.lineCount));
-  if (shouldShowAllStats || options.words) outputColumns.push(formatColumn(stats.wordCount));
-  if (shouldShowAllStats || options.bytes) outputColumns.push(formatColumn(stats.byteCount));
+  if (shouldShowAllStats) {
+    outputColumns.push(formatColumn(stats.lineCount));
+    outputColumns.push(formatColumn(stats.wordCount));
+    outputColumns.push(formatColumn(stats.byteCount));
+  } else {
+    if (options.lines) outputColumns.push(formatColumn(stats.lineCount));
+    if (options.words) outputColumns.push(formatColumn(stats.wordCount));
+    if (options.bytes) outputColumns.push(formatColumn(stats.byteCount));
+  }
 
   console.log(`${outputColumns.join("")} ${stats.displayName}`);
 }
