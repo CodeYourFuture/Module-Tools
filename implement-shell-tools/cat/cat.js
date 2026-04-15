@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
+const path = require('path');
 
 function cat(files, options) {
   let lineNumber = 1;
@@ -9,23 +10,15 @@ function cat(files, options) {
     try {
       const data = fs.readFileSync(file, 'utf8');
       const lines = data.split('\n');
-      const hasTrailingNewline = data.endsWith('\n');
 
-      lines.forEach((line, index) => {
-        const isVirtualTrailingLine = hasTrailingNewline && index === lines.length - 1;
-        if (isVirtualTrailingLine) {
-          return;
-        }
-
+      lines.forEach((line) => {
         let prefix = '';
-        const shouldNumberLine = options.numberLines || (options.numberNonEmpty && line.length > 0);
+        const shouldNumberLine = options.numberLines || (options.numberNonEmpty && line.trim());
         if (shouldNumberLine) {
-          prefix = `${String(lineNumber).padStart(6)}\t`;
+          prefix = `${lineNumber}\t`;
           lineNumber++;
         }
-
-        const shouldAppendNewline = hasTrailingNewline || index < lines.length - 1;
-        process.stdout.write(`${prefix}${line}${shouldAppendNewline ? '\n' : ''}`);
+        console.log(`${prefix}${line}`);
       });
     } catch (err) {
       if (err.code === 'ENOENT') {
