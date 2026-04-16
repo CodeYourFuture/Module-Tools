@@ -21,4 +21,4 @@ print(eliza.name)
 
 print(is_adult(imran))
 
-#print(print_email(imran)) there is no email atribute
+#print(print_email(imran)) there is no email atribute to print
