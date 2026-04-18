@@ -10,3 +10,5 @@ const path = argv[0];
 const content = await fs.readFile(path, "utf-8");
 
 console.log(content);
+const theNumberOfLines = content.split("\n").length;
+console.log(`The number of lines in the file is ${theNumberOfLines}.`);
