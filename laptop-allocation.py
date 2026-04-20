@@ -37,59 +37,59 @@ def sadness(person:Person,operating_system:OperatingSystem)->int:
 def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]:
     how_many_people= len(people)
     how_many_laptops = len(laptops)
+    if how_many_laptops < how_many_people:
+     raise ValueError("Not enough laptops for all people")
     matrix = [[0 for i in range(how_many_laptops)] for _ in range(how_many_people)]
     for i, person in enumerate(people):
         for j,laptop in enumerate(laptops):
             matrix[i][j] = sadness(person,laptop.operating_system)
-    print(matrix)
-
-    best_prem = None
+   
+    best_perm = None
     min_sadness=100000000000
     for perm in permutations(range(how_many_laptops)):
-      print(perm,"dsadsadsadsa")
+    
       total =0
       for i in range(how_many_people):
         
         total+= matrix[i][perm[i]]
         
-      print(total)
+    
       if total< min_sadness :
             min_sadness = total
             best_perm = perm
-            print(min_sadness,"minnnnnn")
-            print(best_perm,"bestttt")
-
-    print("=================================")
-    print (best_perm,min_sadness)        
-
-
+    results = {}           
+    for index, person in enumerate(people):
+        results[person.name]= laptops[best_perm[index]]
          
-      
+        
+    return results      
 
+def main()->None:
+   people = [
+       Person(
+           name="Imran",
+           age=22,
+           preferred_operating_system=[OperatingSystem.UBUNTU, OperatingSystem.ARCH,OperatingSystem.MACOS],
+       ),
+       Person(
+           name="Eliza",
+           age=34,
+           preferred_operating_system=[OperatingSystem.UBUNTU, OperatingSystem.ARCH],
+       ),
+       Person(
+           name="Ahmad",
+           age=34,
+           preferred_operating_system=[OperatingSystem.MACOS],
+       ),
+   
+   ]
+   laptops = [
+       Laptop(id=1, manufacturer="Dell", model="XPS", screen_size_in_inches=13, operating_system=OperatingSystem.MACOS),
+       Laptop(id=2, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.MACOS),
+       Laptop(id=3, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.UBUNTU),
+       
+   ]
+   
+   print(allocate_laptops(people,laptops))      
 
-people = [
-    Person(
-        name="Imran",
-        age=22,
-        preferred_operating_system=[OperatingSystem.UBUNTU, OperatingSystem.ARCH,OperatingSystem.MACOS],
-    ),
-    Person(
-        name="Eliza",
-        age=34,
-        preferred_operating_system=[OperatingSystem.UBUNTU, OperatingSystem.ARCH],
-    ),
-    Person(
-        name="Eliza",
-        age=34,
-        preferred_operating_system=[OperatingSystem.MACOS],
-    ),
-
-]
-laptops = [
-    Laptop(id=1, manufacturer="Dell", model="XPS", screen_size_in_inches=13, operating_system=OperatingSystem.MACOS),
-    Laptop(id=2, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.MACOS),
-    Laptop(id=3, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.UBUNTU),
-    
-]
-
-allocate_laptops(people,laptops)      
+main()
