@@ -41,28 +41,53 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
     for i, person in enumerate(people):
         for j,laptop in enumerate(laptops):
             matrix[i][j] = sadness(person,laptop.operating_system)
-    
+    print(matrix)
 
-
+    best_prem = None
+    min_sadness=100000000000
     for perm in permutations(range(how_many_laptops)):
-      print(perm)
+      print(perm,"dsadsadsadsa")
+      total =0
+      for i in range(how_many_people):
+        
+        total+= matrix[i][perm[i]]
+        
+      print(total)
+      if total< min_sadness :
+            min_sadness = total
+            best_perm = perm
+            print(min_sadness,"minnnnnn")
+            print(best_perm,"bestttt")
+
+    print("=================================")
+    print (best_perm,min_sadness)        
+
+
+         
+      
 
 
 people = [
     Person(
         name="Imran",
         age=22,
+        preferred_operating_system=[OperatingSystem.UBUNTU, OperatingSystem.ARCH,OperatingSystem.MACOS],
+    ),
+    Person(
+        name="Eliza",
+        age=34,
         preferred_operating_system=[OperatingSystem.UBUNTU, OperatingSystem.ARCH],
     ),
     Person(
         name="Eliza",
         age=34,
-        preferred_operating_system=[OperatingSystem.ARCH, OperatingSystem.UBUNTU],
+        preferred_operating_system=[OperatingSystem.MACOS],
     ),
+
 ]
 laptops = [
-    Laptop(id=1, manufacturer="Dell", model="XPS", screen_size_in_inches=13, operating_system=OperatingSystem.ARCH),
-    Laptop(id=2, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.UBUNTU),
+    Laptop(id=1, manufacturer="Dell", model="XPS", screen_size_in_inches=13, operating_system=OperatingSystem.MACOS),
+    Laptop(id=2, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.MACOS),
     Laptop(id=3, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.UBUNTU),
     
 ]
