@@ -49,8 +49,9 @@ def create_person_from_input(laptops: List[Laptop]) -> None:
     
     person = Person(name=name, age=age, preferred_operating_system=preferred_os)
     possible_laptops = find_possible_laptops(laptops, person)
-    print(f"Possible laptops for {person.name}: {possible_laptops}")
-
+    
+    print(f"\nPossible laptops for {person.name}: {possible_laptops}")
+    print(f"The library has {len(possible_laptops)} laptop(s) with {preferred_os.value}")
 
 laptops = [
     Laptop(id=1, manufacturer="Dell", model="XPS", screen_size_in_inches=13, operating_system=OperatingSystem.ARCH),
