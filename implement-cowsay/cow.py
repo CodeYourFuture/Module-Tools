@@ -17,11 +17,11 @@ def main():
     # Combine the message into a single string
     message = " ".join(args.message)
 
-    # Get the animal function dynamically
-    animal_function = getattr(cowsay, args.animal, cowsay.cow)
+    # Get the animal function from the library mapping
+    animal_function = cowsay.char_funcs[args.animal]
 
-    # Print the message using the selected animal
-    print(animal_function(message))
+    # Display the message using the selected animal
+    animal_function(message)
 
 if __name__ == "__main__":
     main()
