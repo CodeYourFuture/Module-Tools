@@ -3,13 +3,34 @@ import process from "node:process";
 
 const args = process.argv.slice(2);
 
-const showLines = args.includes("-l");
-const showWords = args.includes("-w");
-const showBytes = args.includes("-c");
+const expandedArgs = [];
+for (const arg of args) {
+  if (arg.startsWith("-") && arg.length > 2) {
+    for (const char of arg.slice(1)) {
+      expandedArgs.push(`-${char}`);
+    }
+  } else {
+    expandedArgs.push(arg);
+  }
+}
+
+const showLines = expandedArgs.includes("-l");
+const showWords = expandedArgs.includes("-w");
+const showBytes = expandedArgs.includes("-c");
+
+const supportedFlags = ["-l", "-w", "-c"];
+const unknownFlags = expandedArgs.filter(
+  (arg) => arg.startsWith("-") && !supportedFlags.includes(arg),
+);
+
+if (unknownFlags.length > 0) {
+  console.error(`wc: invalid option -- '${unknownFlags[0].slice(1)}'`);
+  process.exit(1);
+}
 
 const noSpecificFlag = !showLines && !showWords && !showBytes;
 
-const filePaths = args.filter((arg) => !arg.startsWith("-"));
+const filePaths = expandedArgs.filter((arg) => !arg.startsWith("-"));
 
 if (filePaths.length === 0) {
   console.error("Usage: node wc.js [-l] [-w] [-c] <file...>");
@@ -36,19 +57,17 @@ const totalLines = results.reduce((sum, r) => sum + r.lines, 0);
 const totalWords = results.reduce((sum, r) => sum + r.words, 0);
 const totalBytes = results.reduce((sum, r) => sum + r.bytes, 0);
 
-let maxNumber;
-
-if (noSpecificFlag) {
-  maxNumber = Math.max(totalLines, totalWords, totalBytes);
-} else if (showLines) {
-  maxNumber = totalLines;
-} else if (showWords) {
-  maxNumber = totalWords;
-} else {
-  maxNumber = totalBytes;
+function getCounts(lines, words, bytes) {
+  const counts = [];
+  if (noSpecificFlag || showLines) counts.push(lines);
+  if (noSpecificFlag || showWords) counts.push(words);
+  if (noSpecificFlag || showBytes) counts.push(bytes);
+  return counts;
 }
 
-const width = String(maxNumber).length + 2;
+const maxNumber = Math.max(...getCounts(totalLines, totalWords, totalBytes));
+
+const width = String(maxNumber).length + 1;
 
 function formatLine(counts, label) {
   const parts = counts.map((n) => String(n).padStart(width, " "));
@@ -56,27 +75,11 @@ function formatLine(counts, label) {
 }
 
 for (const { filePath, lines, words, bytes } of results) {
-  if (noSpecificFlag) {
-    process.stdout.write(formatLine([lines, words, bytes], filePath) + "\n");
-  } else if (showLines) {
-    process.stdout.write(formatLine([lines], filePath) + "\n");
-  } else if (showWords) {
-    process.stdout.write(formatLine([words], filePath) + "\n");
-  } else if (showBytes) {
-    process.stdout.write(formatLine([bytes], filePath) + "\n");
-  }
+  const counts = getCounts(lines, words, bytes);
+  process.stdout.write(formatLine(counts, filePath) + "\n");
 }
 
 if (results.length > 1) {
-  if (noSpecificFlag) {
-    process.stdout.write(
-      formatLine([totalLines, totalWords, totalBytes], "total") + "\n",
-    );
-  } else if (showLines) {
-    process.stdout.write(formatLine([totalLines], "total") + "\n");
-  } else if (showWords) {
-    process.stdout.write(formatLine([totalWords], "total") + "\n");
-  } else if (showBytes) {
-    process.stdout.write(formatLine([totalBytes], "total") + "\n");
-  }
+  const totals = getCounts(totalLines, totalWords, totalBytes);
+  process.stdout.write(formatLine(totals, "total") + "\n");
 }
