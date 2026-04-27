@@ -9,6 +9,15 @@ if (args.length === 0) {
 }
 const showAllLineNumbers = args.includes("-n");
 const showNonBlankNumbers = args.includes("-b");
+const supportedFlags = ["-n", "-b"];
+const unknownFlags = args.filter(
+  (arg) => arg.startsWith("-") && !supportedFlags.includes(arg),
+);
+
+if (unknownFlags.length > 0) {
+  console.error(`cat: invalid option -- '${unknownFlags[0].slice(1)}'`);
+  process.exit(1);
+}
 
 const filePaths = args.filter((arg) => !arg.startsWith("-"));
 
@@ -25,29 +34,22 @@ for (const filePath of filePaths) {
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
-      let isLastLine;
-      if (i === lines.length - 1) {
-        isLastLine = true;
-      } else {
-        isLastLine = false;
-      }
+      const isLastLine = i === lines.length - 1;
 
       if (isLastLine && line === "") {
         break;
       }
 
-      if (showAllLineNumbers) {
+      const isBlankLine = line.trim() === "";
+      const needsLineNumber =
+        showAllLineNumbers || (showNonBlankNumbers && !isBlankLine);
+
+      if (needsLineNumber) {
         const paddedNumber = String(lineNumber).padStart(6, " ");
         process.stdout.write(`${paddedNumber}\t${line}\n`);
         lineNumber++;
-      } else if (showNonBlankNumbers) {
-        if (line.trim() === "") {
-          process.stdout.write("\n");
-        } else {
-          const paddedNumber = String(lineNumber).padStart(6, " ");
-          process.stdout.write(`${paddedNumber}\t${line}\n`);
-          lineNumber++;
-        }
+      } else if (showNonBlankNumbers && isBlankLine) {
+        process.stdout.write("\n");
       }
     }
   }
