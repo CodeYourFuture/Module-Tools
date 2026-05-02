@@ -2,21 +2,21 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 
-@dataclass
-class Person(ABC):
-    first_name: str
-    last_name: str
 
+class HasFullName(ABC):
     @abstractmethod
     def get_full_name(self) -> str: ...
 
 @dataclass
-class Parent(Person):
+class Parent(HasFullName):
+    first_name: str
+    last_name: str
+
     def get_full_name(self) -> str:
         return f"{self.first_name} {self.last_name}"
 
 @dataclass
-class Child(Person):
+class Child(Parent):
     previous_last_names: list[str] = field(default_factory=list)
     
     def change_last_name(self, last_name: str) -> None:
