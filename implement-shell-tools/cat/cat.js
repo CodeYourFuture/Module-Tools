@@ -11,7 +11,6 @@ let content = files.map(f => fs.readFileSync(f, "utf8")).join("");
 
 let lines = content.split("\n");
 
-// remove ONLY final empty line caused by trailing newline
 if (lines[lines.length - 1] === "") {
   lines.pop();
 }
@@ -38,5 +37,4 @@ if (showN) {
   output = lines;
 }
 
-// IMPORTANT: add final newline like real cat
 process.stdout.write(output.join("\n") + "\n");
