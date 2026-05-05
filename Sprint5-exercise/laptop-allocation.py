@@ -27,14 +27,10 @@ class Laptop:
 
 
 def sadness(person: Person, operating_system: OperatingSystem) -> int:
-    sad: int = 100
-    for index, os in enumerate(person.preferred_operating_system):
-        if os == operating_system:
-            sad = index
-            return sad
-
-    return sad
-
+  try:
+        return person.preferred_operating_system.index(operating_system)
+  except ValueError:
+        return 100
 
 def allocate_laptops(
     people: list[Person], laptops: list[Laptop]
