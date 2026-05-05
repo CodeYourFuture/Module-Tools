@@ -1,9 +1,7 @@
 from enum import Enum
-from typing import List, Dict
+from typing import  Dict
 from dataclasses import dataclass
-
-from itertools import permutations
-
+from scipy.optimize import linear_sum_assignment
 
 
 class OperatingSystem(Enum):
@@ -12,11 +10,11 @@ class OperatingSystem(Enum):
     ARCH = "arch linux"
 
 
-@dataclass
+@dataclass (frozen=True)
 class Person:
     name: str
     age: int
-    preferred_operating_system: List[OperatingSystem]
+    preferred_operating_system: tuple[OperatingSystem,...]
 
 
 @dataclass(frozen=True)
@@ -39,56 +37,48 @@ def sadness(person: Person, operating_system: OperatingSystem) -> int:
 
 
 def allocate_laptops(
-    people: List[Person], laptops: List[Laptop]
+    people: list[Person], laptops: list[Laptop]
 ) -> Dict[Person, Laptop]:
     how_many_people = len(people)
     how_many_laptops = len(laptops)
     if how_many_laptops < how_many_people:
         raise ValueError("Not enough laptops for all people")
-    matrix = [[0 for i in range(how_many_laptops)] for _ in range(how_many_people)]
+    sadness_matrix = [[0 for i in range(how_many_laptops)] for _ in range(how_many_people)]
+  
     for i, person in enumerate(people):
         for j, laptop in enumerate(laptops):
-            matrix[i][j] = sadness(person, laptop.operating_system)
+            sadness_matrix[i][j] = sadness(person, laptop.operating_system)
+    # print(sadness_matrix);
+    row_indexes, column_indexes = linear_sum_assignment(sadness_matrix)
+    result = {}
 
-    best_perm = None
-    min_sadness = 100000000000
-    for perm in permutations(range(how_many_laptops)):
+    for row, column in zip(row_indexes, column_indexes):
+        person = people[row]
+        laptop = laptops[column]
+        result[person] = laptop
 
-        total = 0
-        for i in range(how_many_people):
-
-            total += matrix[i][perm[i]]
-
-        if total < min_sadness:
-            min_sadness = total
-            best_perm = perm
-    results = {}
-    for index, person in enumerate(people):
-        results[person.name] = laptops[best_perm[index]]
-
-    return results
-
+    return result
 
 def main() -> None:
     people = [
         Person(
             name="Imran",
             age=22,
-            preferred_operating_system=[
+            preferred_operating_system=(
                 OperatingSystem.UBUNTU,
                 OperatingSystem.ARCH,
                 OperatingSystem.MACOS,
-            ],
+            ),
         ),
         Person(
             name="Eliza",
             age=34,
-            preferred_operating_system=[OperatingSystem.UBUNTU, OperatingSystem.ARCH],
+            preferred_operating_system=(OperatingSystem.UBUNTU,),
         ),
         Person(
             name="Ahmad",
             age=34,
-            preferred_operating_system=[OperatingSystem.MACOS],
+            preferred_operating_system=(OperatingSystem.UBUNTU, OperatingSystem.MACOS,),
         ),
     ]
     laptops = [
@@ -97,11 +87,11 @@ def main() -> None:
             manufacturer="Dell",
             model="XPS",
             screen_size_in_inches=13,
-            operating_system=OperatingSystem.MACOS,
+            operating_system=OperatingSystem.ARCH
         ),
         Laptop(
             id=2,
-            manufacturer="Dell",
+            manufacturer="HM",
             model="XPS",
             screen_size_in_inches=15,
             operating_system=OperatingSystem.MACOS,
