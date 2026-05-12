@@ -172,7 +172,7 @@ elif [[ "$1" == "implement-cowsay" ]]; then
       fi
 
       if [[ "${all_ok}" == "true" && -v GITHUB_OUTPUT ]]; then
-        echo "completed=y" >> "$GITHUB_OUTPUT"
+        echo "complete=y" >> "$GITHUB_OUTPUT"
       fi
     fi
   fi
