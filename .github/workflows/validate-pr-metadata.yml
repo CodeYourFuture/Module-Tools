@@ -48,15 +48,20 @@ jobs:
         if: contains(steps.changed-files.outputs.modified_files, 'number-systems/')
         run: ./test-sdc.sh number-systems
         shell: bash
+      - name: test implement-cowsay
+        id: test-implement-cowsay
+        if: contains(steps.changed-files.outputs.modified_files, 'implement-cowsay/')
+        run: ./test-sdc.sh implement-cowsay
+        shell: bash
       - name: make output comment
-        if: steps.test-individual-shell-tools.outputs.attempted == 'y' || steps.test-jq.outputs.attempted == 'y' || steps.test-shell-pipelines.outputs.attempted == 'y' || steps.test-number-systems.outputs.attempted == 'y'
+        if: steps.test-individual-shell-tools.outputs.attempted == 'y' || steps.test-jq.outputs.attempted == 'y' || steps.test-shell-pipelines.outputs.attempted == 'y' || steps.test-number-systems.outputs.attempted == 'y' || steps.test-implement-cowsay.outputs.attempted == 'y'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.pull_request.html_url }}
         run: |
           gh pr comment $ISSUE_URL --body-file testoutput.txt
       - name: add appropriate labels
-        if: steps.test-individual-shell-tools.outputs.complete == 'y' || steps.test-jq.outputs.complete == 'y' || steps.test-shell-pipelines.outputs.complete == 'y'
+        if: steps.test-individual-shell-tools.outputs.complete == 'y' || steps.test-jq.outputs.complete == 'y' || steps.test-shell-pipelines.outputs.complete == 'y' || steps.test-implement-cowsay.outputs.complete == 'y'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.pull_request.html_url }}
@@ -64,6 +69,6 @@ jobs:
           gh pr edit $ISSUE_URL --add-label "Complete"
           gh pr edit $ISSUE_URL --remove-label "Needs Review"
       - name: fail if not complete
-        if: (steps.test-individual-shell-tools.outputs.attempted == 'y' || steps.test-jq.outputs.attempted == 'y' || steps.test-shell-pipelines.outputs.attempted == 'y') && !(steps.test-individual-shell-tools.outputs.complete == 'y' || steps.test-jq.outputs.complete == 'y' || steps.test-shell-pipelines.outputs.complete == 'y')
+        if: (steps.test-individual-shell-tools.outputs.attempted == 'y' || steps.test-jq.outputs.attempted == 'y' || steps.test-shell-pipelines.outputs.attempted == 'y' || steps.test-implement-cowsay.outputs.attempted == 'y') && !(steps.test-individual-shell-tools.outputs.complete == 'y' || steps.test-jq.outputs.complete == 'y' || steps.test-shell-pipelines.outputs.complete == 'y' || steps.test-implement-cowsay.outputs.complete == 'y')
         run: |
           exit -1

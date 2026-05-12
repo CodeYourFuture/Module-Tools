@@ -127,6 +127,41 @@ elif [[ "$1" == "number-systems" ]]; then
 	fi
 	echo "Please let a volunteer check the answers for part 2." >> testoutput.txt
 	cat testoutput.txt
+elif [[ "$1" == "implement-cowsay" ]]; then
+  if [ -v GITHUB_OUTPUT ]; then
+    echo "attempted=y" >> "$GITHUB_OUTPUT"
+  fi
+  if [[ -e .cowsay-venv ]]; then
+    echo ".cowsay-venv already exists - couldn't test cowsay" >> testoutput.txt
+  else
+    if [ ! -e implement-cowsay/requirements.txt ]; then
+      echo "Expected implement-cowsay/requirements.txt to exist but it didn't" >> testoutput.txt
+    else
+      python3 -m venv .cowsay-venv
+      . .cowsay-venv/bin/activate
+      pip3 install -r implement-cowsay/requirements.txt
+
+      all_ok=true
+
+      python3 implement-cowsay/cow.py Grass, delicious > test.tmp
+      cmp test.tmp expect/implement-cowsay/cow-grass.txt
+      if [ $? -ne 0 ]; then
+        echo "Unexpected cowsay output for Grass, delicious" >> testoutput.txt
+        all_ok=false
+      fi
+
+      python3 implement-cowsay/cow.py --animal turtle "Fish are cool!" > test.tmp
+      cmp test.tmp expect/implement-cowsay/turtle-fish.txt
+      if [ $? -ne 0 ]; then
+        echo "Unexpected cowsay output for Fish are cool!" >> testoutput.txt
+        all_ok=false
+      fi
+
+      if [[ "${all_ok}" == "true" && -v GITHUB_OUTPUT ]]; then
+        echo "completed=y" >> "$GITHUB_OUTPUT"
+      fi
+    fi
+  fi
 else
 	echo "Please run this with a valid test directory name as argument"
 fi
