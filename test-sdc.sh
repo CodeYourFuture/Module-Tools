@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # This test file will be automatically run when you submit a pull request
 # You should not modify this file
 # You can run this file using ./test-sdc.sh task-directory-name to check your output
@@ -18,7 +20,7 @@ if [[ "$1" == "individual-shell-tools" ]]; then
 		for exercise in *.sh; do
 			total=$(($total+1))
 			./$exercise > ../../test.tmp
-			cmp ../../test.tmp ../../expect/individual-shell-tools/$directory$exercise --quiet
+			cmp ../../test.tmp ../../expect/individual-shell-tools/$directory$exercise
 			if [ $? -eq 0 ]; then
 				pass=$(($pass+1))
 			else
@@ -54,7 +56,7 @@ elif [[ "$1" == "shell-pipelines" ]]; then
 		for exercise in *.sh; do
 			total=$(($total+1))
 			./$exercise > ../../test.tmp
-			cmp ../../test.tmp ../../expect/shell-pipelines/$directory$exercise --quiet
+			cmp ../../test.tmp ../../expect/shell-pipelines/$directory$exercise
 			if [ $? -eq 0 ]; then
 				pass=$(($pass+1))
 			else
@@ -83,7 +85,7 @@ elif [[ "$1" == "jq" ]]; then
 	for exercise in *.sh; do
 		total=$(($total+1))
 		./$exercise > ../test.tmp
-		cmp ../test.tmp ../expect/jq/$exercise --quiet
+		cmp ../test.tmp ../expect/jq/$exercise
 		if [ $? -eq 0 ]; then
 			pass=$(($pass+1))
 		else
