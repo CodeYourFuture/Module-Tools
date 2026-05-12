@@ -157,6 +157,18 @@ elif [[ "$1" == "implement-cowsay" ]]; then
         all_ok=false
       fi
 
+      python3 implement-cowsay/cow.py --help | grep dragon
+      if [ $? -ne 0 ]; then
+        echo "Expected python3 cow.py --help to include dragon as it's one of the animal options" >> testoutput.txt
+        all_ok=false
+      fi
+
+      grep dragon implement-cowsay/cow.py > /dev/null
+      if [ $? -eq 0 ]; then
+        echo "Didn't expect cow.py to include the word dragon - you should pull in the animal options from the library not write them yourself" >> testoutput.txt
+        all_ok=false
+      fi
+
       if [[ "${all_ok}" == "true" && -v GITHUB_OUTPUT ]]; then
         echo "completed=y" >> "$GITHUB_OUTPUT"
       fi
