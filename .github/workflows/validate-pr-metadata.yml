@@ -50,7 +50,7 @@ jobs:
         shell: bash
       - name: test implement-cowsay
         id: test-implement-cowsay
-        if: contains(steps.changed-files.outputs.modified_files, 'implement-cowsay/')
+        if: contains(steps.changed-files.outputs.all_modified_files, 'implement-cowsay/')
         run: ./test-sdc.sh implement-cowsay
         shell: bash
       - name: make output comment
