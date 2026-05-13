@@ -13,10 +13,12 @@ from enum import Enum
 from typing import List
 import sys
 
+
 class OperatingSystem(Enum):
     MACOS = "macOS"
     ARCH = "Arch Linux"
     UBUNTU = "Ubuntu"
+
 
 @dataclass(frozen=True)
 class Laptop:
@@ -26,40 +28,89 @@ class Laptop:
     screen_size_in_inches: float
     operating_system: OperatingSystem
 
+
 laptops: List[Laptop] = [
-    Laptop(id=1, manufacturer="Dell", model="XPS", screen_size_in_inches=13, operating_system=OperatingSystem.ARCH),
-    Laptop(id=2, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.UBUNTU),
-    Laptop(id=3, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.UBUNTU),
-    Laptop(id=4, manufacturer="Apple", model="macBook", screen_size_in_inches=13, operating_system=OperatingSystem.MACOS),
+    Laptop(
+        id=1,
+        manufacturer="Dell",
+        model="XPS",
+        screen_size_in_inches=13,
+        operating_system=OperatingSystem.ARCH,
+    ),
+    Laptop(
+        id=2,
+        manufacturer="Dell",
+        model="XPS",
+        screen_size_in_inches=15,
+        operating_system=OperatingSystem.UBUNTU,
+    ),
+    Laptop(
+        id=3,
+        manufacturer="Dell",
+        model="XPS",
+        screen_size_in_inches=15,
+        operating_system=OperatingSystem.UBUNTU,
+    ),
+    Laptop(
+        id=4,
+        manufacturer="Apple",
+        model="macBook",
+        screen_size_in_inches=13,
+        operating_system=OperatingSystem.MACOS,
+    ),
 ]
+
 
 def convert_os(user_input: str) -> OperatingSystem:
     for os_value in OperatingSystem:
         if user_input.lower() == os_value.value.lower():
             return os_value
-        print(f"Error: '{user_input}' is not a valid operating system.", file=sys.stderr)
-        sys.exit(1)
+
+    print(f"Error: '{user_input}' is not a valid operating system.", file=sys.stderr)
+    print("Please enter one of the following: macOS, Arch Linux, Ubuntu.")
+    sys.exit(1)
+
 
 # Get user input
 name = input("Enter your name: ").strip()
-age_input = input("Enter your age: ").strip()
-if not age_input.isdigit():
-    print(f"Error: '{age_input}' age must be a number.", file=sys.stderr)
-    sys.exit(1)
-age = int(age_input)
 
-os_input = input("Enter your preferred operating system (macOS, Arch Linux, Ubuntu): ").strip()
+while True:
+    age_input = input("Enter your age: ").strip()
+
+    try:
+        age = int(age_input)
+        if age < 0:
+            print("Age cannot be negative. Please enter a valid age.", file=sys.stderr)
+            continue
+        break
+    except ValueError:
+        print(
+            f"Error: '{age_input}' is not a valid number. Please enter a valid number.",
+            file=sys.stderr,
+        )
+
+print("Your age is:", age)
+
+os_input = input(
+    "Enter your preferred operating system (macOS, Arch Linux, Ubuntu): "
+).strip()
 preferred_os = convert_os(os_input)
 
 # Count laptops with the preferred operating system
-matching_laptops = [laptop for laptop in laptops if laptop.operating_system == preferred_os]
-print(f"\nHi {name}, there are {len(matching_laptops)} laptops available with {preferred_os.value}.")
+matching_laptops = [
+    laptop for laptop in laptops if laptop.operating_system == preferred_os
+]
+print(
+    f"\nHi {name}, there are {len(matching_laptops)} laptops available with {preferred_os.value}."
+)
 
 # Check if there are better laptops with a different operating system
-counts ={os: 0 for os in OperatingSystem}
+counts = {os: 0 for os in OperatingSystem}
 for laptop in laptops:
     counts[laptop.operating_system] += 1
 
 best_os = max(counts, key=counts.get)
 if best_os != preferred_os:
-    print(f"if you’re willing to accept {best_os.value} you’re more likely to get a laptop, as there are {counts[best_os]} available.")
+    print(
+        f"if you’re willing to accept {best_os.value} you’re more likely to get a laptop, as there are {counts[best_os]} available."
+    )
