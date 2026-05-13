@@ -5,7 +5,7 @@
 # You can run this file using ./test-sdc.sh task-directory-name to check your output
 
 echo "<!--CYFTT tag: sdc-test-results-->" > testoutput.txt
-echo "Results of test" >> testoutput.txt
+echo "Results of test:" >> testoutput.txt
 
 if [[ "$1" == "individual-shell-tools" ]]; then
 	cd individual-shell-tools
@@ -148,14 +148,14 @@ elif [[ "$1" == "implement-cowsay" ]]; then
       python3 implement-cowsay/cow.py Grass, delicious > test.tmp
       cmp test.tmp expect/implement-cowsay/cow-grass.txt
       if [ $? -ne 0 ]; then
-        echo "Unexpected cowsay output for Grass, delicious" >> testoutput.txt
+        echo "Unexpected cowsay output for 'Grass, delicious'." >> testoutput.txt
         all_ok=false
       fi
 
       python3 implement-cowsay/cow.py --animal turtle "Fish are cool!" > test.tmp
       cmp test.tmp expect/implement-cowsay/turtle-fish.txt
       if [ $? -ne 0 ]; then
-        echo "Unexpected cowsay output for Fish are cool!" >> testoutput.txt
+        echo "Unexpected cowsay output for --animal turtle Fish are cool!" >> testoutput.txt
         all_ok=false
       fi
 
@@ -172,7 +172,8 @@ elif [[ "$1" == "implement-cowsay" ]]; then
       fi
 
       if [[ "${all_ok}" == "true" && -v GITHUB_OUTPUT ]]; then
-        echo "completed=y" >> "$GITHUB_OUTPUT"
+        echo "complete=y" >> "$GITHUB_OUTPUT"
+        echo "Your implementation passed all checks." >> testoutput.txt
       fi
     fi
   fi

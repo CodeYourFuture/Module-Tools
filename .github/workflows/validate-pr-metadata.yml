@@ -50,7 +50,7 @@ jobs:
         shell: bash
       - name: test implement-cowsay
         id: test-implement-cowsay
-        if: contains(steps.changed-files.outputs.modified_files, 'implement-cowsay/')
+        if: contains(steps.changed-files.outputs.all_modified_files, 'implement-cowsay/')
         run: ./test-sdc.sh implement-cowsay
         shell: bash
       - name: make output comment
@@ -59,6 +59,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.pull_request.html_url }}
         run: |
+          gh release -R CodeYourFuture/trainee-tracker view --json assets -q ".assets[] | select(.name | startswith(\"pr-metadata-validator-musl-\")).url" | xargs curl --fail -L -o /tmp/pr-metadata-validator && chmod 0755 /tmp/pr-metadata-validator
+          /tmp/pr-metadata-validator --only-close-existing-comments-with-tag="sdc-test-results" "${ISSUE_URL}"
           gh pr comment $ISSUE_URL --body-file testoutput.txt
       - name: add appropriate labels
         if: steps.test-individual-shell-tools.outputs.complete == 'y' || steps.test-jq.outputs.complete == 'y' || steps.test-shell-pipelines.outputs.complete == 'y' || steps.test-implement-cowsay.outputs.complete == 'y'
