@@ -1,3 +1,12 @@
+"""Examples of classes and methods.
+
+A function is a reusable block of code that is defined on its own.
+A method is a function that belongs to a class and is called on an object.
+
+In this file, `Person.is_adult()` is a method because it belongs to the
+`Person` class, while `date.today()` is a method on the `date` class.
+"""
+
 from datetime import date
 
 
