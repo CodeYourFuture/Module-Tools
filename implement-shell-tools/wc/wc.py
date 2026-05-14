@@ -21,8 +21,8 @@ def print_formatted_report(stats, active_flags):
     output_parts = []
 
     for flag in active_flags:
-        # Standard wc uses a width of 8 for numbers
-        output_parts.append(str(stats[flag]).rjust(8))
+        # Standard wc uses a width of 4 for numbers
+        output_parts.append(str(stats[flag]).rjust(4))
 
     # Join the numbers and add the display name at the end
     result = "".join(output_parts)
