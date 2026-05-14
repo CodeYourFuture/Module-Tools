@@ -1,12 +1,10 @@
 import argparse
 import sys
-import os
-
 
 def calculate_stats(content, display_name, original_bytes=None):
     lines = content.count("\n")
     words = len(content.split())
-    # If we have the raw bytes, use that length. Otherwise, encode to get byte length.
+    # Use raw bytes if provided, otherwise encode
     byte_count = (
         original_bytes if original_bytes is not None else len(content.encode("utf-8"))
     )
@@ -19,51 +17,45 @@ def calculate_stats(content, display_name, original_bytes=None):
     }
 
 
-def print_formatted_report(stats, args, should_show_all_stats):
-    output_columns = []
+def print_formatted_report(stats, active_flags):
+    output_parts = []
 
-    def format_col(count):
-        return str(count).rjust(4)
+    for flag in active_flags:
+        # Standard wc uses a width of 8 for numbers
+        output_parts.append(str(stats[flag]).rjust(8))
 
-    if should_show_all_stats:
-        output_columns.append(format_col(stats["lineCount"]))
-        output_columns.append(format_col(stats["wordCount"]))
-        output_columns.append(format_col(stats["byteCount"]))
-    else:
-        if args.lines:
-            output_columns.append(format_col(stats["lineCount"]))
-        if args.words:
-            output_columns.append(format_col(stats["wordCount"]))
-        if args.bytes:
-            output_columns.append(format_col(stats["byteCount"]))
-
-    # Use a single space between the numbers and the name
-    print(f"{''.join(output_columns)} {stats['displayName']}")
+    # Join the numbers and add the display name at the end
+    result = "".join(output_parts)
+    print(f"{result} {stats['displayName']}")
 
 
 def main():
     parser = argparse.ArgumentParser(description="A simple Python implementation of wc")
     parser.add_argument("files", nargs="*", help="Files to process")
-    parser.add_argument(
-        "-l", "--lines", action="store_true", help="print the newline counts"
-    )
-    parser.add_argument(
-        "-w", "--words", action="store_true", help="print the word counts"
-    )
-    parser.add_argument(
-        "-c", "--bytes", action="store_true", help="print the byte counts"
-    )
+    parser.add_argument("-l", "--lines", action="store_true", help="print the newline counts")
+    parser.add_argument("-w", "--words", action="store_true", help="print the word counts")
+    parser.add_argument("-c", "--bytes", action="store_true", help="print the byte counts")
 
     args = parser.parse_args()
-    should_show_all_stats = not (args.lines or args.words or args.bytes)
+
+    # RESOLVE FLAGS HERE: Create a simple list of keys to display
+    active_flags = []
+    if args.lines: active_flags.append("lineCount")
+    if args.words: active_flags.append("wordCount")
+    if args.bytes: active_flags.append("byteCount")
+
+    # Default behavior: show all if no flags are provided
+    if not active_flags:
+        active_flags = ["lineCount", "wordCount", "byteCount"]
+
     all_file_stats = []
     exit_code = 0
 
-    # NEW: Handle Standard Input if no files are provided
+    # Handle Standard Input
     if not args.files:
         stdin_content = sys.stdin.read()
         stats = calculate_stats(stdin_content, "")
-        print_formatted_report(stats, args, should_show_all_stats)
+        print_formatted_report(stats, active_flags)
         return
 
     # Process files
@@ -75,7 +67,7 @@ def main():
                 stats = calculate_stats(content, file_path, len(raw_bytes))
 
             all_file_stats.append(stats)
-            print_formatted_report(stats, args, should_show_all_stats)
+            print_formatted_report(stats, active_flags)
         except Exception:
             print(f"wc: {file_path}: No such file or directory", file=sys.stderr)
             exit_code = 1
@@ -88,11 +80,10 @@ def main():
             "byteCount": sum(s["byteCount"] for s in all_file_stats),
             "displayName": "total",
         }
-        print_formatted_report(grand_totals, args, should_show_all_stats)
+        print_formatted_report(grand_totals, active_flags)
 
     if exit_code != 0:
         sys.exit(exit_code)
-
 
 if __name__ == "__main__":
     main()
