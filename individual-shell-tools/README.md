@@ -16,7 +16,6 @@ You should write all of your scripts assuming they're running inside the directo
 Some folders contain a README.md explaining more information, others do not.
 
 We recommend approaching the tools in this order:
-
 1. `ls`
 2. `cat`
 3. `wc`
