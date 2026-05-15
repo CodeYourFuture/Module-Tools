@@ -1,60 +1,52 @@
 #!/usr/bin/env python3
 import sys
-import os
+import argparse
 
-global_line_counter = 1
 
-def print_file(file_path, options):
-    global global_line_counter
+def print_file(file_path, options, counter):
     try:
         with open(file_path, "r", encoding="utf-8") as f:
-            content = f.read()
+            for line in f:
+                stripped = line.rstrip("\n")
 
-        lines = content.split("\n")
-        if lines and lines[-1] == "":
-            lines.pop()
+                should_number = options.number_mode == "all" or (
+                    options.number_mode == "non-empty" and stripped != ""
+                )
 
-        for line in lines:
-            prefix = ""
+                if should_number:
+                    print(f"{counter}\t{stripped}")
+                    counter += 1
+                else:
+                    print(stripped)
 
-            should_number = (
-                options["number_mode"] == "all" or
-                (options["number_mode"] == "non-empty" and line.strip() != "")
-            )
+    except FileNotFoundError:
+        print(f"cat: {file_path}: No such file or directory", file=sys.stderr)
 
-            if should_number:
-                prefix = f"{global_line_counter:6}\t"
-                global_line_counter += 1
-
-            sys.stdout.write(prefix + line + "\n")
-
-    except Exception as e:
-        print(f"cat: {file_path}: {e}", file=sys.stderr)
-        sys.exit(1)
+    return counter
 
 
 def main():
-    global global_line_counter
-    args = sys.argv[1:]
+    parser = argparse.ArgumentParser(description="Concatenate files and print output")
+    parser.add_argument("-n", "--number", action="store_true", help="number all lines")
 
-    options = {"number_mode": "off"}
-    files = []
+    parser.add_argument(
+        "-b", "--number-nonblank", action="store_true", help="number non-empty lines"
+    )
 
-    for arg in args:
-        if arg == "-n":
-            options["number_mode"] = "all"
-        elif arg == "-b":
-            options["number_mode"] = "non-empty"
-        else:
-            files.append(arg)
+    parser.add_argument("files", nargs="+", help="files to read")
 
-    if not files:
-        print("cat: missing file operand", file=sys.stderr)
-        sys.exit(1)
+    args = parser.parse_args()
 
-    for file_path in files:
-        global_line_counter = 1
-        print_file(file_path, options)
+    if args.number_nonblank:
+        args.number_mode = "non-empty"
+    elif args.number:
+        args.number_mode = "all"
+    else:
+        args.number_mode = "none"
+
+    counter = 1
+    for file in args.files:
+        counter = print_file(file, args, counter)
 
 
 if __name__ == "__main__":
