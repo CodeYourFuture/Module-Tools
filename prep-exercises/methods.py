@@ -2,6 +2,10 @@ import datetime as dt # we import the datetime module
 
 # this is similar to new Date() object in js, but only getting the date not hours etc.
 
+      # The core method advantages over free functions:
+# 1. Methods belong to a class, preventing naming conflicts with other parts of our program.
+# 2. Method syntax like car.drive() reads naturally like a noun performing an action, making code easier to follow
+# 3. Different classes can use the exact same method name to perform distinct, specialized actions.
 class Person:
     def __init__(self, name: str, preferred_os: str, dob: dt.date):
         self.name = name
