@@ -1,3 +1,4 @@
+import sys
 from dataclasses import dataclass
 from enum import Enum
 from typing import List
@@ -44,8 +45,8 @@ def create_person_from_input(laptops: List[Laptop]) -> None:
     try:
         preferred_os = OperatingSystem[os_choice]
     except KeyError:
-        print("Invalid operating system choice!")
-        return
+        print("Invalid operating system choice!", file=sys.stderr)
+        sys.exit(1)
     
     person = Person(name=name, age=age, preferred_operating_system=preferred_os)
     possible_laptops = find_possible_laptops(laptops, person)
