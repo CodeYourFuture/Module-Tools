@@ -3,17 +3,19 @@ import { promises as fs } from "node:fs";
 
 const args = process.argv.slice(2);
 
-let showNumbers = false;
+let option = "none";
 const paths = [];
+
 
 for (const arg of args) {
   if (arg === "-n") {
-    showNumbers = true;
+    option = "n";
+  } else if (arg === "-b") {
+    option = "b";
   } else {
     paths.push(arg);
   }
 }
-
 
 if (paths.length === 0) {
   console.error("Expected at least one file path.");
@@ -25,15 +27,28 @@ for (const path of paths) {
 
   const lines = content.split("\n");
 
-  if (showNumbers) {
-    let i = 1;
+  let lineNumber = 1;
 
-    for (const line of lines) {
-      console.log(`${i} ${line}`);
-      i++;
+  for (const line of lines) {
+
+    if (option === "n") {
+      console.log(`${lineNumber} ${line}`);
+      lineNumber++;
     }
 
-  } else {
-    console.log(content);
+    else if (option === "b") {
+
+      if (line !== "") {
+        console.log(`${lineNumber} ${line}`);
+        lineNumber++;
+      } else {
+        console.log("");
+      }
+
+    }
+
+    else {
+      console.log(line);
+    }
   }
 }
