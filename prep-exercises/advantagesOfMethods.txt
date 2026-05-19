@@ -1,0 +1,5 @@
+Methods make the code more organised because everything stays inside the class.
+It also looks cleaner and easier to read.
+imran.is_adult() looks better than is_adult(imran)
+Its easier to edit later because you only change the code in one place.
+Methods also make more sense because the function belongs to the object itself.
