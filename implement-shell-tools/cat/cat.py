@@ -2,13 +2,15 @@ import sys
 
 args = sys.argv[1:]
 
-show_numbers = False
+option = "none"
 paths = []
 
-# separate flags and paths
+# parse args
 for arg in args:
     if arg == "-n":
-        show_numbers = True
+        option = "n"
+    elif arg == "-b":
+        option = "b"
     else:
         paths.append(arg)
 
@@ -16,10 +18,22 @@ for path in paths:
     with open(path, "r") as file:
         lines = file.readlines()
 
-        if show_numbers:
-            i = 1
-            for line in lines:
-                print(f"{i} {line.rstrip()}")
-                i += 1
-        else:
-            print("".join(lines))
+        line_number = 1
+
+        for line in lines:
+
+            line = line.rstrip("\n")
+
+            if option == "n":
+                print(f"{line_number} {line}")
+                line_number += 1
+
+            elif option == "b":
+                if line != "":
+                    print(f"{line_number} {line}")
+                    line_number += 1
+                else:
+                    print("")
+
+            else:
+                print(line)
