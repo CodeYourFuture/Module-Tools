@@ -3,14 +3,22 @@ import os
 
 args = sys.argv[1:]
 
-# default folder = current folder
+show_all = False
 path = "."
 
-# if user gives a folder
-if len(args) > 1:
-    path = args[1]
+for arg in args:
+
+    if arg == "-a":
+        show_all = True
+
+    elif arg != "-1":
+        path = arg
 
 files = os.listdir(path)
 
 for file in files:
+
+    if not show_all and file.startswith("."):
+        continue
+
     print(file)
