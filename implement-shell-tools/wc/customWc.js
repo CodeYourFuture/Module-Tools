@@ -41,32 +41,37 @@ for (let path of pathArray) {
   let numberOfWords = 0;
   let numberOfCharacters = 0;
 
-  const file = await fs.readFile(path, "utf-8");
-  numberOfLines = file.split("\n").length - 1;
-  const words = file.match(/\S+/g);
-  numberOfWords = words ? words.length : 0;
-  numberOfCharacters = file.length;
+  try {
+    const file = await fs.readFile(path, "utf-8");
+    numberOfLines = file.split("\n").length - 1;
+    const words = file.match(/\S+/g);
+    numberOfWords = words ? words.length : 0;
+    numberOfCharacters = file.length;
 
-  const rowNumbers = [];
+    const rowNumbers = [];
 
-  if (options.lines) rowNumbers.push(numberOfLines);
-  if (options.words) rowNumbers.push(numberOfWords);
-  if (options.characters) rowNumbers.push(numberOfCharacters);
+    if (options.lines) rowNumbers.push(numberOfLines);
+    if (options.words) rowNumbers.push(numberOfWords);
+    if (options.characters) rowNumbers.push(numberOfCharacters);
 
-  if (rowNumbers.length === 0) {
-    console.log(
-      `${padStartNumbers(numberOfLines, numberOfWords, numberOfCharacters)} ${path}`,
-    );
-  } else {
-    if (pathArray.length === 1 && rowNumbers.length === 1) {
-      console.log(`${rowNumbers[0]} ${path}`);
+    if (rowNumbers.length === 0) {
+      console.log(
+        `${padStartNumbers(numberOfLines, numberOfWords, numberOfCharacters)} ${path}`,
+      );
     } else {
-      console.log(`${padStartNumbers(...rowNumbers)} ${path}`);
+      if (pathArray.length === 1 && rowNumbers.length === 1) {
+        console.log(`${rowNumbers[0]} ${path}`);
+      } else {
+        console.log(`${padStartNumbers(...rowNumbers)} ${path}`);
+      }
     }
+    totalOfLines += numberOfLines;
+    totalOfWords += numberOfWords;
+    totalOfCharacters += numberOfCharacters;
+  } catch (error) {
+    console.error(error.message);
+    process.exitCode = 1;
   }
-  totalOfLines += numberOfLines;
-  totalOfWords += numberOfWords;
-  totalOfCharacters += numberOfCharacters;
 }
 
 if (pathArray.length > 1) {
