@@ -22,10 +22,10 @@ const pathArray = argumentArray;
 const options = program.opts();
 
 function padStartNumbers(...args) {
-  const space = [3, 4, 4];
+  const space = 8;
   const numberStringArray = [];
   for (let index = 0; index < args.length; index++) {
-    numberStringArray.push(String(args[index]).padStart(space[index], " "));
+    numberStringArray.push(String(args[index]).padStart(space, " "));
   }
   return numberStringArray.join("");
 }
