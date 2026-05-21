@@ -19,7 +19,7 @@ async function formatFileName(base, fileName) {
   try {
     const fullPath = `${base.endsWith("/") ? base : base + "/"}${fileName}`;
     const stats = await fs.stat(fullPath);
-    if (stats.isDirectory()) {
+    if (stats.isDirectory() && process.stdout.isTTY) {
       return `\x1b[1;34m${fileName}\x1b[0m`;
     }
     return fileName;
@@ -64,7 +64,7 @@ try {
   if (stats && stats.isFile()) {
     console.log(path);
   } else {
-    console.log(
+    console.error(
       `Can't access to this path: ${path} - No such file or directory`,
     );
     process.exit(1);
