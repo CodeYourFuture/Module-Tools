@@ -29,23 +29,28 @@ const pathsArray = argumentArray;
 let count = 1;
 
 for (let path of pathsArray) {
-  const context = await fs.readFile(path, "utf-8");
-  const lines = context.trimEnd().split("\n");
-  if (options.nonBlank) {
-    lines.forEach((line) => {
-      if (line.length != 0) {
+  try {
+    const context = await fs.readFile(path, "utf-8");
+    const lines = context.trimEnd().split("\n");
+    if (options.nonBlank) {
+      lines.forEach((line) => {
+        if (line.trim().length != 0) {
+          console.log(`     ${count}  ${line}`);
+          count++;
+        } else {
+          console.log(line);
+        }
+      });
+    } else if (options.line) {
+      lines.forEach((line) => {
         console.log(`     ${count}  ${line}`);
         count++;
-      } else {
-        console.log(line);
-      }
-    });
-  } else if (options.line) {
-    lines.forEach((line) => {
-      console.log(`     ${count}  ${line}`);
-      count++;
-    });
-  } else {
-    console.log(context.trimEnd());
+      });
+    } else {
+      console.log(context.trimEnd());
+    }
+  } catch (error) {
+    console.error(error.message);
+    process.exitCode = 1;
   }
 }
