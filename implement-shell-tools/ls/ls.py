@@ -1,14 +1,24 @@
 import os
 import sys
+import argparse
 
-# assign flags
-show_all = "-a" in sys.argv
-one_column = "-1" in sys.argv
+# 1. Set up argparse to handle the ls flags
+parser = argparse.ArgumentParser(description="A simple Python implementation of the ls command.")
 
-# Argument Filtering 
-args = [arg for arg in sys.argv[1:] if not arg.startswith("-")]
-# if no path given we use the current path
-path = args[0] if args else "."
+# Add the -a and -1 flags
+parser.add_argument("-a", action="store_true", help="Do not ignore entries starting with .")
+parser.add_argument("-1", action="store_true",dest="one_column", help="List one file per line")
+
+# Add the path argument (nargs="?" means it's optional, default is current directory ".")
+parser.add_argument("path", nargs="?", default=".", help="Directory path to list")
+
+# Parse the arguments
+args = parser.parse_args()
+
+# 2. rename back  variables
+show_all = args.a
+one_column = args.one_column
+path = args.path
 
 try:
     # Get directory contents
@@ -18,10 +28,10 @@ try:
     if show_all:
         entries.extend([".", ".."])
     
-    # 5. Sort alphabetically, should used in ls.js as well
+    # 5. Sort alphabetically
     entries.sort()
 
-    # Printing Logic
+    # Printing Logic 
     for entry in entries:
         # Skip hidden files unless -a is passed
         if not show_all and entry.startswith("."):

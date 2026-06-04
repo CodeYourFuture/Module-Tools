@@ -1,16 +1,30 @@
 import sys
 import os
+import argparse
 
-# Flag Detection
-show_lines = "-l" in sys.argv
-show_words = "-w" in sys.argv
-show_chars = "-c" in sys.argv
+# 1. Set up argparse to handle the wc flags
+parser = argparse.ArgumentParser(description="A simple Python implementation of the wc command.")
+
+# Add the optional flags (-l, -w, -c)
+parser.add_argument("-l", action="store_true", help="Print the newline counts")
+parser.add_argument("-w", action="store_true", help="Print the word counts")
+parser.add_argument("-c", action="store_true", help="Print the byte counts")
+
+# Add the files argument (nargs="*" means it accepts 0 or more files)
+parser.add_argument("files", nargs="*", help="Files to process")
+
+# Parse the arguments
+args = parser.parse_args()
+
+# 2. Rename back the variables
+show_lines = args.l
+show_words = args.w
+show_chars = args.c
+files = args.files
 
 # If no flags then show all.
 show_all = not (show_lines or show_words or show_chars)
 
-# Filter files excluding flags
-files = [arg for arg in sys.argv[1:] if not arg.startswith("-")]
 
 # Total counters
 total_l, total_w, total_c = 0, 0, 0

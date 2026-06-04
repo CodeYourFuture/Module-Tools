@@ -1,10 +1,23 @@
 import sys
+import argparse
 
-show_all_numbers = "-n" in sys.argv #  this check will return true if found the flag
-show_non_blank_numbers = "-b" in sys.argv #  this check will return true if found the flag
+# 1. Set up argparse to handle flags and files
+parser = argparse.ArgumentParser(description="A simple Python implementation of the cat command.")
 
-# 2. using filter get only the filenames everything except the script name and flags
-files = [arg for arg in sys.argv[1:] if arg not in ["-n", "-b"]]
+# Add the optional flags (-n and -b)
+parser.add_argument("-n", action="store_true", help="Number all output lines")
+parser.add_argument("-b", action="store_true", help="Number nonempty output lines, overrides -n")
+
+# Add the files argument (nargs="*" means it accepts 0 or more files)
+parser.add_argument("files", nargs="*", help="Files to read")
+
+# Parse the arguments
+args = parser.parse_args()
+
+show_all_numbers = args.n
+show_non_blank_numbers = args.b
+files = args.files
+
 
 if not files:
     print("Usage: python3 cat.py [-n] [-b] <filenames>")
@@ -22,7 +35,7 @@ for filename in files:
                         print(f"{line_count:>6}\t{line}", end="")
                         line_count += 1
                     else:
-                       # Standard cat no flags
+                        # Standard cat no flags
                         print(line, end="")
                 
                 # Logic for -n 
