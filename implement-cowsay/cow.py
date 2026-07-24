@@ -5,7 +5,7 @@ import cowsay
 parser = argparse.ArgumentParser(description="Make animals say things")
 
 # Get supported animals from cowsay library
-animals = cowsay.list_cows()
+animals = list(cowsay.char_funcs.keys())
 
 parser.add_argument(
     "message",
