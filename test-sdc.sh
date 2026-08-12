@@ -181,4 +181,4 @@ else
 	echo "Please run this with a valid test directory name as argument"
 fi
 
-echo "If you want to re-run the automated tests after changing some code, remove the 'Needs Review', wait a little, and then re-add the 'Needs Review' label on your PR." >> testoutput.txt
+echo "If you want to re-run the automated tests after changing some code, remove the 'Needs Review' label, wait a little, and then re-add the 'Needs Review' label on your PR." >> testoutput.txt
