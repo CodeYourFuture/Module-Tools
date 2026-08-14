@@ -1,0 +1,17 @@
+Advantages of Using Methods Instead of Free Functions
+# Easier to maintain
+   Methods keep related operations inside the class, making the program more organized and easier to update.
+# Better data protection
+   A method can control how the object's data is changed and prevent invalid changes.
+# Simple to use
+    Methods can be called using dot notation, such as account.deposit(100), which makes the code easy to read.
+# Hides unnecessary details
+    Users only need to know what a method does and how to call it. They don't need to understand all the code inside it.
+# Keeps data and behaviour together
+    A class can contain both the information about an object and the methods that work with that information.
+# Can be reused with different objects
+    Once a method is defined in a class, objects created from that class can use the same method.
+# Allows rules to be enforced
+    Methods can make sure that data is changed in a safe and valid way. For example, a withdraw() method could prevent a bank account from having a negative balance.
+In short: methods are useful because they make code more organized,
+reusable, easier to understand, and safer to manage, especially when working with objects and their data.
