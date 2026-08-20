@@ -9,3 +9,6 @@ set -euo pipefail
 # 1 It looked delicious.
 # 2 I was tempted to take a bite of it.
 # 3 But this seemed like a bad idea...
+
+cd individual-shell-tools/helper-files
+cat -n helper-3.txt
