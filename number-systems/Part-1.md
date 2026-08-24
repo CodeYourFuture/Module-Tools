@@ -43,10 +43,10 @@ Q12: Convert the decimal number 386 to hex.
 Answer: 182
 
 Q13: Convert the hex number 386 to decimal.
-Answer:
+Answer: 902
 
 Q14: Convert the hex number B to decimal.
-Answer: 902
+Answer: 11
 
 Q15: If reading the byte 0x21 as a number, what decimal number would it mean?
 Answer: 33
