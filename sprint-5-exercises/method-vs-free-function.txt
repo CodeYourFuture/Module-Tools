@@ -1,0 +1,13 @@
+Advantages of methods:
+
+They keep related code together. A method belongs to a class, so it keeps the behavior related to that object in one place.
+
+They are easier to understand. When you see person.is_adult(), it is clear that the action is related to a Person.
+
+They can directly access the object's data. A method can use self to access attributes of the object.
+
+They make code more organized. Classes group the data and the operations that work with that data together.
+
+They can make code easier to reuse. Once a class has a method, every instance of that class can use it.
+
+Encapsulation - if we change the implementation of Person (e.g. we start storing a date of birth instead of an age), it’s more obvious what things we need to change.

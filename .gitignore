@@ -1,2 +1,4 @@
 node_modules
 testoutput.txt
+__pycache__/
+.env
