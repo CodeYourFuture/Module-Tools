@@ -1,33 +1,69 @@
 import process from "node:process";
 import { promises as fs } from "node:fs";
+import { program } from "commander";
 
-let filePaths = [];
-let flag = null;
-let numberOfWords;
+program
+  .name("Word Count")
+  .description("my implementation of wc")
+  .argument("<path...>", "The file path to process")
+  .option("-l", "Count for the total number of lines")
+  .option("-c", "Count the total number of bytes")
+  .option("-w", "Count the total number of words");
 
-if (process.argv[2].startsWith("-")) {
-  flag = process.argv[2];
-  filePaths = process.argv.slice(3);
-} else {
-  filePaths = process.argv.slice(2);
-}
+program.parse();
+
+let filePaths = program.args;
+let options = program.opts();
+let noFlags = !options.l && !options.w && !options.c;
+
+let totalLines = 0;
+let totalWords = 0;
+let totalBytes = 0;
+
 for (const filePath of filePaths) {
-  const content = await fs.readFile(filePath, "utf-8");
+  try {
+    const content = await fs.readFile(filePath, "utf-8");
+    const outputs = [];
 
-  if (flag === "-w") {
-    console.log(getWordCount(content));
-  } else if (flag === "-l") {
-    console.log(getLineCount(content));
-  } else if (flag === "-c") {
-    console.log(getByteCount(content), filePaths);
-  } else {
-    console.log(
-      getWordCount(content),
-      getLineCount(content),
-      getByteCount(content),
-      filePaths,
-    );
+    const lines = getLineCount(content);
+    const words = getWordCount(content);
+    const bytes = getByteCount(content);
+
+    totalLines += lines;
+    totalWords += words;
+    totalBytes += bytes;
+
+    if (noFlags || options.l) {
+      outputs.push(lines);
+    }
+    if (noFlags || options.w) {
+      outputs.push(words);
+    }
+    if (noFlags || options.c) {
+      outputs.push(bytes);
+    }
+
+    outputs.push(filePath);
+    console.log(outputs.join("\t"));
+  } catch (err) {
+    console.error(`${err.message}`);
   }
+}
+
+if (filePaths.length > 1) {
+  const totalOutputs = [];
+
+  if (noFlags || options.l) {
+    totalOutputs.push(totalLines);
+  }
+  if (noFlags || options.w) {
+    totalOutputs.push(totalWords);
+  }
+  if (noFlags || options.c) {
+    totalOutputs.push(totalBytes);
+  }
+  totalOutputs.push("total");
+  console.log(totalOutputs.join("\t"));
 }
 
 function getWordCount(text) {
