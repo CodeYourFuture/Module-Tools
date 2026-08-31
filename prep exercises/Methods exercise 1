@@ -1,0 +1,4 @@
+The advantage of a method as a opposed to freestanding function is that it works on the instance of a type.
+The freestanding function knows nothing about the instance of the type because it doesn't belong to a type.
+On an instance, the method can influence the internal states.
+However freestanding function can only work on public APIs whereas instance methods have access to internal APIs.
