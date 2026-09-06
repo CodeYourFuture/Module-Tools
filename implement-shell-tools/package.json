@@ -1,0 +1,18 @@
+{
+  "name": "implement-shell-tools",
+  "version": "1.0.0",
+  "description": "Your task is to re-implement shell tools you have used.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "glob": "^11.0.1"
+  }
+}
