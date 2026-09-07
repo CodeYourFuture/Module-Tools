@@ -14,7 +14,7 @@ def format_pence_as_string(total_pence: int) -> str:
     if total_pence < 100:
         return f"{total_pence}p"
 
-    pounds = int(total_pence / 100)
+    pounds = (total_pence // 100)
     pence = total_pence % 100
 
     return f"£{pounds}.{pence:02d}"

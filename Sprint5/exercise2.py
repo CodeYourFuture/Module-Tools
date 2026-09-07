@@ -7,6 +7,6 @@ print(double(10))
 # Since the function is called double, it should multiply the number by 2.
 
 def double(number):
-return number * 2
+    return number * 2
 
 print(double(10))
