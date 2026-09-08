@@ -1,28 +1,31 @@
 import { readFile } from "node:fs/promises";
 import process from "node:process";
+import { parseArgs } from "node:util";
 
-const argv = process.argv.slice(2);
+const { values, positionals: files } = parseArgs({
+  args: process.argv.slice(2),
+  options: {
+    number: {
+      type: "boolean",
+      short: "n",
+    },
+    numberNonBlank: {
+      type: "boolean",
+      short: "b",
+    },
+  },
+  allowPositionals: true,
+});
 
-let showLineNumbers = false;
-let numberNonBlankLines = false;
-const files = [];
-
-for (const arg of argv) {
-  if (arg === "-n") {
-    showLineNumbers = true;
-  } else if (arg === "-b") {
-    numberNonBlankLines = true;
-  } else {
-    files.push(arg);
-  }
-}
+const showLineNumbers = values.number ?? false;
+const numberNonBlankLines = values.numberNonBlank ?? false;
 
 let lineNumber = 1;
 
 for (const file of files) {
   try {
     const content = await readFile(file, "utf-8");
-
+    
     const lines = content.split("\n");
 
     if (numberNonBlankLines) {
