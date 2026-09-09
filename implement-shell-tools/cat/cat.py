@@ -14,17 +14,20 @@ args = parser.parse_args()
 line_number = 1
 
 for filename in args.files:
-   
-  with open(filename) as file:
-    for line in file:
-      line = line.rstrip("\n")
+  try:
+    with open(filename) as file:
+      for line in file:
+        line = line.rstrip("\n")
 
-      if args.b and line == "":
-        print()
-        continue
+        if args.b and line == "":
+          print()
+          continue
 
-      if args.n or args.b:
-        print(f"{line_number} {line}")
-        line_number += 1
-      else:
-        print(line)
+        if args.n or args.b:
+          print(f"{line_number} {line}")
+          line_number += 1
+        else:
+          print(line)
+
+  except FileNotFoundError:
+    print(f"{filename}: No such file or directory")
