@@ -29,5 +29,8 @@ for path in args.paths:
         print(file, end="  ")
       print()
       
-  else:
+  elif os.path.isfile(path):
     print(path)
+
+  else:
+    print(f"{path}: No such file or directory")
