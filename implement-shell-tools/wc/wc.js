@@ -1,26 +1,61 @@
 import { readFile } from "node:fs/promises";
 import process from "node:process";
+import { parseArgs } from "node:util";
 
-const argvs= process.argv.slice(2);
-let countLines = false;
-let countWords = false;
-let countBytes = false;
+const { values, positionals: files } = parseArgs({
+  args: process.argv.slice(2),
+
+  options: {
+    lines: {
+      type: "boolean",
+      short: "l",
+    },
+
+    words: {
+      type: "boolean",
+      short: "w",
+    },
+
+    bytes: {
+      type: "boolean",
+      short: "c",
+    },
+  },
+
+  allowPositionals: true,
+});
+
+const countLines = values.lines ?? false;
+const countWords = values.words ?? false;
+const countBytes = values.bytes ?? false;
+
+function printCounts(lines, words, bytes, label) {
+  const parts = [];
+
+  if (countLines) {
+    parts.push(lines);
+  }
+
+  if (countWords) {
+    parts.push(words);
+  }
+
+  if (countBytes) {
+    parts.push(bytes);
+  }
+
+  if (!countLines && !countWords && !countBytes) {
+    parts.push(lines, words, bytes);
+  }
+
+  const output = parts.map((value) => String(value).padStart(8)).join("");
+
+  process.stdout.write(`${output} ${label}\n`);
+}
+
 let totalWords = 0;
 let totalLines = 0;
 let totalBytes = 0;
-const files = []
-
-for (const arg of argvs) {
-  if (arg === "-l") {
-    countLines = true;
-  } else if (arg === "-w") {
-    countWords = true;
-  } else if (arg === "-c") {
-    countBytes = true;
-  } else {
-    files.push(arg);
-  }
-}
 
 for (const file of files) {
   try {
@@ -32,47 +67,19 @@ for (const file of files) {
     const words = arrayOfWords.length;
     totalLines += lines;
     totalBytes += bytes;
-    totalWords +=words
-    if (countLines && countWords) {
-      process.stdout.write(`       ${lines}      ${words} ${file}\n`);
+    totalWords += words;
+    printCounts(lines, words, bytes, file);
 
-    } else if (countLines) {
-      process.stdout.write(`       ${lines} ${file}\n`);
-      
-    } else if (countWords){
-      process.stdout.write(`  ${words} ${file}\n`);
-
-    } else if (countBytes) {
-      process.stdout.write(`   ${bytes} ${file}\n`);
-
-    } else {
-      process.stdout.write(`       ${lines}      ${words}      ${bytes} ${file}\n`);
-    }
-      
-  } catch(err) {
+  } catch (err) {
     console.error(err.message);
   }
 }
 
-if (files.length > 1 ) {
-  if (countLines && countWords) {
-    process.stdout.write(`       ${totalLines}      ${totalWords} total\n`);
-
-  } else if (countLines) {
-    process.stdout.write(`       ${totalLines} total\n`);
-    
-  } else if (countWords){
-    process.stdout.write(`  ${totalWords} total\n`);
-
-  } else if (countBytes) {
-    process.stdout.write(`   ${totalBytes} total\n`);
-
-  } else {
-    process.stdout.write(`       ${totalLines}      ${totalWords}      ${totalBytes} total\n`);
-  }
+if (files.length > 1) {
+  printCounts(
+    totalLines,
+    totalWords,
+    totalBytes,
+    "total"
+  );
 }
-
-
-
-
-
