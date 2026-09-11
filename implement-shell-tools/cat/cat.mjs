@@ -1,8 +1,7 @@
 import process from "node:process";
 import { promises as fs } from "node:fs";
-import { Command } from "commander";
+import { program } from "commander";
 
-const program = new Command();
 program
 	.name("cat")
 	.description("Concatenate files and print them to stdout")
