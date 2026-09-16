@@ -1,0 +1,4 @@
+Answer the following question:
+What is the difference between a method and a function?
+Can you give some advantages of methods over functions?
+
