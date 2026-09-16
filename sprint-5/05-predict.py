@@ -16,5 +16,5 @@ print(imran["address"])
 
 # Task:
 # Try running mypy on this file and see what happens
-# Then try executing the file and see what happens
-# What is happening here?
+# Predict what do you think will happen when you run this task?
+# Can you explain what actualy happens?
