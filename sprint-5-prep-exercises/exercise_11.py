@@ -5,20 +5,22 @@
 # Tells the user how many laptops the library has that have that operating system.
 # If there is an operating system that has more laptops available, tells the user that if they’re willing to accept that operating system they’re more likely to get a laptop.
 
-# You should convert the age and preferred operating system input from the user into more constrained types as quickly as possible, 
+# You should convert the age and preferred operating system input from the user into more constrained types as quickly as possible,
 # and should output errors to stderr and terminate the program with a non-zero exit code if the user input bad values.
 
 # ----- Imports
+import sys
 from dataclasses import dataclass
 from enum import Enum
-import sys
 
- # ----- Classes and Enums
+
+# ----- Classes and Enums
 class OperatingSystem(Enum):
     MACOS = "macOS"
     ARCH = "Arch Linux"
     UBUNTU = "Ubuntu"
     WINDOWS = "Windows"
+
 
 @dataclass(frozen=True)
 class Person:
@@ -26,15 +28,18 @@ class Person:
     age: int
     preferred_operating_system: OperatingSystem
 
+
 @dataclass(frozen=True)
 class Laptop:
     id: int
     operating_system: OperatingSystem
 
- # ----- Functions
+
+# ----- Functions
 def count_laptops(laptops: list[Laptop], laptop_counts: dict[str, int]):
     for laptop in laptops:
-        laptop_counts[laptop.operating_system] += 1 
+        laptop_counts[laptop.operating_system] += 1
+
 
 def check_laptop_abundance(user: Person, laptop_counts: dict[OperatingSystem, int]):
     abundant_laptops = []
@@ -42,12 +47,15 @@ def check_laptop_abundance(user: Person, laptop_counts: dict[OperatingSystem, in
         if laptop_counts[laptop] > laptop_counts[user.preferred_operating_system]:
             abundant_laptops.append(laptop.value)
     if len(abundant_laptops) > 0:
-        print("\nIf you are willing to accept another operating system you may get a laptop sooner.")
+        print(
+            "\nIf you are willing to accept another operating system you may get a laptop sooner."
+        )
         print("We have more laptops available with the following OS:")
         for laptop in abundant_laptops:
             print(laptop)
-            
- # ----- Data and Constants
+
+
+# ----- Data and Constants
 laptops = [
     Laptop(id=1, operating_system=OperatingSystem.ARCH),
     Laptop(id=2, operating_system=OperatingSystem.ARCH),
@@ -62,10 +70,10 @@ laptop_counts = {
     OperatingSystem.MACOS: 0,
     OperatingSystem.ARCH: 0,
     OperatingSystem.UBUNTU: 0,
-    OperatingSystem.WINDOWS: 0
+    OperatingSystem.WINDOWS: 0,
 }
 
- # ----- Script
+# ----- Script
 user_name = input("Please enter your full name:\n")
 user_age_str = input("Please enter your age:\n")
 
@@ -74,15 +82,20 @@ try:
 except ValueError:
     sys.exit("Error: Age should be a number.")
 
-user_operating_system_str = input("Please enter your preferred operating system (options: ARCH, UBUNTU, MACOS, WINDOWS):\n")
+user_operating_system_str = input(
+    "Please enter your preferred operating system (options: Arch, Ubuntu, MacOS, Windows):\n"
+).upper()
 
 if user_operating_system_str not in OperatingSystem.__members__:
-    sys.exit("Error: Operating system should be written in all caps from given options.")
-else: user_operating_system = OperatingSystem[user_operating_system_str]
+    sys.exit("Error: Please enter a valid operating system from the given options.")
+else:
+    user_operating_system = OperatingSystem[user_operating_system_str]
 
 user = Person(user_name, user_age, user_operating_system)
 
 count_laptops(laptops, laptop_counts)
-print(f"\nThe number of available laptops with {user_operating_system.value} is: {laptop_counts[user_operating_system]}")
+print(
+    f"\nThe number of available laptops with {user_operating_system.value} is: {laptop_counts[user_operating_system]}"
+)
 
 check_laptop_abundance(user, laptop_counts)

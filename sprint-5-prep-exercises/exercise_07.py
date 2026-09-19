@@ -1,5 +1,6 @@
 from datetime import date
 
+
 class Person:
     def __init__(self, name: str, dob: date, preferred_operating_system: str):
         self.name = name
@@ -9,12 +10,10 @@ class Person:
     def is_adult(self):
         dob = self.dob
         today = date.today()
-        if dob.year > today.year - 18: return False
-        if dob.year == today.year - 18:
-            if dob.month > today.month: return False
-            if dob.month == today.month:
-                if dob.day > today.day: return False
-        return True
+        today_tuple = (today.year, today.month, today.day)
+        eighteenth_bday_tuple = (dob.year + 18, dob.month, dob.day)
+
+        return today_tuple >= eighteenth_bday_tuple
 
 
 imran = Person("Imran", date(2004, 8, 31), "Ubuntu")
