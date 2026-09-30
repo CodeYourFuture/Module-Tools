@@ -29,11 +29,9 @@ total_string = format_pence_as_str(total_pence)
 
 print(f"The bank accounts total {total_string}")
 
-# TASK
+# TASK 4
 # This code contains bugs related to types. They are bugs mypy can catch.
-#
-# 1. Read this code to understand what it's trying to do.
-# 2. Install and set up mypy in a python virtual environment
-# 3. Add type annotations everywhere appropriate
-# 4. Run `mypy 04-addmypy.py`, and fix any errors
-# 5. When you're confident all of the type annotations are correct, and the bugs are fixed, run the code and check it works.
+# Read this code to understand what it's trying to do.
+# Add type annotations to the method parameters and return types of this code.
+# Run the code through mypy, and fix all of the bugs that show up.
+# When you're confident all of the type annotations are correct, and the bugs are fixed, run the code and check it works.

@@ -1,4 +1,5 @@
-Answer the following question:
+TASK 7:
+Answer the following questions:
 What is the difference between a method and a function?
 Can you give some advantages of methods over functions?
 

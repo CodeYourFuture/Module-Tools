@@ -24,4 +24,6 @@ rl.question("What URL should we fetch?\n> ", async (url) => {
 	rl.close();
 });
 
-// Task: Leave a comment on any line that you can see has some errors explaining what you think the problem is
+// TASK 2
+// Read through this file and predict what it does.
+// Leave a comment on any lines if you spot any errors, offering an explanation of the problem.

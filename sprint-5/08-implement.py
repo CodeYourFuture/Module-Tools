@@ -4,27 +4,25 @@ class Person:
         self.age = age
         self.preferred_car_brand = preferred_car_brand
 
+def drivers_license_check(person: Person):
+  if person.is_adult() == True:
+    return 'Valid drivers license'
+
+  return 'This person is underage!'
+
 imran = Person("Imran", 22, "Mercedes")
-print(imran.is_adult())
+print(drivers_license_check(imran)) # should return 'Valid drivers license'
 
-# Task:
-# 1. Add the `drivers_license_check` free function and the `is_adult` method into the code
-# 	Make sure your code currently gives the expected output.
+# TASK 8:
 #
-# 2. Change the `Person` class to take a date of birth
-#	Use the standard library's `datetime.date` class
-#	https://docs.python.org/3/library/datetime.html#datetime.date
-#	Store the `date of birth` in a field instead of `age` (it should be a `str`)
+# Add an `is_adult` method into the class, and make sure your code gives the expected output.
 #
-# 3. Try to run your code
-#	How does this change break your code.
-#	What kind of error do you get?
-#	Is it helpful in identifying where your next change needs to be?
-#	Type your thoughts here:
+# Change the `Person` class to take a date of birth using
+# the standard library's `datetime.date` class
+# https://docs.python.org/3/library/datetime.html#datetime.date))
+# and store the `date of birth` instead of `age`.
 #
+# Try to run your code now and observe how this change breaks your code.
+# What kind of error do you get? Is it helpful in identifying where your next change needs to be?
 #
-#
-#
-# 4. Update the `is_adult` method so the error is fixed.
-#	Using the `drivers_license_check` function check everything runs as expected
-
+# Now update only the `is_adult` method to fix the error and check everything works correctly.

@@ -7,6 +7,7 @@ def double(value):
 def second(value):
     return value[1]
 
+# TASK 1:
 # 1. Predict what you think will happen with each of the following functions
 # 2. Then, test it, and explain in your own words what is actually happening and why
 # (feel free to comment out lines if you think they cause errors or crashes while testing)

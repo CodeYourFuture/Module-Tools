@@ -3,7 +3,7 @@ def double(number):
 
 print(double(10))
 
-# Task:
-# What is the bug here?
-# How could you fix it?
-# Are there multiple possible ways to fix it?
+# TASK 3:
+# Read the code and see if you can find any bugs.
+# Write down what the bug is, and how would you fix it?
+# Are there multiple ways you could fix it?

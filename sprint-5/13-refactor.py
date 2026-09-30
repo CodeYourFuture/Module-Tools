@@ -41,17 +41,13 @@ for person in people:
     possible_laptops = find_possible_laptops(laptops, person)
     print(f"Possible laptops for {person.name}: {possible_laptops}")
 
-# Task 12
-#Try changing the type annotation of `Person.preferred_operating_system` from `str` to `List[str]`.
-#
-#Run mypy on the code.
-#
-#It tells us different places that our code is now wrong. Fix it to remov eany errors.
-#
-#Now we changed the types, we probably also want to _rename_ our fields to something appropriate.
-#
-#Run mypy again.
-#
-#Fix all of the places that mypy tells you need changing.
-#
-#Then, make sure the program works as you'd expect.
+# Task 13
+# Change the type annotation of `Person.preferred_operating_system` from `str` to `List[str]`.
+# Run mypy on the code.
+# It tells us different places that our code is now wrong. Fix it to remove any errors.
+
+# Now we changed the types, we probably also want to _rename_ our field to something appropriate.
+# Run mypy again.
+
+# Fix all of the places that mypy tells you need changing.
+# Then, make sure the program works as you'd expect.

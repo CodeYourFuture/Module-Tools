@@ -41,14 +41,16 @@ for person in people:
     possible_laptops = find_possible_laptops(laptops, person)
     print(f"Possible laptops for {person.name}: {possible_laptops}")
 
-# Task 13
-# It currently handles operating systems as strings.
+# TASK 14
+# The above code currently handles operating systems as strings.
 #
 # Refactor the code to use enums for operating systems.
 #
 # Check with mypy and test it to ensure the program still works correctly.
 #
-# Replace the list of existing people with the `input` function to read a person's name, age, and preferred operating system.
+# Replace the list of existing people with the `input` function
+# https://docs.python.org/3/library/functions.html#input
+# to read a person's name, age, and preferred operating system.
 #
 # Make sure your implementation has a good user experience, and properly validates the inputs, mapping an OS to one of the enum values.
 #

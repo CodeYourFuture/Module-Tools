@@ -14,7 +14,11 @@ eliza = {
 print(imran["name"])
 print(imran["address"])
 
-# Task:
-# Try running mypy on this file and see what happens
-# Predict what do you think will happen when you run this task?
+# TASK 5:
+# This code contains some untyped objects.
+# Try checking it with mypy before running the code and predict what you think will happen when you run the code.
+#
+# Prediction:
+#
 # Can you explain what actualy happens?
+#

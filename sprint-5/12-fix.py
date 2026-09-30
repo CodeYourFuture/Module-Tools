@@ -34,30 +34,26 @@ species_tree = Tree[Animal](parent=mammals, children=[cats, dogs])
 family_tree.print_tree()
 species_tree.print_tree()
 
-# Task 11:
+# TASK 12:
+# We are going to improve the printing in the above code, you can find a copy in `12-fix.py`.
+#
 # Experiment with mypy and make sure that the family tree only takes `Person` types and the species tree only takes `Animal` types.
 #
-# We are going to add printing to the above code.
+# Currently the `Tree.print_tree()` method doesn't look very pretty.
 #
-# Unlike our earlier example, we want to avoid having to create two
-# separate looping methods to print out an entire tree for each datatype.
-# So we have created a single looping function within Tree that will work for any datatype.
+# Change only the Animal and Person classes to allow the `Tree.print_tree()` method to display an output that looks like this:
 #
-# Currently the `Tree.print_tree()` function doesn't do anything.
-#
-# Add some appropriate methods to each of the Animal and Person classes to allow it to work.
-#
-# **Stretch task**
+# ```
+# Imran (30 years old)
+# - Fatma (4 years old)
+# - Aisha (6 years old))
+# Mammals (Variable size)
+# - Cat (Small size)
+# - Dog (Medium size)
+# ```
+
+# STRETCH TASK 12.2
 #
 # Think of another type of data that can be organised into a tree.
 #
 # Add a new class for this, instantiate some variables, and have the existing `Tree` class print it out.
-# Here is an example of what should be printed out
-'''
-Imran (30 years old)
-- Fatma (4 years old)
-- Aisha (6 years old))
-Mammals (Variable size)
-- Cat (Small size)
-- Dog (Medium size)
-'''

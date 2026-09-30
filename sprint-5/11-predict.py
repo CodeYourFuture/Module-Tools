@@ -28,3 +28,8 @@ def print_family_tree(family: FamilyTree):
         print(f"{child.name} ({child.age} years old)")
 
 print_family_tree(family)
+
+# TASK 11
+# There is a bug in this code. Can you spot it?
+# Run your code through mypy. Does mypy spot it?
+# Offer an explanation for what is happening.

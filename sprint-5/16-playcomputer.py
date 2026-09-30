@@ -22,8 +22,8 @@ class Child(Parent):
             suffix = f" (née {self.previous_last_names[0]})"
         return f"{self.first_name} {self.last_name}{suffix}"
 
-# Task:
-# Play computer here
+# TASK 16:
+# Play computer with this code
 # Describe what is happening and why on each line below here
 # If any lines cause errors, comment out the line and explain why the error happens
 
