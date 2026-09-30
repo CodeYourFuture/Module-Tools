@@ -1,10 +1,10 @@
 class Person:
-    def __init__(self, name: str, age: int, preferred_operating_system: str):
+    def __init__(self, name: str, age: int, preferred_car_brand: str):
         self.name = name
         self.age = age
-        self.preferred_operating_system = preferred_operating_system
+        self.preferred_car_brand = preferred_car_brand
 
-imran = Person("Imran", 22, "Ubuntu")
+imran = Person("Imran", 22, "Mercedes")
 print(imran.is_adult())
 
 # Task:
