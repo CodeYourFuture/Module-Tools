@@ -1,8 +1,0 @@
-Read through Python encapsulation
-https://www.w3schools.com/python/python_encapsulation.asp
-and think about some of the benefits that encapsulation can add to a class.
-
-Do some further research of your own to learn about encapsulation.
-
-Think of some examples and in your own words write down some benefits and trade-offs of using encapsulation in classes:
-
