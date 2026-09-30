@@ -35,13 +35,13 @@ family_tree.print_tree()
 species_tree.print_tree()
 
 # TASK 12:
-# We are going to improve the printing in the above code, you can find a copy in `12-fix.py`.
+# We are going to improve the printing in the above code.
 #
 # Experiment with mypy and make sure that the family tree only takes `Person` types and the species tree only takes `Animal` types.
 #
 # Currently the `Tree.print_tree()` method doesn't look very pretty.
 #
-# Change only the Animal and Person classes to allow the `Tree.print_tree()` method to display an output that looks like this:
+# Update the code, using __str__ methods in Animal and Person to allow the `Tree.print_tree()` method to display an output that looks like this:
 #
 # ```
 # Imran (30 years old)

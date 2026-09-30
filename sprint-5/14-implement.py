@@ -48,9 +48,10 @@ for person in people:
 #
 # Check with mypy and test it to ensure the program still works correctly.
 #
-# Replace the list of existing people with the `input` function
+# Use the `input` function
 # https://docs.python.org/3/library/functions.html#input
-# to read a person's name, age, and preferred operating system.
+# to read a person's name, age, and preferred operating system,
+# then add them to the list of people.
 #
 # Make sure your implementation has a good user experience, and properly validates the inputs, mapping an OS to one of the enum values.
 #

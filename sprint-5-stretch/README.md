@@ -3,7 +3,7 @@
 This is part of an app that can be used to control an online radio station
 
 Your task is to:
-1. Upgrade everything use dataclasses
+1. Upgrade everything use dataclasses. Use `frozen` where appropriate.
 1. Observe how the given `__str__` method works, and add one to the other classes
 1. When the `__str__` method is called, have it print the duration in formatted mm:ss rather than just seconds
 1. Add a new class of `Person` - you can use your imagination what this includes, but it should have at least a string name
