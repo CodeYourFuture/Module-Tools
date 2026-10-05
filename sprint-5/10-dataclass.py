@@ -8,7 +8,7 @@ class Person:
         return self.age >= 18
 
 def drivers_license_check(person: Person):
-  if person.is_adult() == True:
+  if person.is_adult():
     return 'Valid drivers license'
 
   return 'This person is underage!'

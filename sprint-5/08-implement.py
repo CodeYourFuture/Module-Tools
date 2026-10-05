@@ -5,7 +5,7 @@ class Person:
         self.preferred_car_brand = preferred_car_brand
 
 def drivers_license_check(person: Person):
-  if person.is_adult() == True:
+  if person.is_adult():
     return 'Valid drivers license'
 
   return 'This person is underage!'
