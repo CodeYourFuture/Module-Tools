@@ -1,0 +1,16 @@
+TASK 7:
+Answer the following questions:
+What is the difference between a method and a function?
+Can you give some advantages of methods over functions?
+
+Any of, not limited to:
+A free function is a function that can be defined and called at any point in code
+A free function exists independently of a class or instance
+A method is attached to / a part of / within / a member of a class
+You can only use it with an instance of a class (unless it is static)
+A method can self reference / modify / behave differently according to the instance it is attached to
+Methods offer more encapsulation
+Methods offer more semantics
+Because of the above, classes are more reusable across different code and the methods are contained within the class
+Any example that shows they understand a situation where a method is better than a free function.
+If they mention benefits of functions over methods, make sure the context is clear and they understand that functions are not always better.
