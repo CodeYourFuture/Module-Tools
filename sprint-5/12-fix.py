@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import List
 
 @dataclass(frozen=True)
 class Animal:
@@ -14,7 +13,7 @@ class Person:
 @dataclass(frozen=True)
 class Tree[T]:
     parent: T
-    children: List[T]
+    children: list[T]
 
     def print_tree(self):
         print(self.parent)
@@ -41,12 +40,12 @@ species_tree.print_tree()
 #
 # Currently the `Tree.print_tree()` method doesn't look very pretty.
 #
-# Update the code, using __str__ methods in Animal and Person to allow the `Tree.print_tree()` method to display an output that looks like this:
+# Update the code, adding `__str__()` methods in Animal and Person to allow the `Tree.print_tree()` method to display an output that looks like this:
 #
 # ```
 # Imran (30 years old)
 # - Fatma (4 years old)
-# - Aisha (6 years old))
+# - Aisha (6 years old)
 # Mammals (Variable size)
 # - Cat (Small size)
 # - Dog (Medium size)
