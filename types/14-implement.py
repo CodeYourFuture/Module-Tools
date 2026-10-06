@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import List
 
 @dataclass(frozen=True)
 class Person:
@@ -17,7 +16,7 @@ class Laptop:
     operating_system: str
 
 
-def find_possible_laptops(laptops: List[Laptop], person: Person) -> List[Laptop]:
+def find_possible_laptops(laptops: list[Laptop], person: Person) -> list[Laptop]:
     possible_laptops = []
     for laptop in laptops:
         if laptop.operating_system == person.preferred_operating_system:
