@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import List
 
 @dataclass(frozen=True)
 class Person:
@@ -17,7 +16,7 @@ class Laptop:
     operating_system: str
 
 
-def find_possible_laptops(laptops: List[Laptop], person: Person) -> List[Laptop]:
+def find_possible_laptops(laptops: list[Laptop], person: Person) -> list[Laptop]:
     possible_laptops = []
     for laptop in laptops:
         if laptop.operating_system == person.preferred_operating_system:
@@ -42,7 +41,7 @@ for person in people:
     print(f"Possible laptops for {person.name}: {possible_laptops}")
 
 # Task 13
-# Change the type annotation of `Person.preferred_operating_system` from `str` to `List[str]`.
+# Change the type annotation of `Person.preferred_operating_system` from `str` to `list[str]`.
 # Run mypy on the code.
 # It tells us different places that our code is now wrong. Fix it to remove any errors.
 
