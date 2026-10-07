@@ -7,16 +7,16 @@ The goal of these exercises is for you to gain an intuition for binary numbers. 
 The answers to these questions will require a bit of explanation, not just a simple answer.
 
 Q16: How can you test if a binary number is a power of two (e.g. 1, 2, 4, 8, 16, ...)?
-Answer:
+Answer: there is exactly one bit set to 1
 
 Q17: If reading the byte 0x21 as an ASCII character, what character would it mean?
-Answer:
+Answer: !
 
 Q18: If reading the byte 0x21 as a greyscale colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
-Answer:
+Answer: A very dark grey with almost 1/4 of the white that the given dark grey colour contains
 
 Q19: If reading the bytes 0xAA00FF as a sequence of three one-byte decimal numbers, what decimal numbers would they be?
-Answer:
+Answer: 0170 0000 0255
 
 Q20: If reading the bytes 0xAA00FF as an RGB colour, as described in "Approaches for Representing Colors and Images", what colour would it mean?
-Answer:
+Answer: (electric) purple
