@@ -1,0 +1,51 @@
+import { promises as fs } from "node:fs";
+import { program } from "commander";
+
+program
+  .name("cat")
+  .description("my own cat program")
+  .option("-n", "number all lines")
+  .option("-b", "number non-empty lines")
+  .argument("<paths...>", "The file path to process");
+program.parse();
+
+const paths = program.args;
+const options = program.opts();
+
+let lineNumber = 1;
+let hadError = false;
+for (const path of paths) {
+  try {
+    const content = await fs.readFile(path, "utf-8");
+    if (options.n || options.b) {
+      const lines = content.split("\n");
+      if (lines[lines.length - 1] === "") {
+        lines.pop();
+      }
+
+      if (options.b) {
+        for (const line of lines) {
+          if (line.trim() !== "") {
+            process.stdout.write(`     ${lineNumber} ${line}\n`);
+            lineNumber++;
+          } else {
+            process.stdout.write("\n");
+          }
+        }
+      } else if (options.n) {
+        for (const line of lines) {
+          process.stdout.write(`${String(lineNumber).padStart(6)}\t ${line}\n`);
+          lineNumber++;
+        }
+      }
+    } else {
+      process.stdout.write(content);
+    }
+  } catch (error) {
+    console.error(error.message);
+    hadError = true;
+  }
+}
+if (hadError) {
+  process.exitCode = 1;
+}
