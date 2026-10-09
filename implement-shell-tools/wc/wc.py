@@ -35,9 +35,6 @@ for path in args.paths:
             lines = content.split('\n')
             
             if (args.l):
-                #if (len(lines)) > 0: 
-                 #   lines[-1].strip()
-
                 line_count = content.count('\n')
                 totals["l"] += line_count
                 output_str += f"{line_count:8}"
