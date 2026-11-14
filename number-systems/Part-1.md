@@ -10,7 +10,7 @@ Q1: Convert the decimal number 14 to binary.
 Answer: 1110
 
 Q2: Convert the binary number 101101 to decimal:
-Answer: 60
+Answer: 45
 
 Q3: Which is larger: 1000 or 0111?
 Answer: 1000, but if the data is a signed integer, 1000 would be -8, which would make 0111 larger.
@@ -31,7 +31,7 @@ Q8: How many bits would you need in order to store the numbers between 0 and 255
 Answer: 8 bits.
 
 Q9: How many bits would you need in order to store the numbers between 0 and 3 inclusive?
-Answer: 3 bits.
+Answer: 2 bits.
 
 Q10: How many bits would you need in order to store the numbers between 0 and 1000 inclusive?
 Answer: 10 bits.
