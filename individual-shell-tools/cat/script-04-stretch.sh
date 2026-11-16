@@ -13,3 +13,7 @@ set -euo pipefail
 # 3 It looked delicious.
 # 4 I was tempted to take a bite of it.
 # 5 But this seemed like a bad idea...
+
+# With several files, cat -n keeps counting across them instead of restarting at 1.
+# Alternative: cat ../helper-files/* | cat -n
+cat -n ../helper-files/*
