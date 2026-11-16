@@ -12,4 +12,4 @@ Doctor: You're welcome, goodbye
 
 Patient: I went to the doctor!
 Spouse: I'm glad you saw the Doctor: did they cure you?
-Patient: Yes!grep -v -e 'Hello' -e '^$' dialogue.txt | wc -l
+Patient: Yes!
