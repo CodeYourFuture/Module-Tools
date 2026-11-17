@@ -11,3 +11,7 @@ set -euo pipefail
 # It looked delicious.
 # I was tempted to take a bite of it.
 # But this seemed like a bad idea...
+
+# * matches every file in helper-files (in alphabetical order), so cat receives all three.
+# Same as: cat ../helper-files/helper-1.txt ../helper-files/helper-2.txt ../helper-files/helper-3.txt
+cat ../helper-files/*
