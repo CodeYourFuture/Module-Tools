@@ -11,3 +11,6 @@ set -euo pipefail
 # It looked delicious.
 # I was tempted to take a bite of it.
 # But this seemed like a bad idea...
+
+# Bash expands *.txt into the helper filenames, so cat only needs to run once.
+cat ../helper-files/*.txt
