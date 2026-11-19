@@ -11,4 +11,4 @@ set -euo pipefail
 
 # [^ ] matches anything but space
 
-sed 's/,[^ ]/, /g' input.txt
+sed 's/,\([^ ]\)/, \1/g' input.txt
