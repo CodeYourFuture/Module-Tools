@@ -6,5 +6,5 @@ set -euo pipefail
 # The output should contain two filenames.
 
 
-grep -i "doctor: " *.txt
+grep -il '^Doctor:' *.txt
 
