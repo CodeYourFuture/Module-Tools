@@ -17,7 +17,12 @@ echo "First exercise (sorted newest to oldest):"
 # The output should be a list of names in this order, one per line: helper-3.txt, helper-1.txt, helper-2.txt.
 
 
+# Sort by modification time with -t, then add -r for the oldest-first listing.
+ls -1t child-directory
+
 echo "Second exercise (sorted oldest to newest):"
 
 # TODO: Write a command which does the same as above, but sorted in the opposite order (oldest first).
 # The output should be a list of names in this order, one per line: helper-2.txt, helper-1.txt, helper-3.txt.
+
+ls -1tr child-directory
