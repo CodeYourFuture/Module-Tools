@@ -102,7 +102,7 @@ Q13: Convert the hex number 386 to decimal.
 
 3*16^2 + 8*16^1 + 6*16^0 = 768+128+6= 902
 
-Answer:
+Answer: 902
 
 Q14: Convert the hex number B to decimal.
 
