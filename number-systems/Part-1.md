@@ -7,7 +7,7 @@ The goal of these exercises is for you to gain an intuition for binary numbers. 
 The answers to these questions should be a number, either in binary, hex, or decimal.
 
 Q1: Convert the decimal number 14 to binary.
-Answer:
+Answer: 1110
 
 Q2: Convert the binary number 101101 to decimal:
 Answer:
