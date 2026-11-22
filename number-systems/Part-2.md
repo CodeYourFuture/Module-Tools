@@ -7,7 +7,9 @@ The goal of these exercises is for you to gain an intuition for binary numbers. 
 The answers to these questions will require a bit of explanation, not just a simple answer.
 
 Q16: How can you test if a binary number is a power of two (e.g. 1, 2, 4, 8, 16, ...)?
-Answer:
+Answer: Look for exactly one 1 bit.
+
+Each bit position represents a power of two. If exactly one bit is set, the number is the value of that position. Zero has no set bits.
 
 Q17: If reading the byte 0x21 as an ASCII character, what character would it mean?
 Answer:
