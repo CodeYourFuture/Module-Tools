@@ -8,3 +8,6 @@ set -euo pipefail
 #        1       7      39 ../helper-files/helper-2.txt
 #        3      19      92 ../helper-files/helper-3.txt
 #        5      30     151 total
+
+# Use -l, -w, and -m to count lines, words, and characters in each file.
+wc -lwm ../helper-files/*.txt
