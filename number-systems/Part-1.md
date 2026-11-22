@@ -33,9 +33,9 @@ Answer: 100010
 The rightmost 1 + 1 gives 0 and carries 1 into the next column. The two leftmost 1s also give 0 and carry 1 into a new column.
 
 Q7: What's the largest number you can store with 4 bits, if you want to be able to represent the number 0?
-Answer: 1111
+Answer: 15
 
-Setting all four bits to 1 gives the largest unsigned value.
+Four bits give 2 x 2 x 2 x 2 = 16 possible patterns. Counting from 0, the last value is 15, represented by 1111.
 
 Q8: How many bits would you need in order to store the numbers between 0 and 255 inclusive?
 Answer: 8
