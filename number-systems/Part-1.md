@@ -13,7 +13,9 @@ Q2: Convert the binary number 101101 to decimal:
 Answer: 45
 
 Q3: Which is larger: 1000 or 0111?
-Answer:
+Answer: 1000
+
+I compared the bits from the left. The first bit is already different: 1000 has a 1 there and 0111 has a 0, so 1000 is bigger.
 
 Q4: Which is larger: 00100 or 01011?
 Answer:
