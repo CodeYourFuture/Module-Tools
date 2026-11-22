@@ -18,7 +18,9 @@ Answer: 1000
 I compared the bits from the left. The first bit is already different: 1000 has a 1 there and 0111 has a 0, so 1000 is bigger.
 
 Q4: Which is larger: 00100 or 01011?
-Answer:
+Answer: 01011
+
+Both numbers start with 0. The next digit is 1 in 01011 and 0 in 00100, so 01011 is bigger.
 
 Q5: What is 10101 + 01010?
 Answer:
