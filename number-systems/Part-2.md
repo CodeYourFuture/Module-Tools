@@ -10,9 +10,11 @@ Q16: How can you test if a binary number is a power of two (e.g. 1, 2, 4, 8, 16,
 
 when the numbers of zeroes and ones are the same?
 
-Answer: ok I checked and the answer is when there's a one followed by zeroes. For example 1000 or 10
+Answer: It has to either be 1 in binary or 1 followed by however many zeroes. For example 1000, 1, 10 are all a power of two
 
 Q17: If reading the byte 0x21 as an ASCII character, what character would it mean?
+0b - binary
+0x - hexadecimal
 
 I looked up the ascii table and it was !
 
